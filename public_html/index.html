@@ -18,6 +18,9 @@ and open the template in the editor.
          <!-- App Styling -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
         <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/jquery.fanmenu.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="scripts/jquery.fanmenu.js"></script>
     </head>
     <body>
         
@@ -41,9 +44,30 @@ and open the template in the editor.
             </div>
           </div>
         </header>
-        <canvas id="game_canvas" width="1024" height="512" style="margin:0 auto;"></canvas>
+        <div id="container">
+          <canvas id="game_canvas" width="1024" height="580" style="margin:0 auto;"></canvas>
+          <div id='weaponMenu' class="fm_wrap" >
+            <a class="fm_btntoggle" href="#" title="Toggle"><i>+</i></a>
+            <ul class="fm_list">
+              <li><a href="#"><i class="icon-user icon-white"></i></a></li>
+              <li><a href="#"><i class="icon-heart icon-white"></i></a></li>
+              <li><a href="#"><i class="icon-music icon-white"></i></a></li>
+              <li><a href="#"><i class="icon-home icon-white"></i></a></li>
+              <li><a href="#"><i class="icon-flag icon-white"></i></a></li>
+            </ul>
+          </div>
+          <div id='directionMenu' class="fm_wrap" >
+            <a class="fm_btntoggle" href="#" title="Toggle"><i>+</i></a>
+            <ul class="fm_list">
+              <li><a href="#"><i class="icon-user icon-white"></i></a></li>
+              <li><a href="#"><i class="icon-heart icon-white"></i></a></li>
+              <li><a href="#"><i class="icon-music icon-white"></i></a></li>
+              <li><a href="#"><i class="icon-home icon-white"></i></a></li>
+              <li><a href="#"><i class="icon-flag icon-white"></i></a></li>
+            </ul>
+          </div>
         </div>
-        
+        </div>
             <script src="https://www.gstatic.com/firebasejs/3.5.0/firebase.js"></script>
             <script>
               // Initialize Firebase

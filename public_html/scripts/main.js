@@ -105,14 +105,48 @@ PurpleLife.prototype.initCanvas = function() {
 
     //@TODO ADD CHECK FOR COOKIES REGARDING SPLASH SCREEN
     this.initSplashScreen();
+    this.initWeapons();
+    this.initDirections();
 }
 
 PurpleLife.prototype.initSplashScreen = function() {
     var splashScreen = new Image();
     splashScreen.src = "images/splash.png";
     splashScreen.onload = function () {
-       canvas2D.drawImage(this, 0, 0);
+       canvas2D.drawImage(this, 112, 0);
     }
+}
+
+PurpleLife.prototype.initWeapons = function() {
+  $('#weaponMenu').fanmenu({
+    eventName:'click',
+    hideOnClick: true,
+    hideOnClickExcept: 'fm_antihide',
+    initAngle: 0,
+    angleDisplay: 90,
+    radius: 100,
+    clActive:'fm_active',
+    clDeactive:'fm_off',
+    clToggleEffect:'fm_rotate',
+    cssMenuToggle: '.fm_btntoggle',
+    cssMenuItem: '.fm_list>*'
+  });
+}
+
+PurpleLife.prototype.initDirections = function() {
+  $('#directionMenu').fanmenu({
+    eventName:'click',
+    hideOnClick: true,
+    hideOnClickExcept: 'fm_antihide',
+    initAngle: -90,
+    angleDisplay: 90,
+    radius: 100,
+    clActive:'fm_active',
+    clDeactive:'fm_off',
+    clToggleEffect:'fm_rotate',
+    cssMenuToggle: '.fm_btntoggle',
+    cssMenuItem: '.fm_list>*'
+  });
 }
 
 window.onload = function() {
