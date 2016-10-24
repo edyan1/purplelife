@@ -1,40 +1,29 @@
 'use strict';
 
+// CANVAS VARIABLES
+var canvasWidth;
+var canvasHeight;
+var canvas;
+var canvas2D;
+var mouseState;
+
 // Initializes Purple Life
 function PurpleLife() {
   //this.checkSetup();
 
   // Shortcuts to DOM Elements.
- // this.messageList = document.getElementById('messages');
- // this.messageForm = document.getElementById('message-form');
- // this.messageInput = document.getElementById('message');
- // this.submitButton = document.getElementById('submit');
- // this.submitImageButton = document.getElementById('submitImage');
- // this.imageForm = document.getElementById('image-form');
- // this.mediaCapture = document.getElementById('mediaCapture');
   this.userPic = document.getElementById('user-pic');
   this.userName = document.getElementById('user-name');
   this.signInButton = document.getElementById('sign-in');
   this.signOutButton = document.getElementById('sign-out');
- // this.signInSnackbar = document.getElementById('must-signin-snackbar');
 
   // Saves message on form submit.
- // this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
   this.signInButton.addEventListener('click', this.signIn.bind(this));
 
-  // Toggle for the button.
- // var buttonTogglingHandler = this.toggleButton.bind(this);
- // this.messageInput.addEventListener('keyup', buttonTogglingHandler);
- // this.messageInput.addEventListener('change', buttonTogglingHandler);
-
-  // Events for image upload.
- // this.submitImageButton.addEventListener('click', function() {
- //   this.mediaCapture.click();
- // }.bind(this));
- // this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
-
   this.initFirebase();
+
+  this.initCanvas();
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -92,7 +81,39 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
   }
 };
 
+PurpleLife.prototype.initCanvas = function() {
+    // GET THE CANVAS
+    canvas = document.getElementById("game_canvas");
 
+    // GET THE 2D RENDERING CONTEXT
+    canvas2D = canvas.getContext("2d");
+    
+    // INIT THE FONT FOR TEXT RENDERED ON THE CANVAS. NOTE
+    // THAT WE'LL BE RENDERING THE FRAME RATE AND ZOOM LEVEL
+    // ON THE CANVAS
+    canvas2D.font = "24px Arial";
+    
+    // NOTE THAT THESE DIMENSIONS SHOULD BE THE
+    // SAME AS SPECIFIED IN THE WEB PAGE, WHERE
+    // THE CANVAS IS SIZED
+    canvasWidth = canvas.width;
+    canvasHeight = canvas.height;
+    
+    mouseState = false;
+
+
+
+    //@TODO ADD CHECK FOR COOKIES REGARDING SPLASH SCREEN
+    this.initSplashScreen();
+}
+
+PurpleLife.prototype.initSplashScreen = function() {
+    var splashScreen = new Image();
+    splashScreen.src = "images/splash.png";
+    splashScreen.onload = function () {
+       canvas2D.drawImage(this, 0, 0);
+    }
+}
 
 window.onload = function() {
   window.purpleLife = new PurpleLife();
