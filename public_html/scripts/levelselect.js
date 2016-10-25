@@ -13,15 +13,8 @@ function initLevelSelect() {
     tabContentContainers: '.c-tab'
   });
 
-  updateControls();
   myTabs.init();
 };
-
-function updateControls() {
-  document.getElementById("Enter_button").style.visibility = "hidden";
-  document.getElementById("weaponMenu").style.display = "none";
-  document.getElementById("directionMenu").style.display = "none";
-}
 
 (function() {
 

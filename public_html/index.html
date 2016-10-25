@@ -21,10 +21,14 @@ and open the template in the editor.
         <link rel="stylesheet" href="styles/jquery.fanmenu.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="scripts/jquery.fanmenu.js"></script>
+       
+        <script src="scripts/SceneManager.js"></script>
+        <script src="scripts/main.js"></script>
         
         <!-- Level Select style sheet and script -->
         <link rel="stylesheet" href="styles/levelselect.css">
         <script src="scripts/levelselect.js"></script>
+         
     </head>
     <body>
         
@@ -145,8 +149,9 @@ and open the template in the editor.
 
               <div class="c-tab">
                 <div class="c-tab__content">
-                  <h2>Custom</h2>
-                  <p>custom levels go here.</p>
+                  <h2>Custom Levels</h2>
+                  
+                  <div> <a href="levelMaker.html" class="button">Level Maker</a></div>
                 </div>
               </div>
 
@@ -173,7 +178,7 @@ and open the template in the editor.
               <!--<li><a href="#"><i class="icon-flag icon-white"></i></a></li>-->
             </ul>
           </div>
-          <button id=Enter_button type="button" onclick="updateControls()">Play As A Guest</button>
+          <button id=Enter_button type="button" onclick="sceneManager.changeScene(Scenes.GAME)">Play As A Guest</button>
         </div>
         </div>
             <script src="https://www.gstatic.com/firebasejs/3.5.0/firebase.js"></script>
@@ -188,7 +193,7 @@ and open the template in the editor.
               };
               firebase.initializeApp(config);
             </script>
-            <script src="scripts/SceneManager.js"></script>
-            <script src="scripts/main.js"></script>
+            
+            
     </body>
 </html>

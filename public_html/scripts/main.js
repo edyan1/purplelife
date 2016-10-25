@@ -31,7 +31,6 @@ function PurpleLife() {
 
   //Initialize the Scene Manager
   sceneManager = new SceneManager(Scenes.SPLASH);
-  sceneManager.loadScene(Scenes.GAME);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -54,7 +53,15 @@ PurpleLife.prototype.signIn = function() {
 // Signs-out 
 PurpleLife.prototype.signOut = function() {
   // Sign out of Firebase.
-  this.auth.signOut();
+  var r = confirm(
+    "Are you sure you want to sign out?\n\Signing out will delete any unsaved progress and take you back to the main screen.");
+  if (r === true) {
+      this.auth.signOut();
+      location.reload();
+  } else {
+      
+  }
+  
 };
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
@@ -78,9 +85,9 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
 
     // We load currently existing chant messages.
     //this.loadMessages();
-    this.levelSelect.removeAttribute('hidden');
-    document.getElementById("game_canvas").style.visibility = 'hidden';
-    initLevelSelect();
+    
+    //document.getElementById("game_canvas").style.visibility = 'hidden';
+    sceneManager.changeScene(Scenes.LEVELSELECT);
     
  } else { // User is signed out!
     // Hide user's profile and sign-out button.
@@ -156,13 +163,6 @@ PurpleLife.prototype.initDirections = function() {
     cssMenuItem: '.fm_list>*'
   });
 };
-
-function updateControls() {
-  canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
-  document.getElementById("Enter_button").style.visibility = "hidden";
-  document.getElementById("weaponMenu").style.display = "block";
-  document.getElementById("directionMenu").style.display = "block";
-}
 
 PurpleLife.prototype.initEventHandlers = function () {
   canvas.onclick = this.respondToMouseClick;
