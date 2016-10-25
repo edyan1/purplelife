@@ -47,7 +47,7 @@ and open the template in the editor.
         <div id="container">
           <canvas id="game_canvas" width="1024" height="580" style="margin:0 auto;"></canvas>
           <div id='weaponMenu' class="fm_wrap" >
-            <a class="fm_btntoggle" href="#" title="Toggle"><i>+</i></a>
+            <a class="fm_btntoggle" href="#" title="Toggle"><i>w</i></a>
             <ul class="fm_list">
               <li><a href="#"><i class="icon-user icon-white"></i></a></li>
               <li><a href="#"><i class="icon-heart icon-white"></i></a></li>
@@ -57,15 +57,17 @@ and open the template in the editor.
             </ul>
           </div>
           <div id='directionMenu' class="fm_wrap" >
-            <a class="fm_btntoggle" href="#" title="Toggle"><i>+</i></a>
+            <a class="fm_btntoggle" href="#" title="Toggle"><i>D</i></a>
             <ul class="fm_list">
               <li><a href="#"><i class="icon-user icon-white"></i></a></li>
               <li><a href="#"><i class="icon-heart icon-white"></i></a></li>
               <li><a href="#"><i class="icon-music icon-white"></i></a></li>
               <li><a href="#"><i class="icon-home icon-white"></i></a></li>
-              <li><a href="#"><i class="icon-flag icon-white"></i></a></li>
+              <!--<li><a href="#"><i class="icon-flag icon-white"></i></a></li>-->
             </ul>
           </div>
+          
+           <div style="position: static;"><a href="levelselecttest.html">LEVEL SELECT TEST</a></div>
         </div>
         </div>
             <script src="https://www.gstatic.com/firebasejs/3.5.0/firebase.js"></script>
@@ -81,6 +83,6 @@ and open the template in the editor.
               firebase.initializeApp(config);
             </script>
             
-            <script src="scripts/main.js"></script>
+            <script src="scripts/main.js"></script>   
     </body>
 </html>
