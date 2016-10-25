@@ -6,6 +6,22 @@
  */
 
 'use strict';
+function initLevelSelect() {
+  var myTabs = tabs({
+    el: '#tabs',
+    tabNavigationLinks: '.c-tabs-nav__link',
+    tabContentContainers: '.c-tab'
+  });
+
+  updateControls();
+  myTabs.init();
+};
+
+function updateControls() {
+  document.getElementById("Enter_button").style.visibility = "hidden";
+  document.getElementById("weaponMenu").style.display = "none";
+  document.getElementById("directionMenu").style.display = "none";
+}
 
 (function() {
 

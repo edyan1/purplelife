@@ -16,6 +16,7 @@ function PurpleLife() {
   this.userName = document.getElementById('user-name');
   this.signInButton = document.getElementById('sign-in');
   this.signOutButton = document.getElementById('sign-out');
+  this.levelSelect = document.getElementById('ls-section');
 
   // Saves message on form submit.
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
@@ -70,6 +71,10 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
 
     // We load currently existing chant messages.
     //this.loadMessages();
+    this.levelSelect.removeAttribute('hidden');
+    document.getElementById("game_canvas").style.visibility = 'hidden';
+    initLevelSelect();
+    
  } else { // User is signed out!
     // Hide user's profile and sign-out button.
     this.userName.setAttribute('hidden', 'true');
@@ -107,15 +112,15 @@ PurpleLife.prototype.initCanvas = function() {
     this.initSplashScreen();
     this.initWeapons();
     this.initDirections();
-}
+};
 
 PurpleLife.prototype.initSplashScreen = function() {
     var splashScreen = new Image();
     splashScreen.src = "images/splash.png";
     splashScreen.onload = function () {
        canvas2D.drawImage(this, 112, 0);
-    }
-}
+    };
+};
 
 PurpleLife.prototype.initWeapons = function() {
   $('#weaponMenu').fanmenu({
@@ -131,7 +136,7 @@ PurpleLife.prototype.initWeapons = function() {
     cssMenuToggle: '.fm_btntoggle',
     cssMenuItem: '.fm_list>*'
   });
-}
+};
 
 PurpleLife.prototype.initDirections = function() {
   $('#directionMenu').fanmenu({
@@ -147,9 +152,9 @@ PurpleLife.prototype.initDirections = function() {
     cssMenuToggle: '.fm_btntoggle',
     cssMenuItem: '.fm_list>*'
   });
-}
+};
 
-function startAsGuestClick() {
+function updateControls() {
   canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
   document.getElementById("Enter_button").style.visibility = "hidden";
   document.getElementById("weaponMenu").style.display = "block";
