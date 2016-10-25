@@ -53,8 +53,14 @@ and open the template in the editor.
           </div>
         </header>
         <div id="container">
+        <div class="add_banner_left">
+          <div class="rotate">ADVERTISE HERE</div>
+        </div>
           <div class="canvas">
             <canvas id="game_canvas" width="1024" height="580" style="margin:0 auto;"></canvas>
+          </div>
+          <div class="add_banner_right">
+          <div class="rotate">ADVERTISE HERE</div>
           </div>
 
           <!--LEVEL SELECT -->
@@ -181,6 +187,7 @@ and open the template in the editor.
           <button id=Enter_button type="button" onclick="sceneManager.changeScene(Scenes.GAME)">Play As A Guest</button>
         </div>
         </div>
+
             <script src="https://www.gstatic.com/firebasejs/3.5.0/firebase.js"></script>
             <script>
               // Initialize Firebase
