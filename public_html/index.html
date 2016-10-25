@@ -19,11 +19,14 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/jquery.fanmenu.css">
+        <link rel="stylesheet" href="styles/buttonFont.css">
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="scripts/jquery.fanmenu.js"></script>
        
         <script src="scripts/SceneManager.js"></script>
         <script src="scripts/main.js"></script>
+        
         
         <!-- Level Select style sheet and script -->
         <link rel="stylesheet" href="styles/levelselect.css">
@@ -164,7 +167,9 @@ and open the template in the editor.
             </div>
           </div>
           
-          <div id='weaponMenu' class="fm_wrap">
+          <div id="toolbar" class="divBody">
+             
+            <div id='weaponMenu' class="fm_wrap">
             <a class="fm_btntoggle" href="#" title="Toggle"><i>w</i></a>
             <ul class="fm_list">
               <li><a href="#"><i class="icon-user icon-white"></i></a></li>
@@ -173,8 +178,13 @@ and open the template in the editor.
               <li><a href="#"><i class="icon-home icon-white"></i></a></li>
               <li><a href="#"><i class="icon-flag icon-white"></i></a></li>
             </ul>
-          </div>
-          <div id='directionMenu' class="fm_wrap">
+            </div>  
+              
+            <input id="start_button" type="button" value="Play" class="playBtn" />
+            <input id="quit_button" type="button" value="Quit" class="quitBtn" />
+            <input id="reset_button" type="button" value="Reset" class="resetBtn"/>
+            
+            <div id='directionMenu' class="fm_wrap">
             <a class="fm_btntoggle" href="#" title="Toggle"><i>D</i></a>
             <ul class="fm_list">
               <li><a href="#"><i class="icon-user icon-white"></i></a></li>
@@ -183,7 +193,12 @@ and open the template in the editor.
               <li><a href="#"><i class="icon-home icon-white"></i></a></li>
               <!--<li><a href="#"><i class="icon-flag icon-white"></i></a></li>-->
             </ul>
+            </div>
+            
           </div>
+          
+          
+          
           <button id=Enter_button type="button" onclick="sceneManager.changeScene(Scenes.GAME)">Play As A Guest</button>
         </div>
         </div>

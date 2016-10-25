@@ -61,14 +61,14 @@ SceneManager.prototype.deloadSplashScene = function() {
 };
 
 SceneManager.prototype.loadGameScene = function() {
-  document.getElementById("weaponMenu").style.display = "block";
-  document.getElementById("directionMenu").style.display = "block";
+  document.getElementById("toolbar").style.display = "block";
+
 };
 
 SceneManager.prototype.deloadGameScene = function() {
   canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
-  document.getElementById("weaponMenu").style.visibility = "hidden";
-  document.getElementById("directionMenu").style.visibility = "hidden";
+  document.getElementById("toolbar").style.visibility = "hidden";
+
 };
 
 SceneManager.prototype.loadLevelSelectScene = function() {

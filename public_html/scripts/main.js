@@ -6,6 +6,10 @@ var canvasHeight;
 var canvas;
 var canvas2D;
 var mouseState;
+var userSignedIn;
+
+//Toolbar
+var toolbar;
 
 //Scene Manager
 var sceneManager;
@@ -20,6 +24,7 @@ function PurpleLife() {
   this.signInButton = document.getElementById('sign-in');
   this.signOutButton = document.getElementById('sign-out');
   this.levelSelect = document.getElementById('ls-section');
+  this.toolbar = document.getElementById('toolbar');
 
   // Saves message on form submit.
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
@@ -70,7 +75,7 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
     // Get profile pic and user's name from the Firebase user object.
     var profilePicUrl = user.photoURL;
     var userName = user.displayName;
-
+    userSignedIn = true;
     // Set the user's profile pic and name.
     this.userPic.style.backgroundImage = 'url(' + (profilePicUrl || '/images/profile_placeholder.png') + ')';
     this.userName.textContent = userName;
@@ -94,7 +99,7 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
     this.userName.setAttribute('hidden', 'true');
     this.userPic.setAttribute('hidden', 'true');
     this.signOutButton.setAttribute('hidden', 'true');
-
+    userSignedIn = false;
     // Show sign-in button.
     this.signInButton.removeAttribute('hidden');
   }
