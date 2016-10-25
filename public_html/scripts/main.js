@@ -156,13 +156,6 @@ PurpleLife.prototype.initDirections = function() {
   });
 };
 
-function updateControls() {
-  canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
-  document.getElementById("Enter_button").style.visibility = "hidden";
-  document.getElementById("weaponMenu").style.display = "block";
-  document.getElementById("directionMenu").style.display = "block";
-}
-
 PurpleLife.prototype.initEventHandlers = function () {
   canvas.onclick = this.respondToMouseClick;
   canvas.onmousemove = this.respondToMouseMove;
