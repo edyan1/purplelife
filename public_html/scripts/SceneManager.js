@@ -29,6 +29,7 @@ SceneManager.prototype.loadScene = function(scene) {
             this.deloadLevelMakerScene();
             break;
     }
+    this.currentScene = scene
     switch(scene) {
         case Scenes.SPLASH:
             this.loadSplashScene();
