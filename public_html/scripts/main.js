@@ -77,9 +77,9 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
 
     // We load currently existing chant messages.
     //this.loadMessages();
-    this.levelSelect.removeAttribute('hidden');
-    document.getElementById("game_canvas").style.visibility = 'hidden';
-    initLevelSelect();
+    
+    //document.getElementById("game_canvas").style.visibility = 'hidden';
+    sceneManager.changeScene(Scenes.LEVELSELECT);
     
  } else { // User is signed out!
     // Hide user's profile and sign-out button.

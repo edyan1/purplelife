@@ -13,7 +13,6 @@ function initLevelSelect() {
     tabContentContainers: '.c-tab'
   });
 
-  updateControls();
   myTabs.init();
 };
 

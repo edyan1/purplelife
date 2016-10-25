@@ -64,3 +64,9 @@ SceneManager.prototype.deloadSplashScene = function() {
   canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
   document.getElementById("Enter_button").style.visibility = "hidden";
 }
+
+SceneManager.prototype.loadLevelSelectScene = function() {
+  document.getElementById("Enter_button").style.visibility = "hidden";
+  document.getElementById("ls-section").removeAttribute('hidden');
+  initLevelSelect(); 
+}
