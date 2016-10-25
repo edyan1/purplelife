@@ -240,23 +240,7 @@ main, #messages-card {
     margin: 0 auto;
 }
 
-/*THIS IS THE WEAPON MENU*/
-#weaponMenu {
-  bottom: 1%;
-  left: 1%;
-  position: absolute;
-  width: 100%;
-  display: none;
-}
 
-/*THIS IS THE DIRECTION MENU*/
-#directionMenu {
-  bottom: 1%;
-  left: 95%;
-  position: absolute;
-  width: 100%;
-  display: none;
-}
 
 /*THIS IS THE LEFT AD BANNER*/
 .ad-banner-left {
