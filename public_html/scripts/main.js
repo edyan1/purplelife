@@ -53,7 +53,15 @@ PurpleLife.prototype.signIn = function() {
 // Signs-out 
 PurpleLife.prototype.signOut = function() {
   // Sign out of Firebase.
-  this.auth.signOut();
+  var r = confirm(
+    "Are you sure you want to sign out?\n\Signing out will delete any unsaved progress and take you back to the main screen.");
+  if (r === true) {
+      this.auth.signOut();
+      location.reload();
+  } else {
+      
+  }
+  
 };
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
