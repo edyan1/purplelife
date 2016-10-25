@@ -199,8 +199,6 @@ main, #messages-card {
 }
 /*THIS IS CSS FOR THE ENTER BUTTON ON SPLASH SCREEN*/
 #Enter_button {
-  margin-top: 50%;
-  margin-left: 42%;
   font-size: 20px;
   display: inline-block;
   color: white;
@@ -210,6 +208,9 @@ main, #messages-card {
   background-color: #800080;
   border: none;
   border-radius: 10%;
+  bottom: 1%;
+  left: 38%;
+  position: absolute;
 }
 
 /*THIS IS THE DIV WHERE THE BUTTONS ARE PLACED IN*/
@@ -232,6 +233,7 @@ main, #messages-card {
   left: 1%;
   position: absolute;
   width: 100%;
+  display: none;
 }
 
 /*THIS IS THE DIRECTION MENU*/
@@ -240,6 +242,14 @@ main, #messages-card {
   left: 95%;
   position: absolute;
   width: 100%;
+  display: none;
+}
+
+/*THIS IS THE LEFT AD BANNER*/
+.ad-banner-left {
+  float: left;
+  width: 100px;
+  height: 600px
 }
 
 
