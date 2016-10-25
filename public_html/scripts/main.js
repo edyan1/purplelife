@@ -31,7 +31,6 @@ function PurpleLife() {
 
   //Initialize the Scene Manager
   sceneManager = new SceneManager(Scenes.SPLASH);
-  sceneManager.loadScene(Scenes.GAME);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.

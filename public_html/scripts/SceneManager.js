@@ -11,10 +11,10 @@ var currentScene;
 
 function SceneManager(currentScene) {
     this.currentScene = currentScene;
-    this.loadScene(currentScene);
+    this.changeScene(currentScene);
 }
 
-SceneManager.prototype.loadScene = function(scene) {
+SceneManager.prototype.changeScene = function(scene) {
     switch(this.currentScene) {
         case Scenes.SPLASH:
             this.deloadSplashScene();
@@ -29,6 +29,7 @@ SceneManager.prototype.loadScene = function(scene) {
             this.deloadLevelMakerScene();
             break;
     }
+    this.currentScene = scene;
     switch(scene) {
         case Scenes.SPLASH:
             this.loadSplashScene();
@@ -49,19 +50,17 @@ SceneManager.prototype.loadSplashScene = function() {
     var splashScreen = new Image();
     splashScreen.src = "images/splash.png";
     splashScreen.onload = function () {
-        console.log("udr");
-       canvas2D.drawImage(this, 112, 60);
+    canvas2D.drawImage(this, 112, 60);
     }
+    document.getElementById("Enter_button").style.visibility = "visible";
 }
 
 SceneManager.prototype.loadGameScene = function() {
-    var splashScreen = new Image();
-    splashScreen.src = "images/splash.png";
-    splashScreen.onload = function () {
-       canvas2D.drawImage(this, 112, 60);
-    }
+  document.getElementById("weaponMenu").style.display = "block";
+  document.getElementById("directionMenu").style.display = "block";
 }
 
 SceneManager.prototype.deloadSplashScene = function() {
-    canvas2D.clearRect(0,0,canvasWidth,canvasHeight);
+  canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
+  document.getElementById("Enter_button").style.visibility = "hidden";
 }
