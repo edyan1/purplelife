@@ -62,16 +62,14 @@ SceneManager.prototype.deloadSplashScene = function() {
 
 SceneManager.prototype.loadGameScene = function() {
   document.getElementById("toolbar").style.display = "block";
-  var gridScreen = new Image();
-  gridScreen.src = "images/emptyGrid.png";
-  gridScreen.onload = function () {
-    canvas2D.drawImage(this, 0, 0, canvasWidth, canvasHeight*0.96);
-  };
+  document.getElementById("toolbar").style.visibility = "visible";
 
+  purpleGame.resetGameOfLife();
 };
 
 SceneManager.prototype.deloadGameScene = function() {
   canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
+  document.getElementById("toolbar").style.display = "none";
   document.getElementById("toolbar").style.visibility = "hidden";
 
 };
