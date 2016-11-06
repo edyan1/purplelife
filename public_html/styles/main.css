@@ -291,4 +291,32 @@ main, #messages-card {
   transform-origin: 110% 550%;
 }
 
+/*ROTATE DIRECTIONS FOR WEAPONS*/
+#rightdir {
+  transform: rotate(-118deg);
+}
+
+#leftdir {
+  transform: rotate(182deg);
+}
+
+#downdir {
+  transform: rotate(-119deg);
+}
+
+#updir {
+  transform: rotate(-90deg);
+}
+
+/*FONT FOR PURPLE LIFE TITLE*/
+@font-face {
+  font-family: PurpleLife;
+  src: url(purpleLife.ttf);
+}
+
+h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 28px;
+}
+
 
