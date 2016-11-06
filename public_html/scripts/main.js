@@ -5,8 +5,10 @@ var canvasWidth;
 var canvasHeight;
 var canvas;
 var canvas2D;
-var mouseState;
 var userSignedIn;
+
+//GAME VARIABLE
+var purpleGame;
 
 //Toolbar
 var toolbar;
@@ -33,6 +35,8 @@ function PurpleLife() {
   this.initFirebase();
 
   this.initCanvas();
+
+  this.initGame();
 
   //Initialize the Scene Manager
   sceneManager = new SceneManager(Scenes.SPLASH);
@@ -125,16 +129,19 @@ PurpleLife.prototype.initCanvas = function() {
     
     mouseState = false;
 
-    // SETUP THE EVENT HANDLERS
-    this.initEventHandlers();
-
     //@TODO ADD CHECK FOR COOKIES REGARDING SPLASH SCREEN
     this.initWeapons();
     this.initDirections();
+
+    canvas.onclick = respondToMouseClick;
 };
 
-PurpleLife.prototype.initSplashScreen = function() {
+function respondToMouseClick (event) {
+  purpleGame.realMouseClick(event, purpleGame);
+};
 
+PurpleLife.prototype.initGame = function() {
+	purpleGame = new Game(this.canvas, this.canvas2D, this.canvasWidth, this.canvasHeight, this.mouseState);
 }
 
 PurpleLife.prototype.initWeapons = function() {
@@ -169,27 +176,10 @@ PurpleLife.prototype.initDirections = function() {
   });
 };
 
-PurpleLife.prototype.initEventHandlers = function () {
-  canvas.onclick = this.respondToMouseClick;
-  canvas.onmousemove = this.respondToMouseMove;
-  canvas.onmousedown = this.setMouseDown;
-  canvas.onmouseup = this.setMouseUp;
-}
+function goBack () {
+  purpleGame.pausePurpleGame();
 
-PurpleLife.prototype.respondToMouseClick = function (event) {
-  
-}
-
-PurpleLife.prototype.respondToMouseMove = function (event) {
-  
-}
-
-PurpleLife.prototype.setMouseDown = function () {
-    mouseState = true;
-}
-
-PurpleLife.prototype.setMouseUp = function () {
-    mouseState = false;
+  sceneManager.changeScene(Scenes.SPLASH);
 }
 
 
