@@ -185,10 +185,14 @@ and open the template in the editor.
               <li><a href="#"><i class="icon-home icon-white"></i></a></li>
               <li><a href="#"><i class="icon-flag icon-white"></i></a></li>
             </ul>
-            </div>  
+            <ul id="weaponsList" style="list-style: none;">
+              <li id="rocket.png"></li>
+            </ul>
+            </div> 
+
               
-            <button id="start_button" type="button" value="Play" class="playBtn">Play</button>
-            <button id="quit_button" type="button" value="Quit" class="quitBtn" onclick="sceneManager.changeScene(Scenes.SPLASH)">Quit</button>
+            <button id="start_button" type="button" value="Play" class="playBtn" onclick="purpleGame.startPurpleGame()">Play</button>
+            <button id="quit_button" type="button" value="Quit" class="quitBtn" onclick="goBack()">Quit</button>
             <button id="reset_button" type="button" value="Reset" class="resetBtn">Reset</button>
             
             <div id='directionMenu' class="fm_wrap">

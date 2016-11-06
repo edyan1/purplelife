@@ -82,7 +82,7 @@ var imgDir;
     this.initCellLookup();
 
     // LOAD THE PATTERNS FROM IMAGES
-    //this.initPatterns();
+    this.initPatterns();
             
     // SETUP THE EVENT HANDLERS
     this.initEventHandlers();
@@ -208,15 +208,31 @@ Game.prototype.initCellLookup = function() {
 
 Game.prototype.initPatterns = function () {
     // THIS IS WHERE ALL THE IMAGES SHOULD BE
-    imgDir = "/images/weapons";
+    imgDir = "/images/weapons/";
     
     // THIS WILL STORE ALL THE PATTERNS IN AN ASSOCIATIVE ARRAY
     patterns = new Array();
+
+    var patternsList = document.getElementById("weaponsList");
+    var patternItems = patternsList.getElementsByTagName("li");
+
+    for (var i = 0; i < patternItems.length; i++) {
+        // GET THE NAME OF THE IMAGE FILE AND MAKE
+        // A NEW ARRAY TO STORE IT'S PIXEL COORDINATES
+        var key = patternItems[i].id;
+        var pixelArray = new Array();
+
+        // NOW LOAD THE DATA FROM THE IMAGE
+        loadOffscreenImage(key, pixelArray);
+            
+        // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
+        // BY KEY
+        patterns[key] = pixelArray;
+    }
     
 };
 
 Game.prototype.initEventHandlers = function () {
-  canvas.onclick = this.respondToMouseClick;
   canvas.onmousemove = this.respondToMouseMove;
   canvas.onmousedown = this.setMouseDown;
   canvas.onmouseup = this.setMouseUp;
@@ -304,8 +320,33 @@ Game.prototype.setMouseUp = function () {
     mouseState = false;
 };
 
-Game.prototype.respondToMouseClick = function (event) {
-  
+
+
+Game.prototype.realMouseClick = function(event, purpleGame) {
+	// GET THE PATTERN SELECTED IN THE DROP DOWN LIST
+    var patternsList = document.getElementById("weaponsList");
+    var patternItems = patternsList.getElementsByTagName("li");
+    var selectedPattern = patternItems[0].id;
+    
+    // LOAD THE COORDINATES OF THE PIXELS TO DRAW
+    var pixels = patterns[selectedPattern];
+    
+    // CALCULATE THE ROW,COL OF THE CLICK
+    var canvasCoords = purpleGame.getRelativeCoords(event);
+    var clickCol = Math.floor(canvasCoords.x/cellLength);
+    var clickRow = Math.floor(canvasCoords.y/cellLength);
+        
+    // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
+    for (var i = 0; i < pixels.length; i += 2)
+        {
+            var col = clickCol + pixels[i];
+            var row = clickRow + pixels[i+1];
+            purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
+            purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
+        }
+            
+    // RENDER THE GAME IMMEDIATELY
+    purpleGame.renderGame();
 };
 
 Game.prototype.respondToMouseMove = function (event) {
@@ -317,13 +358,86 @@ Game.prototype.renderGame = function () {
     canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
     
     // RENDER THE GRID LINES, IF NEEDED
-    //if (cellLength >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
+    if (cellLength >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
         this.renderGridLines();
+    
+    // RENDER THE GAME CELLS
+    this.renderCells();
+    
+    // AND RENDER THE TEXT
+    this.renderText();
+    
+    // THE GRID WE RENDER THIS FRAME WILL BE USED AS THE BASIS
+    // FOR THE UPDATE GRID NEXT FRAME
+    this.swapGrids();
 };
 
+/*
+ * Renders the cells in the game grid, with only the live
+ * cells being rendered as filled boxes. Note that boxes are
+ * rendered according to the current cell length.
+ */
+Game.prototype.renderCells = function() {   
+    // RENDER THE LIVE CELLS IN THE GRID
+    for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+               {
+                   var cell = this.getGridCell(renderGrid, i, j);
+                   var cell2 = this.getGridCell(tempGrid, i, j);
+                   var cell3 = this.getGridCell(brightGrid, i, j);
+                   if (cell === LIVE_CELL)
+                       {
+                           canvas2D.fillStyle = LIVE_COLOR;
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+                    else if (cell === VOID_CELL)
+                       {
+                           canvas2D.fillStyle = BACKGROUND_COLOR;
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength); 
+                       }
+                    if (cell2 === HOVER_CELL) {
+                           canvas2D.fillStyle = HOVER_COLOR;
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                    }
+                    
+                    if (cell3 === NEW_CELL) {
+                           canvas2D.fillStyle = BRIGHT_COLOR;
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                    }
+               }
+        }      
+};
+
+/*
+ * Renders the text on top of the grid.
+ */
+Game.prototype.renderText = function() {
+    // SET THE PROPER COLOR
+    canvas2D.fillStyle = TEXT_COLOR;
+    
+    // RENDER THE TEXT
+    canvas2D.fillText("FPS: " + fps, FPS_X, FPS_Y);
+    canvas2D.fillText("Cell Length: " + cellLength, CELL_LENGTH_X, CELL_LENGTH_Y);
+}
+
 Game.prototype.stepPurpleGame = function() {
-	// RENDER THE GAME
-    this.renderGame();
+	//REMOVE BRIGHT ARRAY
+    brightGrid = new Array();
+    
+    // FIRST PERFORM GAME LOGIC
+    purpleGame.updateGame();
+    
+    // RENDER THE GAME
+    purpleGame.renderGame();
 };
 
 Game.prototype.startPurpleGame = function () {
@@ -367,7 +481,7 @@ Game.prototype.pausePurpleGame = function () {
     // THE SIMULATION IS RUNNING OR NOT
     timer = null;
     
-    swapGrids();
+    this.swapGrids();
 };
 
 Game.prototype.renderGridLines = function () {
@@ -399,6 +513,62 @@ Game.prototype.renderGridLines = function () {
             canvas2D.stroke();            
         }
 };
+
+/*
+ * This function is called each frame of the simulation and
+ * it tests and updates each cell according to the rules
+ * of Conway's Game of Life.
+ */
+Game.prototype.updateGame = function () {
+    // GO THROUGH THE UPDATE GRID AND USE IT TO CHANGE THE RENDER GRID
+    for (var i = 0; i < gridHeight; i++)
+        {
+            for (var j = 0; j < gridWidth; j++)
+                {
+                    // HOW MANY NEIGHBORS DOES THIS CELL HAVE?
+                    var numLivingNeighbors = this.calcLivingNeighbors(i, j);
+
+                    // CALCULATE THE ARRAY INDEX OF THIS CELL
+                    // AND GET ITS CURRENT STATE
+                    var index = (i * gridWidth) + j;
+                    var testCell = updateGrid[index];
+
+                    // CASES
+                    // 1) IT'S ALIVE
+                    if (testCell != VOID_CELL) {
+                        if (testCell === LIVE_CELL)
+                            {
+                                // 1a FEWER THAN 2 LIVING NEIGHBORS
+                                if (numLivingNeighbors < 2)
+                                    {
+                                        // IT DIES FROM UNDER-POPULATION
+                                        renderGrid[index] = DEAD_CELL;
+                                    }
+                                // 1b MORE THAN 3 LIVING NEIGHBORS
+                                else if (numLivingNeighbors > 3)
+                                    {
+                                        // IT DIES FROM OVERCROWDING
+                                        renderGrid[index] = DEAD_CELL;
+                                    }
+                                // 1c 2 OR 3 LIVING NEIGHBORS, WE DO NOTHING
+                                else
+                                    {
+                                        renderGrid[index] = LIVE_CELL;
+                                    }
+                            }
+                        // 2) IT'S DEAD
+                       else if (numLivingNeighbors === 3)
+                           {
+                               renderGrid[index] = LIVE_CELL;
+                           }                    
+                       else
+                           {
+                               renderGrid[index] = DEAD_CELL;
+                           }
+                   }
+                }
+        } 
+}
 
 /*
  * We need one grid's cells to determine the grid's values for
@@ -462,7 +632,7 @@ Game.prototype.isValidCell = function(row, col)
 Game.prototype.getGridCell = function(grid, row, col)
 {
     // IGNORE IF IT'S OUTSIDE THE GRID
-    if (!isValidCell(row, col))
+    if (!this.isValidCell(row, col))
         {
             return -1;
         }
@@ -477,7 +647,7 @@ Game.prototype.getGridCell = function(grid, row, col)
 Game.prototype.setGridCell = function(grid, row, col, value)
 {
     // IGNORE IF IT'S OUTSIDE THE GRID
-    if (!isValidCell(row, col))
+    if (!this.isValidCell(row, col))
         {
             return;
         }
@@ -514,7 +684,7 @@ Game.prototype.calcLivingNeighbors = function(row, col)
     
     // DEPENDING ON THE TYPE OF CELL IT IS WE'LL CHECK
     // DIFFERENT ADJACENT CELLS
-    var cellType = determineCellType(row, col);
+    var cellType = this.determineCellType(row, col);
     var cellsToCheck = cellLookup[cellType];
     for (var counter = 0; counter < (cellsToCheck.numNeighbors * 2); counter+=2)
         {

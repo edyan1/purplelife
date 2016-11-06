@@ -132,6 +132,12 @@ PurpleLife.prototype.initCanvas = function() {
     //@TODO ADD CHECK FOR COOKIES REGARDING SPLASH SCREEN
     this.initWeapons();
     this.initDirections();
+
+    canvas.onclick = respondToMouseClick;
+};
+
+function respondToMouseClick (event) {
+  purpleGame.realMouseClick(event, purpleGame);
 };
 
 PurpleLife.prototype.initGame = function() {
@@ -169,6 +175,12 @@ PurpleLife.prototype.initDirections = function() {
     cssMenuItem: '.fm_list>*'
   });
 };
+
+function goBack () {
+  purpleGame.pausePurpleGame();
+
+  sceneManager.changeScene(Scenes.SPLASH);
+}
 
 
 window.onload = function() {
