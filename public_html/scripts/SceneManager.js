@@ -65,6 +65,7 @@ SceneManager.prototype.loadGameScene = function() {
   document.getElementById("toolbar").style.visibility = "visible";
 
   purpleGame.resetGameOfLife();
+  purpleGame.loadLevel("level1.png");
 };
 
 SceneManager.prototype.deloadGameScene = function() {

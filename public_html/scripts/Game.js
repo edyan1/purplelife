@@ -1,15 +1,25 @@
 // CONSTANTS
+
+// CELLS
 var DEAD_CELL;
 var LIVE_CELL;
 var HOVER_CELL;
 var NEW_CELL;
 var VOID_CELL;
+var OBJ_CELL;
+var TELEPORT_CELL;
+var SPLITTER_CELL;
+
+// COLORS
 var LIVE_COLOR;
 var HOVER_COLOR;
 var BRIGHT_COLOR;
 var BACKGROUND_COLOR;
+var WALL_COLOR;
+var OBJ_COLOR;
 var GRID_LINES_COLOR;
 var TEXT_COLOR;
+
 var TOP_LEFT;
 var TOP_RIGHT;
 var BOTTOM_LEFT;
@@ -57,8 +67,10 @@ var cellLength;
 
 // PATTERN PIXELS
 var patterns;
+var levels;
 var cellLookup;
 var imgDir;
+var levelDir;
 
 // INITIALIZATION METHODS
 
@@ -83,6 +95,9 @@ var imgDir;
 
     // LOAD THE PATTERNS FROM IMAGES
     this.initPatterns();
+
+    // LOAD THE LEVELS FROM IMAGES
+    this.initLevels();
             
     // SETUP THE EVENT HANDLERS
     this.initEventHandlers();
@@ -96,12 +111,15 @@ var imgDir;
     HOVER_CELL = 2;
     NEW_CELL = 3;
     VOID_CELL = 4;
+    OBJ_CELL = 5;
     
     // COLORS FOR RENDERING
     LIVE_COLOR = "rgb(255, 0, 0)";
     HOVER_COLOR = "rgba(255, 0, 0, 0.2)";
     BRIGHT_COLOR = "rgb(227, 11, 92)";
     BACKGROUND_COLOR = "rgb(118,143,165)";
+    WALL_COLOR = "rgb(128,128,128)";
+    OBJ_COLOR = "rgb(128, 0, 128)";
     GRID_LINES_COLOR = "#CCCCCC";
     TEXT_COLOR = "#7777CC";
     
@@ -232,10 +250,151 @@ Game.prototype.initPatterns = function () {
     
 };
 
+Game.prototype.initLevels = function () {
+    // THIS IS WHERE ALL THE IMAGES SHOULD BE
+    levelDir = "/images/levels/";
+    
+    // THIS WILL STORE ALL THE PATTERNS IN AN ASSOCIATIVE ARRAY
+    levels = new Array();
+
+    var levelList = document.getElementById("levelsList");
+    var levelItems = levelList.getElementsByTagName("li");
+
+    for (var i = 0; i < levelItems.length; i++) {
+        // GET THE NAME OF THE IMAGE FILE AND MAKE
+        // A NEW ARRAY TO STORE IT'S PIXEL COORDINATES
+        var key = levelItems[i].id;
+        var pixelArray = new Array();
+
+        // NOW LOAD THE DATA FROM THE IMAGE
+        loadOffScreenLevel(key, pixelArray);
+            
+        // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
+        // BY KEY
+        levels[key] = pixelArray;
+    }
+    
+};
+
+Game.prototype.loadLevel = function (levelToLoad) {
+    // LOAD THE COORDINATES OF THE PIXELS TO DRAW
+    var level = levels[levelToLoad];
+    var walls = level[0];
+    var objectives = level[1];
+    
+    // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
+    for (var i = 0; i < walls.length; i += 2)
+        {
+            var col = walls[i];
+            var row = walls[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, VOID_CELL);
+            this.setGridCell(updateGrid, row, col, VOID_CELL);
+        }
+    for (var i = 0; i < objectives.length; i += 2)
+        {
+            var col = objectives[i];
+            var row = objectives[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, OBJ_CELL);
+            this.setGridCell(updateGrid, row, col, OBJ_CELL);
+        }
+        
+    // RENDER THE GAME IMMEDIATELY
+    this.renderGameWithoutSwapping();
+}
+
+function loadOffScreenLevel(imgName, pixelArray)
+{    
+    // FIRST GET THE IMAGE DATA
+    var img = new Image();
+    
+    // NOTE THAT THE IMAGE WILL LOAD IN THE BACKGROUND, BUT
+    // WE CAN TELL JavaScript TO LET US KNOW WHEN IT HAS FULLY
+    // LOADED AND RESPOND THEN.
+    img.onload = function() { respondToLoadedLevelImage(imgName, img, pixelArray); };
+    
+    // document.URL IS THE URL OF WHERE THE WEB PAGE IS FROM WHICH THIS
+    // JavaScript PROGRAM IS BEING USED. NOTE THAT ASSIGNING A URL TO
+    // A CONSTRUCTED Image's src VARIABLE INITIATES THE IMAGE-LOADING
+    // PROCESS
+    var path = document.URL;
+    var indexLocation = path.indexOf("index.html");
+    path = path.substring(0, indexLocation);
+    img.src = path + levelDir + imgName;
+}
+
 Game.prototype.initEventHandlers = function () {
   canvas.onmousedown = this.setMouseDown;
   canvas.onmouseup = this.setMouseUp;
 };
+
+/*
+ * This method is called in response to an Image having completed loading. We
+ * respond by examining the contents of the image, and keeping the non-white
+ * pixel coordinates in our patterns array so that the user may use those
+ * patterns in the simulation.
+ */
+function respondToLoadedLevelImage(imgName, img, pixelArray)
+{
+    // WE'LL EXAMINE THE PIXELS BY FIRST DRAWING THE LOADED
+    // IMAGE TO AN OFFSCREEN CANVAS. SO FIRST WE NEED TO
+    // MAKE THE CANVAS, WHICH WILL NEVER ACTUALLY BE VISIBLE.
+    var offscreenCanvas = document.createElement("canvas");
+    offscreenCanvas.width = img.width;
+    offscreenCanvas.height = img.height;
+    var offscreenCanvas2D = offscreenCanvas.getContext("2d");
+    offscreenCanvas2D.drawImage(img, 0, 0);
+    
+    // NOW GET THE DATA FROM THE IMAGE WE JUST DREW TO OUR OFFSCREEN CANVAS
+    var imgData = offscreenCanvas2D.getImageData( 0, 0, img.width, img.height );
+    
+    // THIS WILL COUNT THE FOUND NON-WHITE PIXLS
+    var voidArrayCounter = 0;
+    var objArrayCounter = 0;
+
+    //LEVEL DATA ARRAYS
+    var voidArray = new Array();
+    var objArray = new Array();
+   
+    // GO THROUGH THE IMAGE DATA AND PICK OUT THE COORDINATES
+    for (var i = 0; i < imgData.data.length; i+=4)
+        {
+            // THE DATA ARRAY IS STRIPED RGBA, WE'LL IGNORE 
+            // THE ALPHA CHANNEL
+            var r = imgData.data[i];
+            var g = imgData.data[i+1];
+            var b = imgData.data[i+2];
+            
+            // KEEP THE PIXEL IF IT'S PART OF THE GAME DATA LOGIC
+            if ((r < 255) && (g < 255) && (b < 255))
+                {
+                    // CALCULATE THE LOCAL COORDINATE OF
+                    // THE FOUND PIXEL. WE DO THIS BECAUSE WE'RE
+                    // NOT KEEPING ALL THE PIXELS
+                    var x = Math.floor((i/4)) % img.width;
+                    var y = Math.floor(Math.floor((i/4)) / img.width);
+
+                    // IF WALL (GRAY)
+                    if ((r == 128) && (g == 128) && (b == 128)) {
+                    	// STORE THE COORDINATES OF OUR PIXELS
+                    	voidArray[voidArrayCounter] = x;
+                    	voidArray[voidArrayCounter+1] = y;
+                    	voidArrayCounter += 2;
+                    }
+
+                    // IF OBJECTIVE (PURPLE)
+                    else if ((r == 128) && (g == 0) && (b == 128)) {
+                    	objArray[objArrayCounter] = x;
+                    	objArray[objArrayCounter+1] = y;
+                    	objArrayCounter += 2;
+                    }
+
+                }            
+        }  
+    pixelArray[0] = voidArray;
+    pixelArray[1] = objArray;     
+}
 
 /*
  * This function loads the image and then examines it, extracting
@@ -458,10 +617,15 @@ Game.prototype.renderCells = function() {
                        }
                     else if (cell === VOID_CELL)
                        {
-                           canvas2D.fillStyle = BACKGROUND_COLOR;
+                           canvas2D.fillStyle = WALL_COLOR;
                            var x = j * cellLength;
                            var y = i * cellLength;
                            canvas2D.fillRect(x, y, cellLength, cellLength); 
+                       } else if (cell === OBJ_CELL) {
+                       	   canvas2D.fillStyle = OBJ_COLOR;
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
                        }
                     if (cell2 === HOVER_CELL) {
                            canvas2D.fillStyle = HOVER_COLOR;
@@ -602,7 +766,7 @@ Game.prototype.updateGame = function () {
                     // CASES
                     // 1) IT'S ALIVE
                     if (testCell != VOID_CELL) {
-                        if (testCell === LIVE_CELL)
+                        if (testCell === LIVE_CELL || testCell === OBJ_CELL)
                             {
                                 // 1a FEWER THAN 2 LIVING NEIGHBORS
                                 if (numLivingNeighbors < 2)
@@ -618,8 +782,12 @@ Game.prototype.updateGame = function () {
                                     }
                                 // 1c 2 OR 3 LIVING NEIGHBORS, WE DO NOTHING
                                 else
-                                    {
-                                        renderGrid[index] = LIVE_CELL;
+                                    {	
+                                    	if (testCell === LIVE_CELL) {
+                                        	renderGrid[index] = LIVE_CELL;
+                                    	} else {
+                                    		renderGrid[index] = OBJ_CELL;
+                                    	}
                                     }
                             }
                         // 2) IT'S DEAD
@@ -759,7 +927,11 @@ Game.prototype.calcLivingNeighbors = function(row, col)
             var index = (neighborRow * gridWidth) + neighborCol;
             var neighborValue;
             if (updateGrid[index] !== VOID_CELL) {
-                neighborValue = updateGrid[index];
+            	if (updateGrid[index] === 5) {
+            		neighborValue = 1;
+            	} else {
+                	neighborValue = updateGrid[index];
+            	}
             } else {
                 neighborValue = 0;
             }
