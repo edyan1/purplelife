@@ -181,6 +181,7 @@ $(document).ready(function() {
         var weapon = $(this).find('.weaponSize').attr('src');
         weapon = weapon.substring(15);
         alert('Weapon is: ' + weapon);
+        // $('#weaponsList').append('<li id=' + weapon + '></li>');
         $('#weaponsList li').each(function() {
             $(this).prop('id', weapon);
         });
