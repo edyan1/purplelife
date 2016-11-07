@@ -308,6 +308,11 @@ main, #messages-card {
   transform: rotate(-90deg);
 }
 
+.weaponSize {
+    width: 60%;
+    height: auto;
+}
+
 /*FONT FOR PURPLE LIFE TITLE*/
 @font-face {
   font-family: PurpleLife;

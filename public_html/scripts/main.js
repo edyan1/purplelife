@@ -176,6 +176,18 @@ PurpleLife.prototype.initDirections = function() {
   });
 };
 
+$(document).ready(function() {
+    $('.fm_list li').click(function() {
+        var weapon = $(this).find('.weaponSize').attr('src');
+        weapon = weapon.substring(15);
+        alert('Weapon is: ' + weapon);
+        $('#weaponsList li').each(function() {
+            $(this).prop('id', weapon);
+        });
+    });
+})
+
+
 function goBack () {
   purpleGame.pausePurpleGame();
 
