@@ -184,13 +184,14 @@ PurpleLife.prototype.initDirections = function() {
 };
 
 $(document).ready(function() {
-    $('.fm_list li').click(function() {
+    $('#weaponSelect li').click(function() {
         var weapon = $(this).find('.weaponSize').attr('src');
-        weapon = weapon.substring(15);
-        alert('Weapon is: ' + weapon);
-        // $('#weaponsList').append('<li id=' + weapon + '></li>');
-        $('#weaponsList li').each(function() {
-            $(this).prop('id', weapon);
+        weapon = weapon.substring(15, weapon.indexOf('.')) + '_';
+        $('#weaponDirection li').click(function() {
+            var direction = $(this).find('.weaponDir').attr('src');
+            direction = '_' + direction.substring(6, direction.indexOf('.'));
+            weapon = weapon.substring(0, weapon.indexOf('_')) + direction + '.png';
+            $('#weaponsList li:first').prop('id', weapon);
         });
     });
 })

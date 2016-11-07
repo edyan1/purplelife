@@ -181,7 +181,7 @@ and open the template in the editor.
              
             <div id='weaponMenu' class="fm_wrap">
             <a class="fm_btntoggle" href="#" title="Toggle"><i>w</i></a>
-            <ul class="fm_list">
+            <ul id="weaponSelect" class="fm_list">
               <li><a><img class="weaponSize" src="images/weapons/rocket.png"><i class="icon-user icon-white"></i></a></li>
               <li><a><img class="weaponSize" src="images/weapons/smallexploder.png"><i class="icon-heart icon-white"></i></a></li>
               <li><a><img class="weaponSize" src="images/weapons/rocket1.png"><i class="icon-music icon-white"></i></a></li>
@@ -190,7 +190,10 @@ and open the template in the editor.
             </ul>
             <ul id="weaponsList" style="list-style: none;">
                 <li id="rocket1.png"></li>
-                <li id="rocket.png"></li>
+                <li id="rocket_left.png"></li>
+                <li id="rocket_right.png"></li>
+                <li id="rocket_up.png"></li>
+                <li id="rocket_down.png"></li>
                 <li id="smallexploder.png"></li>
             </ul>
             </div> 
@@ -202,11 +205,11 @@ and open the template in the editor.
             
             <div id='directionMenu' class="fm_wrap">
             <a class="fm_btntoggle" href="#" title="Toggle"><i>D</i></a>
-            <ul class="fm_list">
-              <li><a href="#"><img id="leftdir" src="icons/left.png"><i class="icon-user icon-white"></i></a></li>
-              <li><a href="#"><img id="rightdir" src="icons/right.png"><i class="icon-heart icon-white"></i></a></li>
-              <li><a href="#"><img id="downdir" src="icons/down.png"><i class="icon-music icon-white"></i></a></li>
-              <li><a href="#"><img id="updir" src="icons/up.png"><i class="icon-home icon-white"></i></a></li>
+            <ul id="weaponDirection" class="fm_list">
+              <li><a><img class="weaponDir" id="leftdir" src="icons/left.png"><i class="icon-user icon-white"></i></a></li>
+              <li><a><img class="weaponDir" id="rightdir" src="icons/right.png"><i class="icon-heart icon-white"></i></a></li>
+              <li><a><img class="weaponDir" id="downdir" src="icons/down.png"><i class="icon-music icon-white"></i></a></li>
+              <li><a><img class="weaponDir" id="updir" src="icons/up.png"><i class="icon-home icon-white"></i></a></li>
               <!--<li><a href="#"><i class="icon-flag icon-white"></i></a></li>-->
             </ul>
             </div>
