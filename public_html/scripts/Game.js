@@ -233,7 +233,6 @@ Game.prototype.initPatterns = function () {
 };
 
 Game.prototype.initEventHandlers = function () {
-  canvas.onmousemove = this.respondToMouseMove;
   canvas.onmousedown = this.setMouseDown;
   canvas.onmouseup = this.setMouseUp;
 };
@@ -323,7 +322,7 @@ Game.prototype.setMouseUp = function () {
 
 
 Game.prototype.realMouseClick = function(event, purpleGame) {
-	// GET THE PATTERN SELECTED IN THE DROP DOWN LIST
+    // GET THE PATTERN SELECTED IN THE DROP DOWN LIST
     var patternsList = document.getElementById("weaponsList");
     var patternItems = patternsList.getElementsByTagName("li");
     var selectedPattern = patternItems[0].id;
@@ -335,22 +334,70 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
     var canvasCoords = purpleGame.getRelativeCoords(event);
     var clickCol = Math.floor(canvasCoords.x/cellLength);
     var clickRow = Math.floor(canvasCoords.y/cellLength);
-        
+    
     // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
     for (var i = 0; i < pixels.length; i += 2)
         {
             var col = clickCol + pixels[i];
             var row = clickRow + pixels[i+1];
-            purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
-            purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
+            var index = (row * gridWidth) + col;
+            if (selectedPattern === "Void.png") {
+                purpleGame.setGridCell(renderGrid, row, col, VOID_CELL);
+                purpleGame.setGridCell(updateGrid, row, col, VOID_CELL);
+                purpleGame.setGridCell(brightGrid, row, col, VOID_CELL);
+            }  
+            else if (selectedPattern === "DeVoid.png" && renderGrid[index] === VOID_CELL) {
+                purpleGame.setGridCell(renderGrid, row, col, DEAD_CELL);
+                purpleGame.setGridCell(updateGrid, row, col, DEAD_CELL);
+                purpleGame.setGridCell(brightGrid, row, col, DEAD_CELL);
+            }
+            else if (renderGrid[index] !== VOID_CELL && selectedPattern !== "DeVoid.png") {
+                    purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
+                    purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
+                    purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
+            }
         }
-            
+        
     // RENDER THE GAME IMMEDIATELY
-    purpleGame.renderGame();
+    purpleGame.renderGameWithoutSwapping();
 };
 
-Game.prototype.respondToMouseMove = function (event) {
-  
+Game.prototype.respondToMouseMove = function (event, purpleGame) {
+    // GET THE PATTERN SELECTED IN THE DROP DOWN LIST
+    var patternsList = document.getElementById("weaponsList");
+    var patternItems = patternsList.getElementsByTagName("li");
+    var selectedPattern = patternItems[0].id;
+    
+    // LOAD THE COORDINATES OF THE PIXELS TO DRAW
+    var pixels = patterns[selectedPattern];
+    
+    // CALCULATE THE ROW,COL OF THE CLICK
+    var canvasCoords = purpleGame.getRelativeCoords(event);
+    var clickCol = Math.floor(canvasCoords.x/cellLength);
+    var clickRow = Math.floor(canvasCoords.y/cellLength);
+    
+    // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
+    tempGrid = new Array();
+    for (var i = 0; i < pixels.length; i += 2)
+        {
+            var col = clickCol + pixels[i];
+            var row = clickRow + pixels[i+1];
+            var index = (row * gridWidth) + col;
+            if (selectedPattern === "Void.png" && mouseState) {
+                purpleGame.setGridCell(renderGrid, row, col, VOID_CELL);
+                purpleGame.setGridCell(updateGrid, row, col, VOID_CELL);
+                purpleGame.setGridCell(brightGrid, row, col, VOID_CELL);
+            } else if (selectedPattern === "DeVoid.png" && mouseState && renderGrid[index] === VOID_CELL) {
+                purpleGame.setGridCell(renderGrid, row, col, DEAD_CELL);
+                purpleGame.setGridCell(updateGrid, row, col, DEAD_CELL);
+                purpleGame.setGridCell(brightGrid, row, col, DEAD_CELL);
+            }
+            purpleGame.setGridCell(tempGrid, row, col, HOVER_CELL);
+
+        }
+        
+    // RENDER THE GAME IMMEDIATELY
+    purpleGame.renderGameWithoutSwapping();
 };
 
 Game.prototype.renderGame = function () {
@@ -365,12 +412,28 @@ Game.prototype.renderGame = function () {
     this.renderCells();
     
     // AND RENDER THE TEXT
-    this.renderText();
+    ///this.renderText();
     
     // THE GRID WE RENDER THIS FRAME WILL BE USED AS THE BASIS
     // FOR THE UPDATE GRID NEXT FRAME
     this.swapGrids();
 };
+
+Game.prototype.renderGameWithoutSwapping = function()
+{
+    // CLEAR THE CANVAS
+    canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
+    
+    // RENDER THE GRID LINES, IF NEEDED
+    if (cellLength >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
+        this.renderGridLines();
+    
+    // RENDER THE GAME CELLS
+    this.renderCells();
+    
+    // AND RENDER THE TEXT
+    //this.renderText();
+}
 
 /*
  * Renders the cells in the game grid, with only the live
@@ -465,7 +528,10 @@ Game.prototype.resetGameOfLife = function () {
         {
             for (var j = 0; j < gridWidth; j++)
                 {
-
+                    this.setGridCell(updateGrid, i, j, DEAD_CELL); 
+                    this.setGridCell(renderGrid, i, j, DEAD_CELL);
+                    this.setGridCell(tempGrid, i, j, DEAD_CELL);
+                    this.setGridCell(brightGrid, i, j, DEAD_CELL);
                 }
         }
 

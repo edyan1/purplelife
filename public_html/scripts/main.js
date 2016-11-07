@@ -134,10 +134,17 @@ PurpleLife.prototype.initCanvas = function() {
     this.initDirections();
 
     canvas.onclick = respondToMouseClick;
+    canvas.onmousemove = respondToMouseMove;
 };
 
 function respondToMouseClick (event) {
   purpleGame.realMouseClick(event, purpleGame);
+};
+
+function respondToMouseMove (event) {
+  if (sceneManager.currentScene == Scenes.GAME) {
+    purpleGame.respondToMouseMove(event, purpleGame);
+  }
 };
 
 PurpleLife.prototype.initGame = function() {
