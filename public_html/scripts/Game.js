@@ -79,6 +79,7 @@ var currentLevel;
 var weaponCount;
 var undoArray;
 var undoCounter;
+var gameWon;
 
 // INITIALIZATION METHODS
 
@@ -596,9 +597,11 @@ Game.prototype.renderGame = function () {
     
     // RENDER THE GAME CELLS
     this.renderCells();
-    
+
     // AND RENDER THE TEXT
-    ///this.renderText();
+    if (gameWon) {
+        this.renderText();
+    }
     
     // THE GRID WE RENDER THIS FRAME WILL BE USED AS THE BASIS
     // FOR THE UPDATE GRID NEXT FRAME
@@ -620,7 +623,9 @@ Game.prototype.renderGameWithoutSwapping = function()
     this.renderCells();
     
     // AND RENDER THE TEXT
-    //this.renderText();
+    if (gameWon) {
+    	this.renderText();
+	}
 }
 
 Game.prototype.renderPlacementCells = function() {
@@ -642,6 +647,8 @@ Game.prototype.renderPlacementCells = function() {
  * rendered according to the current cell length.
  */
 Game.prototype.renderCells = function() {   
+	var objCellCount = 0;
+
     // RENDER THE LIVE CELLS IN THE GRID
     for (var i = 0; i <= gridHeight; i++)
         {
@@ -665,6 +672,7 @@ Game.prototype.renderCells = function() {
                            canvas2D.fillRect(x, y, cellLength, cellLength); 
                        } 
                     else if (cell === OBJ_CELL) {
+                    	   objCellCount++;
                        	   canvas2D.fillStyle = OBJ_COLOR;
                            var x = j * cellLength;
                            var y = i * cellLength;
@@ -684,7 +692,10 @@ Game.prototype.renderCells = function() {
                            canvas2D.fillRect(x, y, cellLength, cellLength);
                     }
                }
-        }      
+        } 
+    if (objCellCount == 0 && currentLevel != undefined) {
+    	gameWon = true;
+    }  
 };
 
 /*
@@ -695,8 +706,8 @@ Game.prototype.renderText = function() {
     canvas2D.fillStyle = TEXT_COLOR;
     
     // RENDER THE TEXT
-    canvas2D.fillText("FPS: " + fps, FPS_X, FPS_Y);
-    canvas2D.fillText("Cell Length: " + cellLength, CELL_LENGTH_X, CELL_LENGTH_Y);
+    canvas2D.textAlign="center"; 
+    canvas2D.fillText("You Won!", canvasWidth/2, canvasHeight/2);
 }
 
 Game.prototype.stepPurpleGame = function() {
@@ -731,6 +742,8 @@ Game.prototype.resetGameOfLife = function () {
     brightGrid = new Array();
     undoArray = new Array();
     undoCounter = -1;
+    currentLevel = undefined;
+    gameWon = false;
     
     // INIT THE CELLS IN THE GRID
     for (var i = 0; i < gridHeight; i++)
