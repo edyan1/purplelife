@@ -77,7 +77,7 @@ and open the template in the editor.
           
 
           <!--LEVEL SELECT -->
-          <div hidden id="ls-section">
+          <div  id="ls-section" hidden>
             <div id="tabs" class="c-tabs no-js">
               <div class="c-tabs-nav">
                 <a href="#" class="c-tabs-nav__link is-active">
@@ -120,7 +120,7 @@ and open the template in the editor.
               <div class="c-tab is-active">
                 <div class="c-tab__content">
                   <h2>Chapter 1</h2>
-                  <p>chap 1 test </p>
+                  <p>Level 1: <br><button id="level1" type="button" onclick="sceneManager.changeScene(Scenes.GAME)"><img src="images/levels/level1.png" /></button> </p>
                 </div>
               </div>
 
@@ -204,7 +204,7 @@ and open the template in the editor.
 
               
             <button id="start_button" type="button" value="Play" class="playBtn" onclick="purpleGame.startPurpleGame()">Play</button>
-            <button id="quit_button" type="button" value="Quit" class="quitBtn" onclick="goBack()">Quit</button>
+            <button id="quit_button" type="button" value="Quit" class="quitBtn" onclick="sceneManager.goBack()">Quit</button>
             <button id="reset_button" type="button" value="Reset" class="resetBtn" onclick="purpleGame.resetLevel()">Reset</button>
             
             <div id='directionMenu' class="fm_wrap">
@@ -237,6 +237,7 @@ and open the template in the editor.
                 messagingSenderId: "1040633483902"
               };
               firebase.initializeApp(config);
+              initLevelSelect(); 
             </script>
             
             

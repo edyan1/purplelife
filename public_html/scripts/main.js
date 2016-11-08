@@ -194,14 +194,10 @@ $(document).ready(function() {
             $('#weaponsList li:first').prop('id', weapon);
         });
     });
-})
+});
 
 
-function goBack () {
-  purpleGame.pausePurpleGame();
 
-  sceneManager.changeScene(Scenes.SPLASH);
-}
 
 
 window.onload = function() {
