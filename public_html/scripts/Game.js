@@ -72,6 +72,11 @@ var cellLookup;
 var imgDir;
 var levelDir;
 
+//Level Stuff
+var weaponCount;
+var undoArray;
+var undoCounter;
+
 // INITIALIZATION METHODS
 
 /*
@@ -169,6 +174,7 @@ Game.prototype.initPurpleGameData = function() {
 
     // INIT THE CELL LENGTH
     cellLength = MIN_CELL_LENGTH;
+
 };
 
 /*
@@ -268,6 +274,9 @@ Game.prototype.initLevels = function () {
 
         // NOW LOAD THE DATA FROM THE IMAGE
         loadOffScreenLevel(key, pixelArray);
+
+        //SET THE WEAPON COUNT
+        pixelArray[2] = levelItems[i].value;
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
@@ -281,6 +290,7 @@ Game.prototype.loadLevel = function (levelToLoad) {
     var level = levels[levelToLoad];
     var walls = level[0];
     var objectives = level[1];
+    weaponCount = level[2];
     
     // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
     for (var i = 0; i < walls.length; i += 2)
@@ -481,44 +491,48 @@ Game.prototype.setMouseUp = function () {
 
 
 Game.prototype.realMouseClick = function(event, purpleGame) {
-    // GET THE PATTERN SELECTED IN THE DROP DOWN LIST
-    var patternsList = document.getElementById("weaponsList");
-    var patternItems = patternsList.getElementsByTagName("li");
-    var selectedPattern = patternItems[0].id;
-    
-    // LOAD THE COORDINATES OF THE PIXELS TO DRAW
-    var pixels = patterns[selectedPattern];
-    
-    // CALCULATE THE ROW,COL OF THE CLICK
-    var canvasCoords = purpleGame.getRelativeCoords(event);
-    var clickCol = Math.floor(canvasCoords.x/cellLength);
-    var clickRow = Math.floor(canvasCoords.y/cellLength);
-    
-    // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
-    for (var i = 0; i < pixels.length; i += 2)
-        {
-            var col = clickCol + pixels[i];
-            var row = clickRow + pixels[i+1];
-            var index = (row * gridWidth) + col;
-            if (selectedPattern === "Void.png") {
-                purpleGame.setGridCell(renderGrid, row, col, VOID_CELL);
-                purpleGame.setGridCell(updateGrid, row, col, VOID_CELL);
-                purpleGame.setGridCell(brightGrid, row, col, VOID_CELL);
-            }  
-            else if (selectedPattern === "DeVoid.png" && renderGrid[index] === VOID_CELL) {
-                purpleGame.setGridCell(renderGrid, row, col, DEAD_CELL);
-                purpleGame.setGridCell(updateGrid, row, col, DEAD_CELL);
-                purpleGame.setGridCell(brightGrid, row, col, DEAD_CELL);
-            }
-            else if (renderGrid[index] !== VOID_CELL && selectedPattern !== "DeVoid.png") {
-                    purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
-                    purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
-                    purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
-            }
-        }
-        
-    // RENDER THE GAME IMMEDIATELY
-    purpleGame.renderGameWithoutSwapping();
+
+	if (purpleGame.getWeaponCount() != 0) {
+	    // GET THE PATTERN SELECTED IN THE DROP DOWN LIST
+	    var patternsList = document.getElementById("weaponsList");
+	    var patternItems = patternsList.getElementsByTagName("li");
+	    var selectedPattern = patternItems[0].id;
+	    
+	    // LOAD THE COORDINATES OF THE PIXELS TO DRAW
+	    var pixels = patterns[selectedPattern];
+	    
+	    // CALCULATE THE ROW,COL OF THE CLICK
+	    var canvasCoords = purpleGame.getRelativeCoords(event);
+	    var clickCol = Math.floor(canvasCoords.x/cellLength);
+	    var clickRow = Math.floor(canvasCoords.y/cellLength);
+	    
+	    // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
+	    for (var i = 0; i < pixels.length; i += 2)
+	        {
+	            var col = clickCol + pixels[i];
+	            var row = clickRow + pixels[i+1];
+	            var index = (row * gridWidth) + col;
+	            if (selectedPattern === "Void.png") {
+	                purpleGame.setGridCell(renderGrid, row, col, VOID_CELL);
+	                purpleGame.setGridCell(updateGrid, row, col, VOID_CELL);
+	                purpleGame.setGridCell(brightGrid, row, col, VOID_CELL);
+	            }  
+	            else if (selectedPattern === "DeVoid.png" && renderGrid[index] === VOID_CELL) {
+	                purpleGame.setGridCell(renderGrid, row, col, DEAD_CELL);
+	                purpleGame.setGridCell(updateGrid, row, col, DEAD_CELL);
+	                purpleGame.setGridCell(brightGrid, row, col, DEAD_CELL);
+	            }
+	            else if (renderGrid[index] !== VOID_CELL && selectedPattern !== "DeVoid.png") {
+	                    purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
+	                    purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
+	                    purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
+	            }
+	        }
+	        
+	    // RENDER THE GAME IMMEDIATELY
+	    purpleGame.renderGameWithoutSwapping();
+	    purpleGame.setWeaponCount(purpleGame.getWeaponCount()-1);
+	}
 };
 
 Game.prototype.respondToMouseMove = function (event, purpleGame) {
@@ -686,6 +700,8 @@ Game.prototype.resetGameOfLife = function () {
     renderGrid = new Array();
     tempGrid = new Array();
     brightGrid = new Array();
+    undoArray = new Array();
+    undoCounter = -1;
     
     // INIT THE CELLS IN THE GRID
     for (var i = 0; i < gridHeight; i++)
@@ -701,6 +717,12 @@ Game.prototype.resetGameOfLife = function () {
 
     // RENDER THE CLEARED SCREEN
     this.renderGame();
+};
+
+Game.prototype.resetLevel = function() {
+  this.resetGameOfLife();
+  this.pausePurpleGame();
+  this.loadLevel("level1.png");
 };
 
 Game.prototype.pausePurpleGame = function () {
@@ -939,3 +961,11 @@ Game.prototype.calcLivingNeighbors = function(row, col)
         }
     return numLivingNeighbors;
 }
+
+Game.prototype.getWeaponCount = function() {
+	return weaponCount;
+};
+
+Game.prototype.setWeaponCount = function(count) {
+	weaponCount = count;
+};

@@ -197,14 +197,15 @@ and open the template in the editor.
                 <li id="smallexploder.png"></li>
             </ul>
             <ul id="levelsList" style="list-style: none;">
-                <li id="level1.png"></li>
+                <li id="level1.png" value="3"></li>
+
             </ul>
             </div> 
 
               
             <button id="start_button" type="button" value="Play" class="playBtn" onclick="purpleGame.startPurpleGame()">Play</button>
             <button id="quit_button" type="button" value="Quit" class="quitBtn" onclick="goBack()">Quit</button>
-            <button id="reset_button" type="button" value="Reset" class="resetBtn">Reset</button>
+            <button id="reset_button" type="button" value="Reset" class="resetBtn" onclick="purpleGame.resetLevel()">Reset</button>
             
             <div id='directionMenu' class="fm_wrap">
             <a class="fm_btntoggle" href="#" title="Toggle"><i>D</i></a>

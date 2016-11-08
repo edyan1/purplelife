@@ -148,7 +148,7 @@ function respondToMouseMove (event) {
 };
 
 PurpleLife.prototype.initGame = function() {
-	purpleGame = new Game(this.canvas, this.canvas2D, this.canvasWidth, this.canvasHeight, this.mouseState);
+	purpleGame = new Game(canvas, canvas2D, canvasWidth, canvasHeight, mouseState);
 }
 
 PurpleLife.prototype.initWeapons = function() {
