@@ -14,7 +14,8 @@ and open the template in the editor.
     <body>
          
     <script src="scripts/levelselect.js"></script>
-    <div class="o-section" style="width: 1024px; height: 580px; margin: auto; border: 1px solid; visibility:hidden;">
+    
+    <div class="o-section" style="width: 1024px; height: 580px; margin: auto; border: 1px solid;">
       <div id="tabs" class="c-tabs no-js">
         <div class="c-tabs-nav">
           <a href="#" class="c-tabs-nav__link is-active">
@@ -58,6 +59,10 @@ and open the template in the editor.
           <div class="c-tab__content">
             <h2>Chapter 1</h2>
             <p>chap 1 test </p>
+            <input name="secret" id="secret" type="password" value="What's your secret?">
+           <button onclick="store()">Save your secret to Firebase Datastore</button>
+           
+           <input id="showSecret" type="text">
           </div>
         </div>
           
@@ -123,5 +128,22 @@ and open the template in the editor.
 
   myTabs.init();
 </script>
+
+<script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
+            <script>
+              // Initialize Firebase
+              var config = {
+                apiKey: "AIzaSyCwUNstnJtU6YPo6Waps0jX4vgRIsrqyEs",
+                authDomain: "purplelifebuild2.firebaseapp.com",
+                databaseURL: "https://purplelifebuild2.firebaseio.com",
+                storageBucket: "purplelifebuild2.appspot.com",
+                messagingSenderId: "1040633483902"
+              };
+              firebase.initializeApp(config);
+              
+              // Get a reference to the database service
+              var database = firebase.database();
+            </script>
+           <script src="scripts/database.js"></script>
     </body>
 </html>
