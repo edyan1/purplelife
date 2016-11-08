@@ -250,8 +250,8 @@ main, #messages-card {
 /*THIS IS THE LEFT AD BANNER*/
 .add_banner_left {
   float: left;
-  width: 150px;
-  height: 600px;
+  width: 8%;
+  height: 55%;
   margin-right: 15px;
   margin-left: 10px;
   border-top: 1px dashed #046ca3;
@@ -269,8 +269,8 @@ main, #messages-card {
 /*THIS IS THE RIGHT AD BANNER*/
 .add_banner_right {
   float: left;
-  width: 150px;
-  height: 600px;
+  width: 8%;
+  height: 55%;
   margin-left: 15px;
   margin-right: 10px;
   border-top: 1px dashed #046ca3;

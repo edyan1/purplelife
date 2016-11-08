@@ -94,15 +94,97 @@ a.button {
 }
 
 /*THIS IS CSS FOR THE ENTER BUTTON ON SPLASH SCREEN*/
-level1 {
+.level1 {
   font-size: 20px;
   display: inline-block;
-  color: white;
+  color: purple;
   padding: 1.5% 6%;
   text-align: center;
   text-decoration: none;
   
   border: none;
   border-radius: 10%;
+  left: 15%;
+  top: 25%;
+  position:absolute;
+}
+
+.level2 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 40%;
+  top: 25%;
+  position:absolute;
+  
+}
+
+.level3 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 65%;
+  top: 25%;
+  position:absolute;
+  
+}
+
+.level4 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 15%;
+  bottom: 25%;
+  position:absolute;
+  
+}
+
+.level5 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 40%;
+  bottom: 25%;
+  position:absolute;
+  
+}
+
+.level6 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 65%;
+  bottom: 25%;
+  position:absolute;
   
 }
