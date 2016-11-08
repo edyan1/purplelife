@@ -78,5 +78,17 @@ SceneManager.prototype.deloadGameScene = function() {
 SceneManager.prototype.loadLevelSelectScene = function() {
   document.getElementById("Enter_button").style.visibility = "hidden";
   document.getElementById("ls-section").removeAttribute('hidden');
-  initLevelSelect(); 
+  
 };
+
+SceneManager.prototype.deloadLevelSelectScene = function() {
+  
+  document.getElementById("ls-section").setAttribute('hidden', 'hidden');
+  
+};
+
+SceneManager.prototype.goBack = function() {
+  purpleGame.pausePurpleGame();
+  if (userSignedIn) this.changeScene(Scenes.LEVELSELECT);
+  else this.changeScene(Scenes.SPLASH);
+}
