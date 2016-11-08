@@ -7,6 +7,7 @@ var HOVER_CELL;
 var NEW_CELL;
 var VOID_CELL;
 var OBJ_CELL;
+var PLACEMENT_CELL;
 var TELEPORT_CELL;
 var SPLITTER_CELL;
 
@@ -17,6 +18,7 @@ var BRIGHT_COLOR;
 var BACKGROUND_COLOR;
 var WALL_COLOR;
 var OBJ_COLOR;
+var PLACEMENT_COLOR;
 var GRID_LINES_COLOR;
 var TEXT_COLOR;
 
@@ -73,6 +75,7 @@ var imgDir;
 var levelDir;
 
 //Level Stuff
+var currentLevel;
 var weaponCount;
 var undoArray;
 var undoCounter;
@@ -117,6 +120,7 @@ var undoCounter;
     NEW_CELL = 3;
     VOID_CELL = 4;
     OBJ_CELL = 5;
+    PLACEMENT_CELL = 6;
     
     // COLORS FOR RENDERING
     LIVE_COLOR = "rgb(255, 0, 0)";
@@ -125,6 +129,7 @@ var undoCounter;
     BACKGROUND_COLOR = "rgb(118,143,165)";
     WALL_COLOR = "rgb(128,128,128)";
     OBJ_COLOR = "rgb(128, 0, 128)";
+    PLACEMENT_COLOR = "rgb(232,232,232)";
     GRID_LINES_COLOR = "#CCCCCC";
     TEXT_COLOR = "#7777CC";
     
@@ -276,7 +281,7 @@ Game.prototype.initLevels = function () {
         loadOffScreenLevel(key, pixelArray);
 
         //SET THE WEAPON COUNT
-        pixelArray[2] = levelItems[i].value;
+        pixelArray[3] = levelItems[i].value;
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
@@ -287,10 +292,12 @@ Game.prototype.initLevels = function () {
 
 Game.prototype.loadLevel = function (levelToLoad) {
     // LOAD THE COORDINATES OF THE PIXELS TO DRAW
+    currentLevel = levelToLoad;
     var level = levels[levelToLoad];
     var walls = level[0];
     var objectives = level[1];
-    weaponCount = level[2];
+    var placements = level[2];
+    weaponCount = level[3];
     
     // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
     for (var i = 0; i < walls.length; i += 2)
@@ -308,6 +315,14 @@ Game.prototype.loadLevel = function (levelToLoad) {
             var index = (row * gridWidth) + col;
             this.setGridCell(renderGrid, row, col, OBJ_CELL);
             this.setGridCell(updateGrid, row, col, OBJ_CELL);
+        }
+    for (var i = 0; i < placements.length; i += 2)
+        {
+            var col = placements[i];
+            var row = placements[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
+            this.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
         }
         
     // RENDER THE GAME IMMEDIATELY
@@ -362,10 +377,12 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
     // THIS WILL COUNT THE FOUND NON-WHITE PIXLS
     var voidArrayCounter = 0;
     var objArrayCounter = 0;
+    var placementArrayCounter = 0;
 
     //LEVEL DATA ARRAYS
     var voidArray = new Array();
     var objArray = new Array();
+    var placementArray = new Array();
    
     // GO THROUGH THE IMAGE DATA AND PICK OUT THE COORDINATES
     for (var i = 0; i < imgData.data.length; i+=4)
@@ -400,10 +417,18 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
                     	objArrayCounter += 2;
                     }
 
+                    // IF PLACEMENT CELL (LIGHT GRAY)
+                    else if ((r == 232) && (g == 232) && (b == 232)) {
+                    	placementArray[placementArrayCounter] = x;
+                    	placementArray[placementArrayCounter+1] = y;
+                    	placementArrayCounter += 2;
+                    }
+
                 }            
         }  
     pixelArray[0] = voidArray;
-    pixelArray[1] = objArray;     
+    pixelArray[1] = objArray; 
+    pixelArray[2] = placementArray;    
 }
 
 /*
@@ -512,21 +537,13 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	            var col = clickCol + pixels[i];
 	            var row = clickRow + pixels[i+1];
 	            var index = (row * gridWidth) + col;
-	            if (selectedPattern === "Void.png") {
-	                purpleGame.setGridCell(renderGrid, row, col, VOID_CELL);
-	                purpleGame.setGridCell(updateGrid, row, col, VOID_CELL);
-	                purpleGame.setGridCell(brightGrid, row, col, VOID_CELL);
-	            }  
-	            else if (selectedPattern === "DeVoid.png" && renderGrid[index] === VOID_CELL) {
-	                purpleGame.setGridCell(renderGrid, row, col, DEAD_CELL);
-	                purpleGame.setGridCell(updateGrid, row, col, DEAD_CELL);
-	                purpleGame.setGridCell(brightGrid, row, col, DEAD_CELL);
-	            }
-	            else if (renderGrid[index] !== VOID_CELL && selectedPattern !== "DeVoid.png") {
-	                    purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
-	                    purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
-	                    purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
-	            }
+	            var cell = purpleGame.getGridCell(renderGrid, row, col);
+	            if (cell === PLACEMENT_CELL) {
+	            	purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
+	            	purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
+	            	purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
+	        	}
+	        	
 	        }
 	        
 	    // RENDER THE GAME IMMEDIATELY
@@ -556,17 +573,10 @@ Game.prototype.respondToMouseMove = function (event, purpleGame) {
             var col = clickCol + pixels[i];
             var row = clickRow + pixels[i+1];
             var index = (row * gridWidth) + col;
-            if (selectedPattern === "Void.png" && mouseState) {
-                purpleGame.setGridCell(renderGrid, row, col, VOID_CELL);
-                purpleGame.setGridCell(updateGrid, row, col, VOID_CELL);
-                purpleGame.setGridCell(brightGrid, row, col, VOID_CELL);
-            } else if (selectedPattern === "DeVoid.png" && mouseState && renderGrid[index] === VOID_CELL) {
-                purpleGame.setGridCell(renderGrid, row, col, DEAD_CELL);
-                purpleGame.setGridCell(updateGrid, row, col, DEAD_CELL);
-                purpleGame.setGridCell(brightGrid, row, col, DEAD_CELL);
+           	var cell = purpleGame.getGridCell(renderGrid, row, col);
+	        if (cell === PLACEMENT_CELL) {
+            	purpleGame.setGridCell(tempGrid, row, col, HOVER_CELL);
             }
-            purpleGame.setGridCell(tempGrid, row, col, HOVER_CELL);
-
         }
         
     // RENDER THE GAME IMMEDIATELY
@@ -576,6 +586,9 @@ Game.prototype.respondToMouseMove = function (event, purpleGame) {
 Game.prototype.renderGame = function () {
     // CLEAR THE CANVAS
     canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    if (currentLevel != undefined)
+    this.renderPlacementCells();
     
     // RENDER THE GRID LINES, IF NEEDED
     if (cellLength >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
@@ -596,6 +609,8 @@ Game.prototype.renderGameWithoutSwapping = function()
 {
     // CLEAR THE CANVAS
     canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    this.renderPlacementCells();
     
     // RENDER THE GRID LINES, IF NEEDED
     if (cellLength >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
@@ -607,6 +622,19 @@ Game.prototype.renderGameWithoutSwapping = function()
     // AND RENDER THE TEXT
     //this.renderText();
 }
+
+Game.prototype.renderPlacementCells = function() {
+	var level = levels[currentLevel];
+	var placements = level[2];
+	for (var i = 0; i < placements.length; i+=2) {
+		var col = placements[i];
+        var row = placements[i+1];
+	    var x = col * cellLength;
+	    var y = row * cellLength;
+	    canvas2D.fillStyle = PLACEMENT_COLOR;
+	    canvas2D.fillRect(x, y, cellLength, cellLength);
+	}
+};
 
 /*
  * Renders the cells in the game grid, with only the live
@@ -635,7 +663,8 @@ Game.prototype.renderCells = function() {
                            var x = j * cellLength;
                            var y = i * cellLength;
                            canvas2D.fillRect(x, y, cellLength, cellLength); 
-                       } else if (cell === OBJ_CELL) {
+                       } 
+                    else if (cell === OBJ_CELL) {
                        	   canvas2D.fillStyle = OBJ_COLOR;
                            var x = j * cellLength;
                            var y = i * cellLength;
@@ -951,7 +980,9 @@ Game.prototype.calcLivingNeighbors = function(row, col)
             if (updateGrid[index] !== VOID_CELL) {
             	if (updateGrid[index] === 5) {
             		neighborValue = 1;
-            	} else {
+            	}  else if (updateGrid[index] === 6) {
+            		neighborValue = 0;
+            	}  else {
                 	neighborValue = updateGrid[index];
             	}
             } else {
