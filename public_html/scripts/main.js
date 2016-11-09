@@ -16,6 +16,9 @@ var toolbar;
 //Scene Manager
 var sceneManager;
 
+//Weapon Manager
+var weapon;
+
 // Initializes Purple Life
 function PurpleLife() {
   //this.checkSetup();
@@ -183,16 +186,32 @@ PurpleLife.prototype.initDirections = function() {
   });
 };
 
+
+$(document).ready(function() {
+    weapon = $(this).find('.weaponSize').attr('src');
+    weapon = weapon.substring(15);
+})
+
 $(document).ready(function() {
     $('#weaponSelect li').click(function() {
-        var weapon = $(this).find('.weaponSize').attr('src');
-        weapon = weapon.substring(15, weapon.indexOf('.')) + '_';
-        $('#weaponDirection li').click(function() {
-            var direction = $(this).find('.weaponDir').attr('src');
-            direction = '_' + direction.substring(6, direction.indexOf('.'));
-            weapon = weapon.substring(0, weapon.indexOf('_')) + direction + '.png';
-            $('#weaponsList li:first').prop('id', weapon);
-        });
+        weapon = $(this).find('.weaponSize').attr('src');
+        weapon = weapon.substring(15);
+        // $('#weaponDirection li').click(function() {
+        //     var direction = $(this).find('.weaponDir').attr('src');
+        //     direction = '_' + direction.substring(6, direction.indexOf('.'));
+        //     weapon = weapon.substring(0, weapon.indexOf('_')) + direction + '.png';
+        $('#weaponsList li:first').prop('id', weapon);
+        // });
+    });
+});
+
+$(document).ready(function() {
+    $('#weaponDirection li').click(function() {
+        weapon = weapon.substring(0, weapon.indexOf('.')) + '_';
+        var direction = $(this).find('.weaponDir').attr('src');
+        direction = '_' + direction.substring(6, direction.indexOf('.'));
+        weapon = weapon.substring(0, weapon.indexOf('_')) + direction + '.png';
+        $('#weaponsList li:first').prop('id', weapon);
     });
 });
 
