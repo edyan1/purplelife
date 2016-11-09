@@ -123,10 +123,10 @@ and open the template in the editor.
                   <h2>Chapter 1</h2>
                   <div class="level1">Level 1: <br><button class="levelButton" id="level1" type="button" onclick="sceneManager.loadGameLevel(1)"><img class="levelImg" src="images/levels/level1.png" /></button> </div>
                   <div class="level2">Level 2: <br><button class="levelButton" id="level2" type="button" onclick="sceneManager.loadGameLevel(2)"><img class="levelImg" src="images/levels/level2.png" /></button> </div>
-                  <div class="level3">Level 3: <br><button class="levelButton" id="level3" type="button" onclick="sceneManager.loadGameLevel(1)"><img class="levelImg" src="images/levels/level1.png" /></button> </div>
-                  <div class="level4">Level 4: <br><button class="levelButton" id="level4" type="button" onclick="sceneManager.loadGameLevel(1)"><img class="levelImg" src="images/levels/level1.png" /></button> </div>
-                  <div class="level5">Level 5: <br><button class="levelButton" id="level5" type="button" onclick="sceneManager.loadGameLevel(1)"><img class="levelImg" src="images/levels/level1.png" /></button> </div>
-                  <div class="level6">Level 6: <br><button class="levelButton" id="level6" type="button" onclick="sceneManager.loadGameLevel(1)"><img class="levelImg" src="images/levels/level1.png" /></button> </div>
+                  <div class="level3">Level 3: <br><button class="levelButton" id="level3" type="button" onclick="sceneManager.loadGameLevel(3)"><img class="levelImg" src="images/levels/level3.png" /></button> </div>
+                  <div class="level4">Level 4: <br><button class="levelButton" id="level4" type="button" onclick="sceneManager.loadGameLevel(4)"><img class="levelImg" src="images/levels/level4.png" /></button> </div>
+                  <div class="level5">Level 5: <br><button class="levelButton" id="level5" type="button" onclick="sceneManager.loadGameLevel(5)"><img class="levelImg" src="images/levels/level5.png" /></button> </div>
+                  <div class="level6">Level 6: <br><button class="levelButton" id="level6" type="button" onclick="sceneManager.loadGameLevel(6)"><img class="levelImg" src="images/levels/level6.png" /></button> </div>
                 </div>
               </div>
 
@@ -177,6 +177,10 @@ and open the template in the editor.
                   <h2>Custom Levels</h2>
                   
                   <div> <a href="levelmakertest.html" class="button">Level Maker</a></div>
+                   <input name="secret" id="secret" type="text" value="Say something.">
+                    <button onclick="store()">Save this text to Firebase Datastore</button>
+           
+                    <input id="showSecret" type="text">
                 </div>
               </div>
 
@@ -204,8 +208,12 @@ and open the template in the editor.
                 <li id="smallexploder.png"></li>
             </ul>
             <ul id="levelsList" style="list-style: none;">
-                <li id="level1.png" value="3"></li>
-                <li id="level2.png" value="4"></li>
+                <li id="level1.png" value="2"></li>
+                <li id="level2.png" value="2"></li>
+                <li id="level3.png" value="2"></li>
+                <li id="level4.png" value="3"></li>
+                <li id="level5.png" value="4"></li>
+                <li id="level6.png" value="2"></li>
 
             </ul>
             </div> 
@@ -246,8 +254,10 @@ and open the template in the editor.
               };
               firebase.initializeApp(config);
               initLevelSelect(); 
+              // Get a reference to the database service
+              var database = firebase.database();
             </script>
-            
+            <script src="scripts/database.js"></script>
             
     </body>
 </html>
