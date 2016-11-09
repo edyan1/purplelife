@@ -764,7 +764,7 @@ Game.prototype.resetGameOfLife = function () {
 Game.prototype.resetLevel = function() {
   this.resetGameOfLife();
   this.pausePurpleGame();
-  this.loadLevel("level1.png");
+  this.loadLevel(currentLevel + ".png");
 };
 
 Game.prototype.pausePurpleGame = function () {
