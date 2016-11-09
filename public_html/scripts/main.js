@@ -196,6 +196,7 @@ $(document).ready(function() {
     $('#weaponSelect li').click(function() {
         weapon = $(this).find('.weaponSize').attr('src');
         weapon = weapon.substring(15);
+        $.notify("Your Selected Weapon: " + weapon.substring(0, weapon.indexOf('.')), 'success');
         // $('#weaponDirection li').click(function() {
         //     var direction = $(this).find('.weaponDir').attr('src');
         //     direction = '_' + direction.substring(6, direction.indexOf('.'));
@@ -209,6 +210,7 @@ $(document).ready(function() {
     $('#weaponDirection li').click(function() {
         weapon = weapon.substring(0, weapon.indexOf('.')) + '_';
         var direction = $(this).find('.weaponDir').attr('src');
+        $.notify("Your Selected Direction: " + direction.substring(6, direction.indexOf('.')), 'success');
         direction = '_' + direction.substring(6, direction.indexOf('.'));
         weapon = weapon.substring(0, weapon.indexOf('_')) + direction + '.png';
         $('#weaponsList li:first').prop('id', weapon);

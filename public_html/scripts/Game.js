@@ -84,7 +84,7 @@ var gameWon;
 // INITIALIZATION METHODS
 
 /*
- * This method initializes the Game of Life, setting it up with
+ * This method initializes The Purple Life Game, setting it up with
  * and empty grid, ready to accept additions at the request
  * of the user.
  */
