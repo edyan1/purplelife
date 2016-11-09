@@ -309,7 +309,10 @@ function initEventHandlers()
 function saveCanvas() {
     var canvasSave = document.getElementById("level_maker_canvas");
     var img = canvasSave.toDataURL("image/png");
-    window.open(img);
+    var thumbnail = document.getElementById("thumbnail");
+    thumbnail.setAttribute("src",img);
+    thumbnail.setAttribute("width", "64px");
+    thumbnail.setAttribute("height","33px");
 }
 /*
  * This method is called in response to an Image having completed loading. We
