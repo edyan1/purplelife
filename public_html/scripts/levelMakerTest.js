@@ -310,12 +310,23 @@ function initEventHandlers()
 //saves the canvas as a png to a url
 function saveCanvas() {
     var canvasSave = document.getElementById("level_maker_canvas");
-    var img = canvasSave.toDataURL("image/png");
+    var imgURL = canvasSave.toDataURL("image/png");
+    var img = new Image();
+    img.src = imgURL;
+    var offscreenCanvas = document.createElement("canvas");
+    offscreenCanvas.width = 64;
+    offscreenCanvas.height = 33;
+    var offscreenCanvas2D = offscreenCanvas.getContext("2d");
+    offscreenCanvas2D.drawImage(img, 0, 0, 64, 33);
+    
+    var imgSave = offscreenCanvas.toDataURL("image/png");
+    
+    
     var thumbnail = document.getElementById("thumbnail");
-    thumbnail.setAttribute("src",img);
+    thumbnail.setAttribute("src",imgSave);
     thumbnail.setAttribute("width", "64px");
     thumbnail.setAttribute("height","33px");
-    writeUserData(img);
+    writeUserData(imgSave);
 }
 
 function loadCustomMap() {
