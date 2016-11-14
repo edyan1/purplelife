@@ -30,7 +30,7 @@ and open the template in the editor.
             <select id="game_of_life_patterns">
                 <option value="2x2.png">Objective</option>
                 <option value="VoidCell.png">Void Cell</option>
-                <option value="RemoveVC">Remove Void Cell</option>
+                <option value="RemoveVC">Delete Void Cell</option>
             </select>
             
             
@@ -61,7 +61,8 @@ and open the template in the editor.
               };
               firebase.initializeApp(config);
             </script>
-            <script>    initLevelMaker();
-                </script>
+            <script> initLevelMaker(); </script>
+            <script> var database = firebase.database(); </script>
+            <script src="scripts/database.js"></script>
     </body>
 </html>

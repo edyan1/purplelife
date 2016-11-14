@@ -217,6 +217,14 @@ $(document).ready(function() {
     });
 });
 
+function showHelpNotes (){
+    
+    setTimeout(function () {$("#weaponMenu").notify("Click here to select your weapon.", "warn"); }, 500);
+    setTimeout(function () {$("#directionMenu").notify("Click here to change the direction it will point.","warn");},3000);
+    setTimeout(function () {$(".playBtn").notify("Once you have placed your weapons, click Play to start the attack!","warn");},8000);
+    setTimeout(function () {$(".resetBtn").notify("Or click Reset to clear your placed weapons to place them again.","warn");},13000);
+    setTimeout(function () {$(".quitBtn").notify("Quit brings you back to the level select screen.","warn");},18000);
+};
 
 window.onload = function() {
   window.purpleLife = new PurpleLife();

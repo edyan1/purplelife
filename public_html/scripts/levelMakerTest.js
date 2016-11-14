@@ -90,6 +90,7 @@ function initConstants()
     DEAD_CELL = 0;   
     LIVE_CELL = 1; 
     VOID_CELL = 2;
+    PLACEMENT_CELL = 3;
     
     // COLORS FOR RENDERING
     LIVE_COLOR = "rgb(128, 0, 128)";
@@ -99,6 +100,7 @@ function initConstants()
     TEXT_COLOR = "#7777CC";
     GHOST_COLOR = "#FF8080";
     FEEDBACK_COLOR = "#CC00CC";
+    PLACEMENT_COLOR = "rgb(232,232,232)";
     //flag for placing and removing void cells
     voidFlag = false;
     
@@ -300,7 +302,7 @@ function initEventHandlers()
     //document.getElementById("undo_button").onclick=pauseGameOfLife;
     document.getElementById("reset_button").onclick=resetGameOfLife;
     document.getElementById("save_upload").onclick=saveCanvas;
-    //document.getElementById("load_from_save").onclick=incFPS;
+    document.getElementById("load_from_save").onclick=loadCustomMap;
     //document.getElementById("dec_cell_length_button").onclick=decCellLength;
     //document.getElementById("inc_cell_length_button").onclick=incCellLength;
 }
@@ -313,7 +315,128 @@ function saveCanvas() {
     thumbnail.setAttribute("src",img);
     thumbnail.setAttribute("width", "64px");
     thumbnail.setAttribute("height","33px");
+    writeUserData(img);
 }
+
+function loadCustomMap() {
+    resetGameOfLife();
+    loadUserMap();
+    var mapLoaded = document.getElementById("thumbnail");
+    
+    pixelArray = new Array();
+    mapLoaded.onload = function(){
+        respondToLoadedLevelImage(mapLoaded, pixelArray);
+        renderLoadedLevel(pixelArray);
+    };
+}
+
+function respondToLoadedLevelImage(img, pixelArray)
+{
+    // WE'LL EXAMINE THE PIXELS BY FIRST DRAWING THE LOADED
+    // IMAGE TO AN OFFSCREEN CANVAS. SO FIRST WE NEED TO
+    // MAKE THE CANVAS, WHICH WILL NEVER ACTUALLY BE VISIBLE.
+    var offscreenCanvas = document.createElement("canvas");
+    offscreenCanvas.width = 64;
+    offscreenCanvas.height = 33;
+    var offscreenCanvas2D = offscreenCanvas.getContext("2d");
+    offscreenCanvas2D.drawImage(img, 0, 0, 64, 33);
+    
+    // NOW GET THE DATA FROM THE IMAGE WE JUST DREW TO OUR OFFSCREEN CANVAS
+    var imgData = offscreenCanvas2D.getImageData( 0, 0, img.width, img.height );
+    // THIS WILL COUNT THE FOUND NON-WHITE PIXLS
+    var voidArrayCounter = 0;
+    var objArrayCounter = 0;
+    var placementArrayCounter = 0;
+
+    //LEVEL DATA ARRAYS
+    var voidArray = new Array();
+    var objArray = new Array();
+    var placementArray = new Array();
+   
+    // GO THROUGH THE IMAGE DATA AND PICK OUT THE COORDINATES
+    for (var i = 0; i < imgData.data.length; i+=4)
+        {
+            // THE DATA ARRAY IS STRIPED RGBA, WE'LL IGNORE 
+            // THE ALPHA CHANNEL
+            var r = imgData.data[i];
+            var g = imgData.data[i+1];
+            var b = imgData.data[i+2];
+            
+            // KEEP THE PIXEL IF IT'S PART OF THE GAME DATA LOGIC
+            if ((r < 255) && (g < 255) && (b < 255))
+                {
+                    // CALCULATE THE LOCAL COORDINATE OF
+                    // THE FOUND PIXEL. WE DO THIS BECAUSE WE'RE
+                    // NOT KEEPING ALL THE PIXELS
+                    var x = Math.floor((i/4)) % img.width;
+                    var y = Math.floor(Math.floor((i/4)) / img.width);
+
+                    // IF WALL (GRAY)
+                    if ((r == 128) && (g == 128) && (b == 128)) {
+                    	// STORE THE COORDINATES OF OUR PIXELS
+                    	voidArray[voidArrayCounter] = x;
+                    	voidArray[voidArrayCounter+1] = y;
+                    	voidArrayCounter += 2;
+                    }
+
+                    // IF OBJECTIVE (PURPLE)
+                    else if ((r == 128) && (g == 0) && (b == 128)) {
+                    	objArray[objArrayCounter] = x;
+                    	objArray[objArrayCounter+1] = y;
+                    	objArrayCounter += 2;
+                    }
+
+                    // IF PLACEMENT CELL (LIGHT GRAY)
+                    else if ((r == 232) && (g == 232) && (b == 232)) {
+                    	placementArray[placementArrayCounter] = x;
+                    	placementArray[placementArrayCounter+1] = y;
+                    	placementArrayCounter += 2;
+                    }
+
+                }            
+        }  
+    pixelArray[0] = voidArray;
+    pixelArray[1] = objArray; 
+    pixelArray[2] = placementArray;    
+}
+
+function renderLoadedLevel (pixelArray) {
+    // LOAD THE COORDINATES OF THE PIXELS TO DRAW
+   
+    var walls = pixelArray[0];
+    var objectives = pixelArray[1];
+    var placements = pixelArray[2];
+    
+    // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
+    for (var i = 0; i < walls.length; i += 2)
+        {
+            var col = walls[i];
+            var row = walls[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, VOID_CELL);
+            this.setGridCell(updateGrid, row, col, VOID_CELL);
+        }
+    for (var i = 0; i < objectives.length; i += 2)
+        {
+            var col = objectives[i];
+            var row = objectives[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, LIVE_CELL);
+            this.setGridCell(updateGrid, row, col, LIVE_CELL);
+        }
+    for (var i = 0; i < placements.length; i += 2)
+        {
+            var col = placements[i];
+            var row = placements[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
+            this.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+        }
+        
+    // RENDER THE GAME IMMEDIATELY
+    this.renderGameWithoutSwapping();
+}
+
 /*
  * This method is called in response to an Image having completed loading. We
  * respond by examining the contents of the image, and keeping the non-white

@@ -90,9 +90,10 @@ SceneManager.prototype.goBack = function() {
   purpleGame.pausePurpleGame();
   if (userSignedIn) this.changeScene(Scenes.LEVELSELECT);
   else this.changeScene(Scenes.SPLASH);
-}
+};
 
 SceneManager.prototype.loadGameLevel = function(levelToLoad) {
   this.changeScene(Scenes.GAME);
   purpleGame.loadLevel("level" + levelToLoad + ".png");
-}
+  if (levelToLoad === 1) showHelpNotes();
+};
