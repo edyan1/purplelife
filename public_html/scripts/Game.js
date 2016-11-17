@@ -80,6 +80,8 @@ var weaponCount;
 var undoArray;
 var undoCounter;
 var gameWon;
+var gameLost;
+var waitTillPlayerLoses;
 
 // INITIALIZATION METHODS
 
@@ -598,9 +600,24 @@ Game.prototype.renderGame = function () {
     // RENDER THE GAME CELLS
     this.renderCells();
 
+    // RENDER WEAPON COUNT
+    this.renderWeaponCountText();
+
     // AND RENDER THE TEXT
     if (gameWon) {
-        this.renderText();
+        this.renderYouWonText();
+        if (currentlyPressedKeys[70]) {
+            var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
+            var tempCurrentLevel = currentLevel;
+            this.resetGameOfLife();
+            this.pausePurpleGame();
+            this.loadLevel(tempCurrentLevel.substring(0,5) + levelNumber + ".png");
+        }
+    } else if (gameLost) {
+        this.renderYouLostText();
+        if (currentlyPressedKeys[82]) {
+            this.resetLevel();
+        }
     }
     
     // THE GRID WE RENDER THIS FRAME WILL BE USED AS THE BASIS
@@ -621,11 +638,26 @@ Game.prototype.renderGameWithoutSwapping = function()
     
     // RENDER THE GAME CELLS
     this.renderCells();
+
+    // RENDER WEAPON COUNT
+    this.renderWeaponCountText();
+
     
     // AND RENDER THE TEXT
     if (gameWon) {
-    	this.renderText();
-	}
+        this.renderYouWonText();
+        if (currentlyPressedKeys[70]) {
+            var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
+            this.resetGameOfLife();
+            this.pausePurpleGame();
+            this.loadLevel(currentLevel.substring(0,5) + levelNumber + ".png");
+        }
+    } else if (gameLost) {
+        this.renderYouLostText();
+        if (currentlyPressedKeys[82]) {
+            this.resetLevel();
+        }
+    }
 }
 
 Game.prototype.renderPlacementCells = function() {
@@ -698,16 +730,36 @@ Game.prototype.renderCells = function() {
     }  
 };
 
+Game.prototype.renderWeaponCountText = function() {
+    canvas2D.fillStyle = TEXT_COLOR;
+
+    canvas2D.textAlign="left";
+    canvas2D.fillText("Weapon Count: " + this.getWeaponCount(), 25,canvasHeight*(6/7));
+}
+
 /*
  * Renders the text on top of the grid.
  */
-Game.prototype.renderText = function() {
+Game.prototype.renderYouWonText = function() {
     // SET THE PROPER COLOR
     canvas2D.fillStyle = TEXT_COLOR;
     
     // RENDER THE TEXT
     canvas2D.textAlign="center"; 
-    canvas2D.fillText("You Won!", canvasWidth/2, canvasHeight/2);
+    canvas2D.fillText("You Won! Press F to Continue!", canvasWidth/2, canvasHeight/2);
+}
+
+Game.prototype.renderYouLostText = function() {
+    // SET THE PROPER COLOR
+    canvas2D.fillStyle = TEXT_COLOR;
+    
+    // RENDER THE TEXT
+    canvas2D.textAlign="center"; 
+    canvas2D.fillText("You Lost! Press R to retry!", canvasWidth/2, canvasHeight/2);
+}
+
+Game.prototype.hasPlayerLost = function() {
+    if (!gameWon) gameLost = true;
 }
 
 Game.prototype.stepPurpleGame = function() {
@@ -730,6 +782,13 @@ Game.prototype.startPurpleGame = function () {
         
     // START A NEW TIMER
     timer = setInterval(this.stepPurpleGame, frameInterval);
+
+    var purpleGame = this;
+    var callMethod = function() {
+        purpleGame.hasPlayerLost();
+    }
+
+    waitTillPlayerLoses = setTimeout(function() { callMethod() }, 5000);
 };
 
 Game.prototype.resetGameOfLife = function () {
@@ -744,6 +803,8 @@ Game.prototype.resetGameOfLife = function () {
     undoCounter = -1;
     currentLevel = undefined;
     gameWon = false;
+    gameLost = false;
+    clearTimeout(waitTillPlayerLoses);
     
     // INIT THE CELLS IN THE GRID
     for (var i = 0; i < gridHeight; i++)

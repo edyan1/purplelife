@@ -1,5 +1,8 @@
 'use strict';
 
+//KEYS
+var currentlyPressedKeys = {};
+
 // CANVAS VARIABLES
 var canvasWidth;
 var canvasHeight;
@@ -138,6 +141,13 @@ PurpleLife.prototype.initCanvas = function() {
 
     canvas.onclick = respondToMouseClick;
     canvas.onmousemove = respondToMouseMove;
+
+    document.onkeydown = handleKeyDown;
+    document.onkeyup = handleKeyUp;
+
+    //SET ALL KEYS WE'RE GONNA USE
+    currentlyPressedKeys[70] = false;
+    currentlyPressedKeys[82] = false;
 };
 
 function respondToMouseClick (event) {
@@ -225,6 +235,14 @@ function showHelpNotes (){
     setTimeout(function () {$(".resetBtn").notify("Or click Reset to clear your placed weapons to place them again.","warn");},13000);
     setTimeout(function () {$(".quitBtn").notify("Quit brings you back to the level select screen.","warn");},18000);
 };
+
+function handleKeyDown(event) {
+  currentlyPressedKeys[event.keyCode] = true;
+}
+
+function handleKeyUp(event) {
+  currentlyPressedKeys[event.keyCode] = false;
+}
 
 window.onload = function() {
   window.purpleLife = new PurpleLife();
