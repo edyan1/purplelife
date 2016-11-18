@@ -132,7 +132,7 @@ var waitTillPlayerLoses;
     BACKGROUND_COLOR = "rgb(118,143,165)";
     WALL_COLOR = "rgb(128,128,128)";
     OBJ_COLOR = "rgb(128, 0, 128)";
-    PLACEMENT_COLOR = "rgb(232,232,232)";
+    PLACEMENT_COLOR = "rgb(90,180,90)";
     GRID_LINES_COLOR = "#CCCCCC";
     TEXT_COLOR = "#7777CC";
     

@@ -7,10 +7,13 @@ var ghostpixels; //array for the ghost pattern
 var ghostLock; //locks the ghost function so feedback bright cell function can work
 var VOID_CELL;
 var voidFlag;
+var PLACEMENT_CELL;
+var placeFlag;
 var LIVE_COLOR;
 var VOID_COLOR;
 var GHOST_COLOR;
 var GRID_LINES_COLOR;
+var PLACEMENT_COLOR;
 var TEXT_COLOR;
 var TOP_LEFT;
 var TOP_RIGHT;
@@ -40,9 +43,9 @@ var fps;
 var frameInterval;
 
 // CANVAS VARIABLES
+var canvas;
 var canvasWidth;
 var canvasHeight;
-var canvas;
 var canvas2D;
 
 // GRID VARIABLES
@@ -100,9 +103,10 @@ function initConstants()
     TEXT_COLOR = "#7777CC";
     GHOST_COLOR = "#FF8080";
     FEEDBACK_COLOR = "#CC00CC";
-    PLACEMENT_COLOR = "rgb(232,232,232)";
+    PLACEMENT_COLOR = "rgb(90,180,90)";
     //flag for placing and removing void cells
     voidFlag = false;
+    placeFlag = false;
     
     // THESE REPRESENT THE DIFFERENT TYPES OF CELL LOCATIONS IN THE GRID
     TOP_LEFT = 0;
@@ -142,10 +146,6 @@ function initCanvas()
     // GET THE 2D RENDERING CONTEXT
     canvas2D = canvas.getContext("2d");
     
-    // INIT THE FONT FOR TEXT RENDERED ON THE CANVAS. NOTE
-    // THAT WE'LL BE RENDERING THE FRAME RATE AND ZOOM LEVEL
-    // ON THE CANVAS
-    canvas2D.font = "24px Arial";
     
     // NOTE THAT THESE DIMENSIONS SHOULD BE THE
     // SAME AS SPECIFIED IN THE WEB PAGE, WHERE
@@ -281,6 +281,7 @@ function loadOffscreenImage(imgName, pixelArray)
 function voidPlaceChange () 
 {
     voidFlag = false;
+    placeFlag = false;
     canvas.onmousemove = respondToMoveGhost;
 }
 
@@ -309,6 +310,8 @@ function initEventHandlers()
 
 //saves the canvas as a png to a url
 function saveCanvas() {
+    drawBorders();
+    renderCells();
     var canvasSave = document.getElementById("level_maker_canvas");
     var imgURL = canvasSave.toDataURL("image/png");
     var img = new Image();
@@ -326,12 +329,19 @@ function saveCanvas() {
     thumbnail.setAttribute("src",imgSave);
     thumbnail.setAttribute("width", "64px");
     thumbnail.setAttribute("height","33px");
-    writeUserData(imgSave);
+    
+    var storedCustoms = document.getElementById("stored_customs");
+    var slot = storedCustoms.options[storedCustoms.selectedIndex].value;
+    storeMap(slot, imgSave);
 }
 
 function loadCustomMap() {
+    
+    var storedCustoms = document.getElementById("stored_customs");
+    var slot = storedCustoms.options[storedCustoms.selectedIndex].value;
+    
     resetGameOfLife();
-    loadUserMap();
+    loadUserMap(slot);
     var mapLoaded = document.getElementById("thumbnail");
     
     pixelArray = new Array();
@@ -383,7 +393,7 @@ function respondToLoadedLevelImage(img, pixelArray)
                     var y = Math.floor(Math.floor((i/4)) / img.width);
 
                     // IF WALL (GRAY)
-                    if ((r == 128) && (g == 128) && (b == 128)) {
+                    if ((r === 128) && (g === 128) && (b === 128)) {
                     	// STORE THE COORDINATES OF OUR PIXELS
                     	voidArray[voidArrayCounter] = x;
                     	voidArray[voidArrayCounter+1] = y;
@@ -391,14 +401,14 @@ function respondToLoadedLevelImage(img, pixelArray)
                     }
 
                     // IF OBJECTIVE (PURPLE)
-                    else if ((r == 128) && (g == 0) && (b == 128)) {
+                    else if ((r === 128) && (g === 0) && (b === 128)) {
                     	objArray[objArrayCounter] = x;
                     	objArray[objArrayCounter+1] = y;
                     	objArrayCounter += 2;
                     }
 
                     // IF PLACEMENT CELL (LIGHT GRAY)
-                    else if ((r == 232) && (g == 232) && (b == 232)) {
+                    else if ((r === 90) && (g === 180) && (b === 90)) {
                     	placementArray[placementArrayCounter] = x;
                     	placementArray[placementArrayCounter+1] = y;
                     	placementArrayCounter += 2;
@@ -509,7 +519,7 @@ function respondToMouseClick(event)
     var selectedPattern = patternsList.options[patternsList.selectedIndex].value;
     
     //for void cell placement:
-    if (selectedPattern === "VoidCell.png" || selectedPattern === "RemoveVC") {
+    if (selectedPattern === "VoidCell.png" || selectedPattern === "RemoveVC" || selectedPattern === "Placement.png") {
         return;
     }
     
@@ -553,12 +563,13 @@ function respondToMouseClick(event)
 
 function voidCellPlace()
 {
-    voidFlag = true; //set the void boolean for placing void sets to true
+    voidFlag = true;
     var patternsList = document.getElementById("game_of_life_patterns");
     var selectedPattern = patternsList.options[patternsList.selectedIndex].value;
     if (selectedPattern === "VoidCell.png"){
-        // CALCULATE THE ROW,COL OF THE CLICK
         
+        // CALCULATE THE ROW,COL OF THE CLICK
+         //set the void boolean for placing void sets to true
         canvas2D.fillStyle = VOID_COLOR;
         var canvasCoords = getRelativeCoords(event);
         var clickCol = Math.floor(canvasCoords.x/cellLength);
@@ -570,19 +581,35 @@ function voidCellPlace()
         canvas.onmousemove = respondToMoveVoid;
         
     }
-    //if selected menu option is not void cell, return
+    //for setting placement cells
+    else if (selectedPattern === "Placement.png") {
+       
+        // CALCULATE THE ROW,COL OF THE CLICK
+        placeFlag = true;
+        canvas2D.fillStyle = PLACEMENT_COLOR;
+        var canvasCoords = getRelativeCoords(event);
+        var clickCol = Math.floor(canvasCoords.x/cellLength);
+        var clickRow = Math.floor(canvasCoords.y/cellLength);
+        if (clickCol !== 0 && clickCol !== gridWidth-1 && clickRow !== 0 && clickRow !== gridHeight-1){
+            setGridCell(renderGrid, clickRow, clickCol, PLACEMENT_CELL);
+            setGridCell(updateGrid, clickRow, clickCol, PLACEMENT_CELL);
+        }
+        canvas2D.fillRect(clickCol*cellLength, clickRow*cellLength, cellLength, cellLength);
+        canvas.onmousemove = respondToMovePlace; 
+    }
+    //for deleting cells
     else if (selectedPattern === "RemoveVC") {
        
         // CALCULATE THE ROW,COL OF THE CLICK
-       
+        
         canvas2D.fillStyle = "#FFFFFF";
         var canvasCoords = getRelativeCoords(event);
         var clickCol = Math.floor(canvasCoords.x/cellLength);
         var clickRow = Math.floor(canvasCoords.y/cellLength);
-        if (getGridCell(renderGrid, clickRow, clickCol) === VOID_CELL)
-            {setGridCell(renderGrid, clickRow, clickCol, DEAD_CELL);}
-        if (getGridCell(updateGrid, clickRow, clickCol) === VOID_CELL)
-            {setGridCell(updateGrid, clickRow, clickCol, DEAD_CELL);}
+        if (clickCol !== 0 && clickCol !== gridWidth-1 && clickRow !== 0 && clickRow !== gridHeight-1){
+            setGridCell(renderGrid, clickRow, clickCol, DEAD_CELL);
+            setGridCell(updateGrid, clickRow, clickCol, DEAD_CELL);
+        }
         canvas2D.fillRect(clickCol*cellLength, clickRow*cellLength, cellLength, cellLength);
         canvas.onmousemove = respondToMoveVoidRemove;
         
@@ -590,8 +617,11 @@ function voidCellPlace()
     
     else {
         voidFlag = false;
+        placeFlag = false;
         return;
     }
+    
+    drawBorders();
 }
 
 function respondToMoveVoid(event){
@@ -609,6 +639,26 @@ function respondToMoveVoid(event){
     }
     
     renderGridLines();
+    drawBorders();
+}
+
+function respondToMovePlace(event){
+     if (placeFlag === false) return;
+    else {
+        canvas2D.fillStyle = PLACEMENT_COLOR;
+        var canvasCoords = getRelativeCoords(event);
+        var clickCol = Math.floor(canvasCoords.x/cellLength);
+        var clickRow = Math.floor(canvasCoords.y/cellLength);
+        if (clickCol !== 0 && clickCol !== gridWidth-1 && clickRow !== 0 && clickRow !== gridHeight-1){
+            setGridCell(renderGrid, clickRow, clickCol, PLACEMENT_CELL);
+            setGridCell(updateGrid, clickRow, clickCol, PLACEMENT_CELL);
+        }
+        
+        canvas2D.fillRect(clickCol*cellLength, clickRow*cellLength, cellLength, cellLength);
+    }
+    
+    renderGridLines();
+    drawBorders();
 }
 
 function respondToMoveVoidRemove(event) {
@@ -619,15 +669,16 @@ function respondToMoveVoidRemove(event) {
         var canvasCoords = getRelativeCoords(event);
         var clickCol = Math.floor(canvasCoords.x/cellLength);
         var clickRow = Math.floor(canvasCoords.y/cellLength);
-            if (getGridCell(renderGrid, clickRow, clickCol) === VOID_CELL)
-            {setGridCell(renderGrid, clickRow, clickCol, DEAD_CELL);}
-        if (getGridCell(updateGrid, clickRow, clickCol) === VOID_CELL)
-            {setGridCell(updateGrid, clickRow, clickCol, DEAD_CELL);}
+        if (clickCol !== 0 && clickCol !== gridWidth-1 && clickRow !== 0 && clickRow !== gridHeight-1){
+            setGridCell(renderGrid, clickRow, clickCol, DEAD_CELL);
+            setGridCell(updateGrid, clickRow, clickCol, DEAD_CELL);
+        }
         
         canvas2D.fillRect(clickCol*cellLength, clickRow*cellLength, cellLength, cellLength);
     }
     
     renderGridLines();
+    drawBorders();
 }
 
 function respondToMoveGhost(event)
@@ -754,6 +805,7 @@ function renderGame()
         renderGridLines();
     
     // RENDER THE GAME CELLS
+    drawBorders();
     renderCells();
     
     // AND RENDER THE TEXT
@@ -774,6 +826,7 @@ function renderGameWithoutSwapping()
         renderGridLines();
     
     // RENDER THE GAME CELLS
+    drawBorders();
     renderCells();
     
     // AND RENDER THE TEXT
@@ -821,7 +874,22 @@ function renderCells()
                            canvas2D.fillRect(x, y, cellLength, cellLength);
                        }
                }
-        }  
+        }
+        
+   canvas2D.fillStyle = PLACEMENT_COLOR;
+   for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+               {
+                   var cell = getGridCell(renderGrid, i, j);
+                   if (cell === PLACEMENT_CELL)
+                       {
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+               }
+        }
 }
 
 function clearGhostCells()
@@ -855,6 +923,13 @@ function clearGhostCells()
                            canvas2D.fillStyle = VOID_COLOR;
                            canvas2D.fillRect(x, y, cellLength, cellLength);
                         }
+                    else if (cell === PLACEMENT_CELL)
+                        {
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillStyle = PLACEMENT_COLOR;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                        }
                }
         }          
 }
@@ -885,32 +960,51 @@ function resetGameOfLife()
     renderGrid = new Array();
     
     // INIT THE CELLS IN THE GRID
-    for (var i = 0; i < gridHeight; i++)
-        {
-            for (var j = 0; j < gridWidth; j++)
-                {
-                    //sets up void cells around the border
-                    if (i === 0 || i === gridHeight-1){
-                        setGridCell(updateGrid, i, j, VOID_CELL); 
-                        setGridCell(renderGrid, i, j, VOID_CELL);
-                    }
-                    
-                    else if (j === 0 || j === gridWidth-1){
-                        setGridCell(updateGrid, i, j, VOID_CELL); 
-                        setGridCell(renderGrid, i, j, VOID_CELL);
-                    }
-                    else {
-                        setGridCell(updateGrid, i, j, DEAD_CELL); 
-                        setGridCell(renderGrid, i, j, DEAD_CELL);
-                    }
-                }
-        }
+    boardReset();
 
-    //set void borders
-    for (var k = 0; k < gridWidth; k++)
     
     // RENDER THE CLEARED SCREEN
     renderGame();
+}
+
+function boardReset(){
+    
+    for (var i = 0; i < gridHeight; i++) {
+        for (var j = 0; j < gridWidth; j++){
+            //sets up void cells around the border
+            if (i === 0 || i === gridHeight-1){
+                setGridCell(updateGrid, i, j, VOID_CELL); 
+                setGridCell(renderGrid, i, j, VOID_CELL);
+            }
+                    
+            else if (j === 0 || j === gridWidth-1){
+                setGridCell(updateGrid, i, j, VOID_CELL); 
+                setGridCell(renderGrid, i, j, VOID_CELL);
+            }
+            else {
+                setGridCell(updateGrid, i, j, DEAD_CELL); 
+                setGridCell(renderGrid, i, j, DEAD_CELL);
+            }
+        }
+    }
+}
+
+function drawBorders(){
+    for (var i = 0; i < gridHeight; i++) {
+        for (var j = 0; j < gridWidth; j++){
+            //sets up void cells around the border
+            if (i === 0 || i === gridHeight-1){
+                setGridCell(updateGrid, i, j, VOID_CELL); 
+                setGridCell(renderGrid, i, j, VOID_CELL);
+            }
+                    
+            else if (j === 0 || j === gridWidth-1){
+                setGridCell(updateGrid, i, j, VOID_CELL); 
+                setGridCell(renderGrid, i, j, VOID_CELL);
+            }
+            
+        }
+    }
 }
 
 /*

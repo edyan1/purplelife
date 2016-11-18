@@ -8,7 +8,7 @@ var canvas2D;
 var mouseState;
 
 // Initializes Purple Life
-function PurpleLife() {
+function PurpleLifeLM() {
   //this.checkSetup();
 
   // Shortcuts to DOM Elements.
@@ -23,11 +23,11 @@ function PurpleLife() {
 
   this.initFirebase();
 
-  this.initCanvas();
+  //this.initCanvas();
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
-PurpleLife.prototype.initFirebase = function() {
+PurpleLifeLM.prototype.initFirebase = function() {
   // Shortcuts to Firebase SDK features.
   this.auth = firebase.auth();
   this.database = firebase.database();
@@ -37,14 +37,14 @@ PurpleLife.prototype.initFirebase = function() {
 };
 
 // Signs-in with google
-PurpleLife.prototype.signIn = function() {
+PurpleLifeLM.prototype.signIn = function() {
   // Sign in Firebase using popup auth and Google as the identity provider.
   var provider = new firebase.auth.GoogleAuthProvider();
   this.auth.signInWithPopup(provider);
 };
 
 // Signs-out 
-PurpleLife.prototype.signOut = function() {
+PurpleLifeLM.prototype.signOut = function() {
   // Sign out of Firebase.
    var r = confirm(
     "Are you sure you want to sign out?\n\Signing out will delete any unsaved progress and take you back to the main screen.");
@@ -57,7 +57,7 @@ PurpleLife.prototype.signOut = function() {
 };
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
-PurpleLife.prototype.onAuthStateChanged = function(user) {
+PurpleLifeLM.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
     // Get profile pic and user's name from the Firebase user object.
     var profilePicUrl = user.photoURL;
@@ -88,7 +88,7 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
   }
 };
 
-PurpleLife.prototype.initCanvas = function() {
+PurpleLifeLM.prototype.initCanvas = function() {
     // GET THE CANVAS
     canvas = document.getElementById("game_canvas");
 
@@ -117,7 +117,7 @@ PurpleLife.prototype.initCanvas = function() {
     this.initObjectives();
 }
 
-PurpleLife.prototype.initGridScreen = function() {
+PurpleLifeLM.prototype.initGridScreen = function() {
     var gridScreen = new Image();
     gridScreen.src = "images/emptyGrid.png";
     gridScreen.onload = function () {
@@ -125,7 +125,7 @@ PurpleLife.prototype.initGridScreen = function() {
     }
 }
 
-PurpleLife.prototype.initWall = function() {
+PurpleLifeLM.prototype.initWall = function() {
   $('#wallMenu').fanmenu({
     eventName:'click',
     hideOnClick: true,
@@ -141,7 +141,7 @@ PurpleLife.prototype.initWall = function() {
   });
 }
 
-PurpleLife.prototype.initObstacles = function() {
+PurpleLifeLM.prototype.initObstacles = function() {
   $('#obstacleMenu').fanmenu({
     eventName:'click',
     hideOnClick: true,
@@ -157,7 +157,7 @@ PurpleLife.prototype.initObstacles = function() {
   });
 }
 
-PurpleLife.prototype.initObjectives = function() {
+PurpleLifeLM.prototype.initObjectives = function() {
   $('#objectiveMenu').fanmenu({
     eventName:'click',
     hideOnClick: true,
@@ -171,8 +171,8 @@ PurpleLife.prototype.initObjectives = function() {
     cssMenuToggle: '.fm_btntoggle',
     cssMenuItem: '.fm_list>*'
   });
-}
+};
 
 window.onload = function() {
-  window.purpleLife = new PurpleLife();
+  window.purpleLifeLM = new PurpleLifeLM();
 };

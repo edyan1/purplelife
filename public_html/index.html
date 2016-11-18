@@ -65,9 +65,7 @@ and open the template in the editor.
           <div class="rotate">ADVERTISE HERE</div>
         </div>
         
-        <div class="add_banner_right">
-          <div class="rotate">ADVERTISE HERE</div>
-        </div> 
+        
         
         
         <div id="container">
@@ -176,11 +174,12 @@ and open the template in the editor.
                 <div class="c-tab__content">
                   <h2>Custom Levels</h2>
                   
-                  <div> <a href="levelmakertest.html" class="button">Level Maker</a></div>
-                   <input name="secret" id="secret" type="text" value="Say something.">
-                    <button onclick="store()">Save this text to Firebase Datastore</button>
-           
-                    <input id="showSecret" type="text">
+                  <div class="level1">Level Maker: <br><a href="levelcreate.html" class="button" style="padding-top: 12%; padding-bottom: 12%">Create custom levels</a></div>
+                  <div class="level2">Slot 1: <br><button class="levelButton" id="custom1" type="button" onclick=""><img class="levelImg" id="slot1" src="images/levels/empty.png" /></button> </div>
+                  <div class="level3">Slot 2 : <br><button class="levelButton" id="custom2" type="button" onclick=""><img class="levelImg" id="slot2" src="images/levels/empty.png" /></button> </div>
+                  <div class="level4">Slot 3: <br><button class="levelButton" id="custom3" type="button" onclick=""><img class="levelImg" id="slot3" src="images/levels/empty.png" /></button> </div>
+                  <div class="level5">Slot 4: <br><button class="levelButton" id="custom4" type="button" onclick=""><img class="levelImg" id="slot4" src="images/levels/empty.png" /></button> </div>
+                  <div class="level6">Slot 5: <br><button class="levelButton" id="custom5" type="button" onclick=""><img class="levelImg" id="slot5" src="images/levels/empty.png" /></button> </div>
                 </div>
               </div>
 
@@ -256,11 +255,11 @@ and open the template in the editor.
             </script>
             
             <script>
-              initLevelSelect(); 
               // Get a reference to the database service
               var database = firebase.database();
             </script>
             <script src="scripts/database.js"></script>
+            <script>initLevelSelect(); </script>
             
     </body>
 </html>

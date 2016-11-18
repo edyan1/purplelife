@@ -14,6 +14,7 @@ function initLevelSelect() {
   });
 
   myTabs.init();
+  
 };
 
 (function() {
