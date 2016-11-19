@@ -412,7 +412,8 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
                     var y = Math.floor(Math.floor((i/4)) / img.width);
 
                     // IF WALL (GRAY)
-                    if ((r == 128) && (g == 128) && (b == 128)) {
+                    if (((r == 128) && (g == 128) && (b == 128)) || 
+                        ((r == 129) && (g == 129) && (b == 129)) ) {
                     	// STORE THE COORDINATES OF OUR PIXELS
                     	voidArray[voidArrayCounter] = x;
                     	voidArray[voidArrayCounter+1] = y;
@@ -420,14 +421,16 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
                     }
 
                     // IF OBJECTIVE (PURPLE)
-                    else if ((r == 128) && (g == 0) && (b == 128)) {
+                    else if (((r == 128) && (g == 0) && (b == 128)) ||
+                             ((r == 129) && (g == 0) && (b == 129)) ) {
                     	objArray[objArrayCounter] = x;
                     	objArray[objArrayCounter+1] = y;
                     	objArrayCounter += 2;
                     }
 
                     // IF PLACEMENT CELL (LIGHT GRAY)
-                    else if ((r == 232) && (g == 232) && (b == 232)) {
+                    else if (((r == 232) && (g == 232) && (b == 232)) ||
+                             ((r == 233) && (g == 233) && (b == 233))) {
                     	placementArray[placementArrayCounter] = x;
                     	placementArray[placementArrayCounter+1] = y;
                     	placementArrayCounter += 2;
