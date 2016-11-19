@@ -208,12 +208,27 @@ $(document).ready(function() {
         weapon = $(this).find('.weaponSize').attr('src');
         weapon = weapon.substring(15);
         $.notify("Your Selected Weapon: " + weapon.substring(0, weapon.indexOf('.')), 'success');
-        // $('#weaponDirection li').click(function() {
-        //     var direction = $(this).find('.weaponDir').attr('src');
-        //     direction = '_' + direction.substring(6, direction.indexOf('.'));
-        //     weapon = weapon.substring(0, weapon.indexOf('_')) + direction + '.png';
         $('#weaponsList li:first').prop('id', weapon);
-        // });
+        if(weapon.localeCompare("gun.png") == 0) {
+            $('#leftdir').attr('src', 'icons/downleft.png');
+            $('#leftdir').css("transform", "rotate(-50deg)")
+            $('#rightdir').attr('src', 'icons/downright.png');
+            $('#rightdir').css("transform", "rotate(10deg)");
+            $('#downdir').attr('src', 'icons/upleft.png');
+            $('#downdir').css("transform", "rotate(100deg)");
+            $('#updir').attr('src', 'icons/upright.png');
+            $('#updir').css("transform", "rotate(-50deg)");
+        }
+        else {
+            $('#leftdir').attr('src', 'icons/left.png');
+            $('#leftdir').css("transform", "rotate(182deg)")
+            $('#rightdir').attr('src', 'icons/right.png');
+            $('#rightdir').css("transform", "rotate(-118deg)");
+            $('#downdir').attr('src', 'icons/down.png');
+            $('#downdir').css("transform", "rotate(-119deg)");
+            $('#updir').attr('src', 'icons/up.png');
+            $('#updir').css("transform", "rotate(-90deg)");
+        }
     });
 });
 
