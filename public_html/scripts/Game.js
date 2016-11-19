@@ -5,15 +5,19 @@ var DEAD_CELL;
 var LIVE_CELL;
 var HOVER_CELL;
 var NEW_CELL;
+var PREV_CELL;
 var VOID_CELL;
 var OBJ_CELL;
 var PLACEMENT_CELL;
 var TELEPORT_CELL;
 var SPLITTER_CELL;
+var savedPlacementCells = [];
+var savedCellsCount = 0;
 
 // COLORS
 var LIVE_COLOR;
 var HOVER_COLOR;
+var PREV_COLOR;
 var BRIGHT_COLOR;
 var BACKGROUND_COLOR;
 var WALL_COLOR;
@@ -116,7 +120,7 @@ var waitTillPlayerLoses;
  }
 
  Game.prototype.initConstants = function() {
-    // THESE REPRESENT THE TWO POSSIBLE STATES FOR EACH CELL
+    // THESE REPRESENT THE POSSIBLE STATES FOR EACH CELL
     DEAD_CELL = 0;   
     LIVE_CELL = 1; 
     HOVER_CELL = 2;
@@ -124,15 +128,17 @@ var waitTillPlayerLoses;
     VOID_CELL = 4;
     OBJ_CELL = 5;
     PLACEMENT_CELL = 6;
+    PREV_CELL = 7;
     
     // COLORS FOR RENDERING
     LIVE_COLOR = "rgb(255, 0, 0)";
     HOVER_COLOR = "rgba(255, 0, 0, 0.2)";
+    PREV_COLOR =  "rgba(0, 0, 0, 0.2)";
     BRIGHT_COLOR = "rgb(227, 11, 92)";
     BACKGROUND_COLOR = "rgb(118,143,165)";
     WALL_COLOR = "rgb(128,128,128)";
     OBJ_COLOR = "rgb(128, 0, 128)";
-    PLACEMENT_COLOR = "rgb(90,180,90)";
+    PLACEMENT_COLOR = "rgba(90,180,90, 0.3)";
     GRID_LINES_COLOR = "#CCCCCC";
     TEXT_COLOR = "#7777CC";
     
@@ -545,9 +551,13 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	            	purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
 	            	purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
 	            	purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
+                    savedPlacementCells[savedCellsCount++] = col;
+                    savedPlacementCells[savedCellsCount++] = row;
 	        	}
 	        	
 	        }
+	        savedPlacementCells[savedCellsCount++] = -1;
+            alert(savedPlacementCells);
 	        
 	    // RENDER THE GAME IMMEDIATELY
 	    purpleGame.renderGameWithoutSwapping();
@@ -609,6 +619,8 @@ Game.prototype.renderGame = function () {
         if (currentlyPressedKeys[70]) {
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
             var tempCurrentLevel = currentLevel;
+            savedPlacementCells.length = 0;
+            savedCellsCount = 0;
             this.resetGameOfLife();
             this.pausePurpleGame();
             this.loadLevel(tempCurrentLevel.substring(0,5) + levelNumber + ".png");
@@ -716,6 +728,12 @@ Game.prototype.renderCells = function() {
                            var y = i * cellLength;
                            canvas2D.fillRect(x, y, cellLength, cellLength);
                     }
+                    if (cell3 == PREV_CELL) {
+                        canvas2D.fillStyle = PREV_COLOR;
+                        var x = j * cellLength;
+                        var y = i * cellLength;
+                        canvas2D.fillRect(x, y, cellLength, cellLength);
+                    }
                     
                     if (cell3 === NEW_CELL) {
                            canvas2D.fillStyle = BRIGHT_COLOR;
@@ -723,6 +741,7 @@ Game.prototype.renderCells = function() {
                            var y = i * cellLength;
                            canvas2D.fillRect(x, y, cellLength, cellLength);
                     }
+
                }
         } 
     if (objCellCount == 0 && currentLevel != undefined) {
@@ -818,15 +837,30 @@ Game.prototype.resetGameOfLife = function () {
                 }
         }
 
+    if(savedCellsCount != 0) {
+        for(var i = 0; i < savedPlacementCells.length; i += 2) {
+            if(savedPlacementCells[i] == -1)
+                i--;
+            else {
+                var col = savedPlacementCells[i];
+                var row = savedPlacementCells[i + 1];
+                purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
+            }
+        }
+        savedPlacementCells.length = 0;
+        savedCellsCount = 0;
+    }
+
+
     // RENDER THE CLEARED SCREEN
     this.renderGame();
 };
 
 Game.prototype.resetLevel = function() {
-  var levelToReset = currentLevel;
-  this.resetGameOfLife();
-  this.pausePurpleGame();
-  this.loadLevel(levelToReset);
+    var levelToReset = currentLevel;
+    this.resetGameOfLife();
+    this.pausePurpleGame();
+    this.loadLevel(levelToReset);
 };
 
 Game.prototype.pausePurpleGame = function () {
