@@ -691,6 +691,7 @@ Game.prototype.renderGame = function () {
         this.renderYouWonText();
         if (currentlyPressedKeys[70]) {
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
+            if (getUserProgress() < levelNumber-1 )setUserProgress(levelNumber-1);
             var tempCurrentLevel = currentLevel;
             savedPlacementCells.length = 0;
             savedCellsCount = 0;
@@ -736,6 +737,7 @@ Game.prototype.renderGameWithoutSwapping = function()
         this.renderYouWonText();
         if (currentlyPressedKeys[70]) {
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
+            if (getUserProgress() < levelNumber-1 ) setUserProgress(levelNumber-1);
             this.resetGameOfLife();
             this.pausePurpleGame();
             this.loadLevel(currentLevel.substring(0,5) + levelNumber + ".png");
