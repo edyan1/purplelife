@@ -1,0 +1,42 @@
+a.btn {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #ad2d9a;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  align: right;
+}
+
+a.btn:hover {
+  background: #f0f3f5;
+  text-decoration: none;
+}
+
+.dividerb{
+	width:370px;
+	height:auto;
+	display:inline-block;
+}
+
+.divider{
+    width:15px;
+    height:auto;
+    display:inline-block;
+}
+
+table, th, td{
+	border: 1px solid black;
+}
+
+.aboutP{
+	font-family: Arial;
+	font-size: 20px;
+}
+
+td{
+	text-align: center;
+}
