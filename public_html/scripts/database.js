@@ -3,7 +3,14 @@
  */
 
 
-
+function userProgress(levelNum){
+    
+    var userId = firebase.auth().currentUser.uid;
+    var dbRef = firebase.database().ref('users/'+userId);
+    dbRef.update({
+        "progress" : levelNum
+    });
+}
 
 
 function storeMap(slot, img){
