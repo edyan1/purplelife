@@ -11,6 +11,9 @@ var OBJ_CELL;
 var PLACEMENT_CELL;
 var TELEPORT_CELL;
 var SPLITTER_CELL;
+var TURRET_CELL;
+var TURRET_SPAWN_CELL;
+var LIVE_TURRET_CELL;
 var savedPlacementCells = [];
 var savedCellsCount = 0;
 
@@ -22,6 +25,8 @@ var BRIGHT_COLOR;
 var BACKGROUND_COLOR;
 var WALL_COLOR;
 var OBJ_COLOR;
+var TURRET_COLOR;
+var LIVE_TURRET_COLOR;
 var PLACEMENT_COLOR;
 var GRID_LINES_COLOR;
 var TEXT_COLOR;
@@ -50,6 +55,7 @@ var GRID_LINE_LENGTH_RENDERING_THRESHOLD;
 
 // FRAME RATE TIMING VARIABLES
 var timer;
+var turretRenderTimer;
 var fps;
 var frameInterval;
 
@@ -86,7 +92,8 @@ var undoCounter;
 var gameWon;
 var gameLost;
 var waitTillPlayerLoses;
-
+var turretFireRate;
+var nextTimeTurretCanFire;
 // INITIALIZATION METHODS
 
 /*
@@ -129,6 +136,9 @@ var waitTillPlayerLoses;
     OBJ_CELL = 5;
     PLACEMENT_CELL = 6;
     PREV_CELL = 7;
+    TURRET_CELL = 8;
+    TURRET_SPAWN_CELL = 9;
+    LIVE_TURRET_CELL = 10;
     
     // COLORS FOR RENDERING
     LIVE_COLOR = "rgb(255, 0, 0)";
@@ -139,6 +149,8 @@ var waitTillPlayerLoses;
     WALL_COLOR = "rgb(128,128,128)";
     OBJ_COLOR = "rgb(128, 0, 128)";
     PLACEMENT_COLOR = "rgba(90,180,90, 0.3)";
+    TURRET_COLOR = "rgb(28,147,64)";
+    LIVE_TURRET_COLOR = "rgb(0,0,0)";
     GRID_LINES_COLOR = "#CCCCCC";
     TEXT_COLOR = "#7777CC";
     
@@ -170,6 +182,8 @@ var waitTillPlayerLoses;
     FPS_Y = 450;
     CELL_LENGTH_X = 20;
     CELL_LENGTH_Y = 480;
+
+    turretFireRate = 1000;
 };
 
 Game.prototype.initCanvas = function(canvas, canvas2D, canvasWidth, canvasHeight, mouseState) {
@@ -183,6 +197,7 @@ Game.prototype.initCanvas = function(canvas, canvas2D, canvasWidth, canvasHeight
 Game.prototype.initPurpleGameData = function() {
 	// INIT THE TIMING DATA
     timer = null;
+    turretRenderTimer;
     fps = MAX_FPS;
     frameInterval = MILLISECONDS_IN_ONE_SECOND/fps;
 
@@ -290,7 +305,7 @@ Game.prototype.initLevels = function () {
         loadOffScreenLevel(key, pixelArray);
 
         //SET THE WEAPON COUNT
-        pixelArray[3] = levelItems[i].value;
+        pixelArray[5] = levelItems[i].value;
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
@@ -306,7 +321,13 @@ Game.prototype.loadLevel = function (levelToLoad) {
     var walls = level[0];
     var objectives = level[1];
     var placements = level[2];
-    weaponCount = level[3];
+    var turrets = level[3];
+    var turretSpawns = level[4];
+    weaponCount = level[5];
+    nextTimeTurretCanFire = Date.now();
+
+    // START A NEW TIMER
+    turretRenderTimer = setInterval(this.stepTurretTime, frameInterval);
     
     // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
     for (var i = 0; i < walls.length; i += 2)
@@ -333,7 +354,23 @@ Game.prototype.loadLevel = function (levelToLoad) {
             this.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
             this.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
         }
-        
+    for (var i = 0; i < turrets.length; i += 2)
+        {
+            var col = turrets[i];
+            var row = turrets[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_CELL);
+            this.setGridCell(updateGrid, row, col, TURRET_CELL);
+        }
+    for (var i = 0; i < turretSpawns.length; i += 2)
+        {
+            var col = turretSpawns[i];
+            var row = turretSpawns[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_SPAWN_CELL);
+            this.setGridCell(updateGrid, row, col, TURRET_SPAWN_CELL);
+        }
+
     // RENDER THE GAME IMMEDIATELY
     this.renderGameWithoutSwapping();
 }
@@ -387,11 +424,15 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
     var voidArrayCounter = 0;
     var objArrayCounter = 0;
     var placementArrayCounter = 0;
+    var turretArrayCounter = 0;
+    var turretSpawnArrayCounter = 0;
 
     //LEVEL DATA ARRAYS
     var voidArray = new Array();
     var objArray = new Array();
     var placementArray = new Array();
+    var turretArray = new Array();
+    var turretSpawnArray = new Array();
    
     // GO THROUGH THE IMAGE DATA AND PICK OUT THE COORDINATES
     for (var i = 0; i < imgData.data.length; i+=4)
@@ -436,11 +477,34 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
                     	placementArrayCounter += 2;
                     }
 
+                    // IF TURRET CELL (GREEN)
+                    else if (((r == 28) && (g == 147) && (b == 64)) ||
+                             ((r == 21) && (g == 148) && (b == 62))) {
+                        turretArray[turretArrayCounter] = x;
+                        turretArray[turretArrayCounter+1] = y;
+                        turretArrayCounter += 2;
+                    }
+
+                    // IF TURRET SPAWN CELL (PINK)
+                    else if (((r == 253) && (g == 174) && (b == 201)) ||
+                             ((r == 253) && (g == 176) && (b == 202))) {
+                        turretSpawnArray[turretSpawnArrayCounter] = x;
+                        turretSpawnArray[turretSpawnArrayCounter+1] = y;
+                        turretSpawnArrayCounter += 2;
+                    }
+
+                    // **DEBUG** CHECK FOR BROWSER DESCREPENCIES
+                    else {
+                        console.log(r +'\n' + g + '\n' + b + '\n');
+                    }
+
                 }            
         }  
     pixelArray[0] = voidArray;
     pixelArray[1] = objArray; 
-    pixelArray[2] = placementArray;    
+    pixelArray[2] = placementArray; 
+    pixelArray[3] = turretArray;
+    pixelArray[4] = turretSpawnArray;   
 }
 
 /*
@@ -560,7 +624,6 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	        	
 	        }
 	        savedPlacementCells[savedCellsCount++] = -1;
-            alert(savedPlacementCells);
 	        
 	    // RENDER THE GAME IMMEDIATELY
 	    purpleGame.renderGameWithoutSwapping();
@@ -725,6 +788,24 @@ Game.prototype.renderCells = function() {
                            var y = i * cellLength;
                            canvas2D.fillRect(x, y, cellLength, cellLength);
                        }
+                    else if (cell === TURRET_CELL) {
+                           canvas2D.fillStyle = TURRET_COLOR;
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+                    else if (cell === TURRET_SPAWN_CELL) {
+                           canvas2D.fillStyle = TURRET_COLOR;
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+                    else if (cell === LIVE_TURRET_CELL) {
+                           canvas2D.fillStyle = LIVE_TURRET_COLOR;
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                    }
                     if (cell2 === HOVER_CELL) {
                            canvas2D.fillStyle = HOVER_COLOR;
                            var x = j * cellLength;
@@ -744,7 +825,6 @@ Game.prototype.renderCells = function() {
                            var y = i * cellLength;
                            canvas2D.fillRect(x, y, cellLength, cellLength);
                     }
-
                }
         } 
     if (objCellCount == 0 && currentLevel != undefined) {
@@ -785,15 +865,68 @@ Game.prototype.hasPlayerLost = function() {
 }
 
 Game.prototype.stepPurpleGame = function() {
+    var now = Date.now();
+    if (nextTimeTurretCanFire <= now) {
+        purpleGame.spawnProjectile();
+        nextTimeTurretCanFire += turretFireRate;
+    }
+
 	//REMOVE BRIGHT ARRAY
     brightGrid = new Array();
     
     // FIRST PERFORM GAME LOGIC
     purpleGame.updateGame();
+
+    // TURRET LOGIC
+    purpleGame.updateTurretProjectiles();
     
     // RENDER THE GAME
     purpleGame.renderGame();
 };
+
+Game.prototype.stepTurretTime = function() {
+    var now = Date.now();
+    if (nextTimeTurretCanFire <= now) {
+        purpleGame.spawnProjectile();
+        nextTimeTurretCanFire += turretFireRate;
+    }
+    
+    // FIRST PERFORM GAME LOGIC
+    purpleGame.updateTurretProjectiles();
+
+    purpleGame.renderGame();
+};
+
+Game.prototype.spawnProjectile = function() {
+    var turretSpawns = levels[currentLevel][4];
+    for (var i = 0; i < turretSpawns.length; i += 2) {
+        //BOTTOM RIGHT
+        purpleGame.setGridCell(renderGrid, turretSpawns[i+1] + 2, turretSpawns[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawns[i+1] + 3, turretSpawns[i] + 3, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawns[i+1] + 4, turretSpawns[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawns[i+1] + 4, turretSpawns[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawns[i+1] + 4, turretSpawns[i] + 3, LIVE_TURRET_CELL);
+        //BOTTOM LEFT
+        purpleGame.setGridCell(renderGrid, turretSpawns[i+1] - 1, turretSpawns[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawns[i+1] - 2, turretSpawns[i] + 3, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawns[i+1] - 3, turretSpawns[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawns[i+1] - 3, turretSpawns[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawns[i+1] - 3, turretSpawns[i] + 3, LIVE_TURRET_CELL);
+
+        //UPDATE GRID
+        purpleGame.setGridCell(updateGrid, turretSpawns[i+1] + 2, turretSpawns[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawns[i+1] + 3, turretSpawns[i] + 3, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawns[i+1] + 4, turretSpawns[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawns[i+1] + 4, turretSpawns[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawns[i+1] + 4, turretSpawns[i] + 3, LIVE_TURRET_CELL);
+
+        purpleGame.setGridCell(updateGrid, turretSpawns[i+1] - 1, turretSpawns[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawns[i+1] - 2, turretSpawns[i] + 3, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawns[i+1] - 3, turretSpawns[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawns[i+1] - 3, turretSpawns[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawns[i+1] - 3, turretSpawns[i] + 3, LIVE_TURRET_CELL);
+    }
+}
 
 Game.prototype.startPurpleGame = function () {
     // CLEAR OUT ANY OLD TIMER
@@ -801,7 +934,11 @@ Game.prototype.startPurpleGame = function () {
         {
             clearInterval(timer);
         }
-        
+    if (turretRenderTimer !== null) 
+        {
+            clearInterval(turretRenderTimer);
+        }
+
     // START A NEW TIMER
     timer = setInterval(this.stepPurpleGame, frameInterval);
 
@@ -869,10 +1006,12 @@ Game.prototype.resetLevel = function() {
 Game.prototype.pausePurpleGame = function () {
     // TELL JavaScript TO STOP RUNNING THE LOOP
     clearInterval(timer);
+    clearInterval(turretRenderTimer);
     
     // AND THIS IS HOW WE'LL KEEP TRACK OF WHETHER
     // THE SIMULATION IS RUNNING OR NOT
     timer = null;
+    turretRenderTimer = null;
     
     this.swapGrids();
 };
@@ -928,8 +1067,8 @@ Game.prototype.updateGame = function () {
 
                     // CASES
                     // 1) IT'S ALIVE
-                    if (testCell != VOID_CELL) {
-                        if (testCell === LIVE_CELL || testCell === OBJ_CELL)
+                    if (testCell != VOID_CELL && testCell != TURRET_CELL && testCell != TURRET_SPAWN_CELL && testCell != LIVE_TURRET_CELL) {
+                        if (testCell === LIVE_CELL || testCell === OBJ_CELL || testCell === LIVE_TURRET_CELL)
                             {
                                 // 1a FEWER THAN 2 LIVING NEIGHBORS
                                 if (numLivingNeighbors < 2)
@@ -948,7 +1087,9 @@ Game.prototype.updateGame = function () {
                                     {	
                                     	if (testCell === LIVE_CELL) {
                                         	renderGrid[index] = LIVE_CELL;
-                                    	} else {
+                                    	} else if (testCell === LIVE_TURRET_CELL) {
+                                            renderGrid[index] = LIVE_TURRET_CELL;
+                                        } else {
                                     		renderGrid[index] = OBJ_CELL;
                                     	}
                                     }
@@ -956,7 +1097,8 @@ Game.prototype.updateGame = function () {
                         // 2) IT'S DEAD
                        else if (numLivingNeighbors === 3)
                            {
-                               renderGrid[index] = LIVE_CELL;
+                               if (renderGrid[index] === LIVE_TURRET_CELL) renderGrid[index] = LIVE_TURRET_CELL;
+                               else renderGrid[index] = LIVE_CELL;
                            }                    
                        else
                            {
@@ -966,6 +1108,62 @@ Game.prototype.updateGame = function () {
                 }
         } 
 }
+
+Game.prototype.updateTurretProjectiles = function () {
+    // GO THROUGH THE UPDATE GRID AND USE IT TO CHANGE THE RENDER GRID
+    for (var i = 0; i < gridHeight; i++)
+        {
+            for (var j = 0; j < gridWidth; j++)
+                {
+                    // HOW MANY NEIGHBORS DOES THIS CELL HAVE?
+                    var numLivingNeighbors = this.calcLivingNeighborsTurret(i, j);
+
+                    // CALCULATE THE ARRAY INDEX OF THIS CELL
+                    // AND GET ITS CURRENT STATE
+                    var index = (i * gridWidth) + j;
+                    var testCell = updateGrid[index];
+
+                    // CASES
+                    // 1) IT'S ALIVE
+                    if (testCell != VOID_CELL && testCell != TURRET_CELL && testCell != TURRET_SPAWN_CELL && testCell != PLACEMENT_CELL && testCell != LIVE_CELL) {
+                        if (testCell === LIVE_TURRET_CELL || testCell === OBJ_CELL)
+                            {
+                                // 1a FEWER THAN 2 LIVING NEIGHBORS
+                                if (numLivingNeighbors < 2)
+                                    {
+                                        // IT DIES FROM UNDER-POPULATION
+                                        renderGrid[index] = DEAD_CELL;
+                                    }
+                                // 1b MORE THAN 3 LIVING NEIGHBORS
+                                else if (numLivingNeighbors > 3)
+                                    {
+                                        // IT DIES FROM OVERCROWDING
+                                        renderGrid[index] = DEAD_CELL;
+                                    }
+                                // 1c 2 OR 3 LIVING NEIGHBORS, WE DO NOTHING
+                                else
+                                    {   
+                                        if (testCell === LIVE_TURRET_CELL) {
+                                            renderGrid[index] = LIVE_TURRET_CELL;
+                                        } else {
+                                            renderGrid[index] = OBJ_CELL;
+                                        }
+                                    }
+                            }
+                        // 2) IT'S DEAD
+                       else if (numLivingNeighbors === 3)
+                           {
+                               renderGrid[index] = LIVE_TURRET_CELL;
+                           }                    
+                       else if (numLivingNeighbors < 0) {}
+                       else {
+                               renderGrid[index] = DEAD_CELL;
+                           }
+                   }
+                }
+        } 
+}
+
 
 /*
  * We need one grid's cells to determine the grid's values for
@@ -1089,14 +1287,58 @@ Game.prototype.calcLivingNeighbors = function(row, col)
             var neighborRow = row + cellsToCheck.cellValues[counter+1];
             var index = (neighborRow * gridWidth) + neighborCol;
             var neighborValue;
-            if (updateGrid[index] !== VOID_CELL) {
+            if (updateGrid[index] !== VOID_CELL && updateGrid[index] !== TURRET_CELL && updateGrid[index] !== TURRET_SPAWN_CELL) {
             	if (updateGrid[index] === 5) {
             		neighborValue = 1;
             	}  else if (updateGrid[index] === 6) {
             		neighborValue = 0;
-            	}  else {
+            	}  else if (updateGrid[index] === 8) {
+                    neighborValue = 0;
+                }  else if (updateGrid[index] === 9) {
+                    neighborValue = 0;
+                } else if (updateGrid[index] === 10) {
+                    neighborValue = 1;
+                }  else {
                 	neighborValue = updateGrid[index];
             	}
+            } else {
+                neighborValue = 0;
+            }
+            numLivingNeighbors += neighborValue;
+        }
+    return numLivingNeighbors;
+}
+
+Game.prototype.calcLivingNeighborsTurret = function(row, col)
+{
+    var numLivingNeighbors = 0;
+    
+    // DEPENDING ON THE TYPE OF CELL IT IS WE'LL CHECK
+    // DIFFERENT ADJACENT CELLS
+    var cellType = this.determineCellType(row, col);
+    var cellsToCheck = cellLookup[cellType];
+    for (var counter = 0; counter < (cellsToCheck.numNeighbors * 2); counter+=2)
+        {
+            var neighborCol = col + cellsToCheck.cellValues[counter];
+            var neighborRow = row + cellsToCheck.cellValues[counter+1];
+            var index = (neighborRow * gridWidth) + neighborCol;
+            var neighborValue;
+            if (updateGrid[index] !== VOID_CELL && updateGrid[index] !== TURRET_CELL && updateGrid[index] !== TURRET_SPAWN_CELL) {
+                if (updateGrid[index] === 5) {
+                    neighborValue = 1;
+                }  else if (updateGrid[index] === 6) {
+                    neighborValue = 0;
+                }  else if (updateGrid[index] === 8) {
+                    neighborValue = 0;
+                }  else if (updateGrid[index] === 9) {
+                    neighborValue = 0;
+                } else if (updateGrid[index] === 10) {
+                    neighborValue = 1;
+                }  else if (updateGrid[index] === 1) {
+                    neighborValue = -10;
+                }  else {
+                    neighborValue = updateGrid[index];
+                }
             } else {
                 neighborValue = 0;
             }
