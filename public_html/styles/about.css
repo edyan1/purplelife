@@ -16,7 +16,7 @@ a.btn:hover {
   text-decoration: none;
 }
 
-.dividerb{
+/*.dividerb{
 	width:370px;
 	height:auto;
 	display:inline-block;
@@ -26,7 +26,7 @@ a.btn:hover {
     width:15px;
     height:auto;
     display:inline-block;
-}
+}*/
 
 table, th, td{
 	border: 1px solid black;

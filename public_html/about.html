@@ -29,17 +29,26 @@
         <header class="mdl-layout__header mdl-color-text--white mdl-color--purple-700">
           <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
             <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-              <h3>Purple Life</h3>
-			  <div class="dividerb"></div>
-			  <div>
-			    <a href="index.html" class="btn">Home</a>
-				
-				<a href="" class="btn">About</a>		
-				<div class="divider"/>
-				<a href="help.html" class="btn">Help</a>
-			  </div>
+                <h3>Purple Life</h3>
+	
             </div>
             <div id="user-container">
+
+               <div id="helpabout-container">
+                   
+                <button id="home" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='index.html'">
+                    Home
+                  </button>
+                   
+                <button id="help" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='help.html'">
+                    Help
+                  </button>
+
+                <button id="about" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='about.html'">
+                    About Us
+                  </button>
+                </div>   
+              
               <div hidden id="user-pic"></div>
               <div hidden id="user-name"></div>
               <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
