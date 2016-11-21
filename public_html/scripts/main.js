@@ -21,7 +21,8 @@ var sceneManager;
 
 //Weapon Manager
 var weapon;
-TEXT_COLOR = "#7777CC";
+var direction;
+
 
 // Initializes Purple Life
 function PurpleLife() {
@@ -240,7 +241,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('#weaponDirection li').click(function() {
         weapon = weapon.substring(0, weapon.indexOf('.')) + '_';
-        var direction = $(this).find('.weaponDir').attr('src');
+        direction = $(this).find('.weaponDir').attr('src');
         $.notify("Your Selected Direction: " + direction.substring(6, direction.indexOf('.')), 'success');
         direction = '_' + direction.substring(6, direction.indexOf('.'));
         weapon = weapon.substring(0, weapon.indexOf('_')) + direction + '.png';

@@ -853,7 +853,7 @@ Game.prototype.renderWeaponSelect = function() {
     canvas2D.fillStyle = TEXT_COLOR;
 
     canvas2D.textAlign="left"
-    canvas2D.fillText("Weapon: " + this.getWeaponSelect(), 25,canvasHeight*(5.5/7));
+    canvas2D.fillText("Weapon: " + this.getWeaponSelect() + " " + this.getWeaponDirection(), 25,canvasHeight*(5.5/7));
 }
 
 /*
@@ -1376,9 +1376,16 @@ Game.prototype.getWeaponSelect = function() {
     if(weapon.indexOf('_') == -1) {
         // weapon = weapon.substring(0, weapon.indexOf('.'));
         // weapon = weapon.substring(0,1).toUpperCase() + weapon.substring(1);
-        return weapon.substring(0, weapon.indexOf('.'));;
+        return weapon.substring(0, weapon.indexOf('.'));
     }
     // weapon = weapon.substring(0, weapon.indexOf('_'));
     // weapon = weapon.substring(0,1).toUpperCase() + weapon.substring(1);
     return weapon.substring(0, weapon.indexOf('_'));
+}
+
+Game.prototype.getWeaponDirection = function() {
+    if(weapon.indexOf('_') == -1) {
+        return "";
+    }
+    return direction.substring(1);
 }
