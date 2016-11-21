@@ -21,6 +21,7 @@ var sceneManager;
 
 //Weapon Manager
 var weapon;
+TEXT_COLOR = "#7777CC";
 
 // Initializes Purple Life
 function PurpleLife() {
@@ -203,12 +204,14 @@ $(document).ready(function() {
     weapon = weapon.substring(15);
 })
 
+// GRABS THE WEAPON SELECTED AND LOADS IT ON THE CANVAS
 $(document).ready(function() {
     $('#weaponSelect li').click(function() {
         weapon = $(this).find('.weaponSize').attr('src');
         weapon = weapon.substring(15);
         $.notify("Your Selected Weapon: " + weapon.substring(0, weapon.indexOf('.')), 'success');
         $('#weaponsList li:first').prop('id', weapon);
+        // CHANGE DIRECTIONS TO DIAGONALS WHEN GUN WEAPON IS SELECTED
         if(weapon.localeCompare("gun.png") == 0) {
             $('#leftdir').attr('src', 'icons/downleft.png');
             $('#leftdir').css("transform", "rotate(-50deg)")
@@ -219,6 +222,7 @@ $(document).ready(function() {
             $('#updir').attr('src', 'icons/upright.png');
             $('#updir').css("transform", "rotate(-50deg)");
         }
+        // CHANGE DIRECTIONS TO NORMAL WHEN OTHER WEAPONS ARE SELECTED
         else {
             $('#leftdir').attr('src', 'icons/left.png');
             $('#leftdir').css("transform", "rotate(182deg)")
@@ -232,6 +236,7 @@ $(document).ready(function() {
     });
 });
 
+// GRABS THE DIRECTIONS SELECTED, CONCATENATES IT TO THE WEAPON SELECTED, THEN LOADS THE WEAPON
 $(document).ready(function() {
     $('#weaponDirection li').click(function() {
         weapon = weapon.substring(0, weapon.indexOf('.')) + '_';
@@ -243,13 +248,15 @@ $(document).ready(function() {
     });
 });
 
+
+
 function showHelpNotes (){
     
-    setTimeout(function () {$("#weaponMenu").notify("Click here to select your weapon.", "warn"); }, 500);
-    setTimeout(function () {$("#directionMenu").notify("Click here to change the direction it will point.","warn");},3000);
-    setTimeout(function () {$(".playBtn").notify("Once you have placed your weapons, click Play to start the attack!","warn");},8000);
-    setTimeout(function () {$(".resetBtn").notify("Or click Reset to clear your placed weapons to place them again.","warn");},13000);
-    setTimeout(function () {$(".quitBtn").notify("Quit brings you back to the level select screen.","warn");},18000);
+    setTimeout(function () {$("#weaponMenu").notify("Click here to select your weapon.", "info"); }, 500);
+    setTimeout(function () {$("#directionMenu").notify("Click here to change the direction it will point.","info");},3000);
+    setTimeout(function () {$(".playBtn").notify("Once you have placed your weapons, click Play to start the attack!","info");},8000);
+    setTimeout(function () {$(".resetBtn").notify("Or click Reset to clear your placed weapons to place them again.","info");},13000);
+    setTimeout(function () {$(".quitBtn").notify("Quit brings you back to the level select screen.","info");},18000);
 };
 
 function handleKeyDown(event) {

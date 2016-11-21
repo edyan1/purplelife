@@ -683,6 +683,9 @@ Game.prototype.renderGame = function () {
     // RENDER WEAPON COUNT
     this.renderWeaponCountText();
 
+    // RNEDER WEAPON SELECT
+    this.renderWeaponSelect();
+
     // AND RENDER THE TEXT
     if (gameWon) {
         this.renderYouWonText();
@@ -723,6 +726,9 @@ Game.prototype.renderGameWithoutSwapping = function()
 
     // RENDER WEAPON COUNT
     this.renderWeaponCountText();
+
+    // RENDER WEAPON SELECT
+    this.renderWeaponSelect();
 
     
     // AND RENDER THE TEXT
@@ -841,6 +847,13 @@ Game.prototype.renderWeaponCountText = function() {
 
     canvas2D.textAlign="left";
     canvas2D.fillText("Weapon Count: " + this.getWeaponCount(), 25,canvasHeight*(6/7));
+}
+
+Game.prototype.renderWeaponSelect = function() {
+    canvas2D.fillStyle = TEXT_COLOR;
+
+    canvas2D.textAlign="left"
+    canvas2D.fillText("Weapon: " + this.getWeaponSelect(), 25,canvasHeight*(5.5/7));
 }
 
 /*
@@ -1358,3 +1371,14 @@ Game.prototype.getWeaponCount = function() {
 Game.prototype.setWeaponCount = function(count) {
 	weaponCount = count;
 };
+
+Game.prototype.getWeaponSelect = function() {
+    if(weapon.indexOf('_') == -1) {
+        // weapon = weapon.substring(0, weapon.indexOf('.'));
+        // weapon = weapon.substring(0,1).toUpperCase() + weapon.substring(1);
+        return weapon.substring(0, weapon.indexOf('.'));;
+    }
+    // weapon = weapon.substring(0, weapon.indexOf('_'));
+    // weapon = weapon.substring(0,1).toUpperCase() + weapon.substring(1);
+    return weapon.substring(0, weapon.indexOf('_'));
+}
