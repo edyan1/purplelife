@@ -125,6 +125,19 @@ main, #messages-card {
   background: linear-gradient(white, #f9f9f9);
   justify-content: space-between;
 }
+
+#helpabout-container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  right: 17%;
+  padding-left: 10px;
+  justify-content: flex-end;
+  padding-right: 10px;
+  
+}
+
 #user-container {
   position: absolute;
   display: flex;

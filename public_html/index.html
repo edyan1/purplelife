@@ -48,9 +48,19 @@ and open the template in the editor.
             <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
               <h3>Purple Life</h3>
               
-            </div>
-            <div><a href="help.html">Help</a> <a href="about.html">About Us</a></div>
-            <div id="user-container">
+            </div>     
+            
+            <div id="user-container">  
+               <div id="helpabout-container">
+                <button id="help" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='help.html'">
+                    Help
+                  </button>
+
+                <button id="about" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='about.html'">
+                    About Us
+                  </button>
+            </div> 
+                
               <div hidden id="user-pic"></div>
               <div hidden id="user-name"></div>
               <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
