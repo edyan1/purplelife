@@ -106,6 +106,8 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
     //document.getElementById("game_canvas").style.visibility = 'hidden';
     sceneManager.changeScene(Scenes.LEVELSELECT);
     customLevelSelect();
+    alert(getUserProgress());
+    levelSelectAccess();
     
  } else { // User is signed out!
     // Hide user's profile and sign-out button.

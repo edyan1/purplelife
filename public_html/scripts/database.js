@@ -2,17 +2,49 @@
  *Javascript file for database
  */
 
-
-function userProgress(levelNum){
+//Stores user progress as the level number 
+function setUserProgress(levelNum){
     
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId);
+ 
     dbRef.update({
-        "progress" : levelNum
+            "progress" : levelNum
     });
 }
 
+//retrieve user progress
+function getUserProgress (){
+    var userProgress;
+    var userId = firebase.auth().currentUser.uid;
+    var dbRef = firebase.database().ref('users/'+userId);
+    dbRef.once('value').then(function(snapshot) {
+        userProgress = snapshot.val().progress;
+    });
+    alert(userProgress);
+    if (userProgress !== undefined) 
+        return userProgress;
+    else return 0;
+}
 
+//controls user's access to levels based on their progress
+function giveLevelAccess (levelNum){
+
+    document.getElementById("level"+levelNum.toString()).disabled = false;
+    
+}
+
+function levelSelectAccess (){
+    var userProgress = parseInt(getUserProgress());
+    if (userProgress !== undefined){
+        for (i = 1; i <= userProgress; i++){
+            giveLevelAccess(i);
+        }
+    }
+}
+
+//saves custom map to datastore based on slot selected
+//each user has 5 slots in which to save custom maps to
 function storeMap(slot, img){
     
     if (slot === "1") writeUserData1(img);
@@ -23,6 +55,7 @@ function storeMap(slot, img){
     
 }
 
+//save map to slot 1
 function writeUserData1(data) {
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
@@ -31,6 +64,7 @@ function writeUserData1(data) {
     });
 }
 
+//save map to slot 2
 function writeUserData2(data) {
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
@@ -39,6 +73,7 @@ function writeUserData2(data) {
     });
 }
 
+//save map to slot 3
 function writeUserData3(data) {
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
@@ -47,6 +82,7 @@ function writeUserData3(data) {
     });
 }
 
+//save map to slot 4
 function writeUserData4(data) {
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
@@ -55,6 +91,7 @@ function writeUserData4(data) {
     });
 }
 
+//save map to slot 5
 function writeUserData5(data) {
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
@@ -63,8 +100,7 @@ function writeUserData5(data) {
     });
 }
 
-
-
+//load map in user selected slot (in level editor)
 function loadUserMap (slot) {
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
@@ -82,6 +118,7 @@ function loadUserMap (slot) {
     
 }
 
+//populate custom maps screen in level select with user created maps
 function customLevelSelect (){
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
