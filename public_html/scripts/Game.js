@@ -183,7 +183,7 @@ var nextTimeTurretCanFire;
     CELL_LENGTH_X = 20;
     CELL_LENGTH_Y = 480;
 
-    turretFireRate = 1000;
+    turretFireRate = 2000;
 };
 
 Game.prototype.initCanvas = function(canvas, canvas2D, canvasWidth, canvasHeight, mouseState) {
@@ -607,6 +607,8 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	    var clickCol = Math.floor(canvasCoords.x/cellLength);
 	    var clickRow = Math.floor(canvasCoords.y/cellLength);
 	    
+        var placed = false;
+
 	    // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
 	    for (var i = 0; i < pixels.length; i += 2)
 	        {
@@ -620,6 +622,7 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	            	purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
                     savedPlacementCells[savedCellsCount++] = col;
                     savedPlacementCells[savedCellsCount++] = row;
+                    placed = true;
 	        	}
 	        	
 	        }
@@ -627,7 +630,8 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	        
 	    // RENDER THE GAME IMMEDIATELY
 	    purpleGame.renderGameWithoutSwapping();
-	    purpleGame.setWeaponCount(purpleGame.getWeaponCount()-1);
+        if (placed)
+	       purpleGame.setWeaponCount(purpleGame.getWeaponCount()-1);
 	}
 };
 
