@@ -289,7 +289,7 @@ Game.prototype.initPatterns = function () {
 
 Game.prototype.initLevels = function () {
     // THIS IS WHERE ALL THE IMAGES SHOULD BE
-    levelDir = "/images/levels/";
+    levelDir = "images/levels/";
     
     // THIS WILL STORE ALL THE PATTERNS IN AN ASSOCIATIVE ARRAY
     levels = new Array();

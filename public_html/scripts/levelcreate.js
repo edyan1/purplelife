@@ -101,7 +101,7 @@ function initConstants()
     VOID_COLOR = "rgb(128,128,128)";
     GRID_LINES_COLOR = "#CCCCCC";
     TEXT_COLOR = "#7777CC";
-    GHOST_COLOR = "#FF8080";
+    GHOST_COLOR = "rgba(255, 0, 0, 0.2)";
     FEEDBACK_COLOR = "#CC00CC";
     PLACEMENT_COLOR = "rgb(90,180,90)";
     //flag for placing and removing void cells

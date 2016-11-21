@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "purplelifebuild3"
+    "default": "purplelifebuild3",
+    "purplelifebuild3": "purplelifebuild3",
+    "purplelife": "purplelifebuild3"
   }
 }
