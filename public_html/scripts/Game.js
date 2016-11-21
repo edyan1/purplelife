@@ -904,13 +904,13 @@ Game.prototype.stepTurretTime = function() {
 Game.prototype.spawnProjectile = function() {
     var turretSpawns = levels[currentLevel][4];
     for (var i = 0; i < turretSpawns.length; i += 2) {
-        //BOTTOM RIGHT
+        //TOP RIGHT
         purpleGame.setGridCell(renderGrid, turretSpawns[i+1] + 2, turretSpawns[i] + 2, LIVE_TURRET_CELL);
         purpleGame.setGridCell(renderGrid, turretSpawns[i+1] + 3, turretSpawns[i] + 3, LIVE_TURRET_CELL);
         purpleGame.setGridCell(renderGrid, turretSpawns[i+1] + 4, turretSpawns[i] + 1, LIVE_TURRET_CELL);
         purpleGame.setGridCell(renderGrid, turretSpawns[i+1] + 4, turretSpawns[i] + 2, LIVE_TURRET_CELL);
         purpleGame.setGridCell(renderGrid, turretSpawns[i+1] + 4, turretSpawns[i] + 3, LIVE_TURRET_CELL);
-        //BOTTOM LEFT
+        //BOTTOM RIGHT
         purpleGame.setGridCell(renderGrid, turretSpawns[i+1] - 1, turretSpawns[i] + 2, LIVE_TURRET_CELL);
         purpleGame.setGridCell(renderGrid, turretSpawns[i+1] - 2, turretSpawns[i] + 3, LIVE_TURRET_CELL);
         purpleGame.setGridCell(renderGrid, turretSpawns[i+1] - 3, turretSpawns[i] + 1, LIVE_TURRET_CELL);
