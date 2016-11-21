@@ -23,7 +23,7 @@
   text-decoration: none;
   height: 50px;
   position: absolute;
-  left: 35%
+  left: 45%
 }
 
 .playBtn:hover {
@@ -44,7 +44,7 @@
   text-decoration: none;
   height: 50px;
   position: absolute;
-  left: 45%
+  left: 55%
 }
 
 .quitBtn:hover {
@@ -65,7 +65,7 @@
   text-decoration: none;
   height: 50px;
   position: absolute;
-  left: 55%
+  left: 35%
 }
 
 .resetBtn:hover {
