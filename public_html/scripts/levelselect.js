@@ -12,9 +12,8 @@ function initLevelSelect() {
     tabNavigationLinks: '.c-tabs-nav__link',
     tabContentContainers: '.c-tab'
   });
-
-  myTabs.init();
   
+  myTabs.init();
 };
 
 (function() {

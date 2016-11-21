@@ -7,20 +7,40 @@ function setUserProgress(levelNum){
     
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId);
+ 
     dbRef.update({
-        "progress" : levelNum
+            "progress" : levelNum
     });
 }
 
+//retrieve user progress
 function getUserProgress (){
     var userProgress;
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId);
-    dbRef.on('value', function(snapshot) {
+    dbRef.once('value').then(function(snapshot) {
         userProgress = snapshot.val().progress;
     });
-    return userProgress;
+    alert(userProgress);
+    if (userProgress !== undefined) 
+        return userProgress;
+    else return 0;
+}
+
+//controls user's access to levels based on their progress
+function giveLevelAccess (levelNum){
+
+    document.getElementById("level"+levelNum.toString()).disabled = false;
     
+}
+
+function levelSelectAccess (){
+    var userProgress = parseInt(getUserProgress());
+    if (userProgress !== undefined){
+        for (i = 1; i <= userProgress; i++){
+            giveLevelAccess(i);
+        }
+    }
 }
 
 //saves custom map to datastore based on slot selected
@@ -80,7 +100,7 @@ function writeUserData5(data) {
     });
 }
 
-//populate custom maps screen in level select with user created maps
+//load map in user selected slot (in level editor)
 function loadUserMap (slot) {
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
@@ -98,7 +118,7 @@ function loadUserMap (slot) {
     
 }
 
-//load map in user selected slot (in level editor)
+//populate custom maps screen in level select with user created maps
 function customLevelSelect (){
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
