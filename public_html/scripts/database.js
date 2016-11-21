@@ -2,6 +2,8 @@
  *Javascript file for database
  */
 
+var userProgress = 1;
+
 //Stores user progress as the level number 
 function setUserProgress(levelNum){
     
@@ -9,22 +11,23 @@ function setUserProgress(levelNum){
     var dbRef = firebase.database().ref('users/'+userId);
  
     dbRef.update({
-            "progress" : levelNum
+        "progress" : levelNum
     });
 }
 
 //retrieve user progress
 function getUserProgress (){
-    var userProgress;
+    
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId);
     dbRef.once('value').then(function(snapshot) {
-        userProgress = snapshot.val().progress;
+        
+        var progress = snapshot.val().progress;
+        if (progress!==undefined) userProgress = progress;
+        
     });
-    alert(userProgress);
-    if (userProgress !== undefined) 
-        return userProgress;
-    else return 0;
+    
+    return userProgress;
 }
 
 //controls user's access to levels based on their progress
@@ -34,8 +37,10 @@ function giveLevelAccess (levelNum){
     
 }
 
+//not used, still debugging
 function levelSelectAccess (){
-    var userProgress = parseInt(getUserProgress());
+    var j = getUserProgress();
+    alert(j);
     if (userProgress !== undefined){
         for (i = 1; i <= userProgress; i++){
             giveLevelAccess(i);
