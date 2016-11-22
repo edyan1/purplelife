@@ -84,6 +84,8 @@ var cellLookup;
 var imgDir;
 var levelDir;
 
+var cLevels; //custom levels array
+
 //Level Stuff
 var currentLevel;
 var weaponCount;
@@ -262,7 +264,7 @@ Game.prototype.initCellLookup = function() {
 
 Game.prototype.initPatterns = function () {
     // THIS IS WHERE ALL THE IMAGES SHOULD BE
-    imgDir = "/images/weapons/";
+    imgDir = "images/weapons/";
     
     // THIS WILL STORE ALL THE PATTERNS IN AN ASSOCIATIVE ARRAY
     patterns = new Array();
@@ -313,6 +315,34 @@ Game.prototype.initLevels = function () {
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
         levels[key] = pixelArray;
+    }
+    
+};
+
+Game.prototype.initCustLevels = function () {
+    
+    // THIS WILL STORE ALL THE PATTERNS IN AN ASSOCIATIVE ARRAY
+    cLevels = new Array();
+
+    // RECEIEVE THE LEVELS FROM THE HTML
+    var cLevelList = document.getElementById("customLevelsList");
+    var cLevelItems = cLevelList.getElementsByTagName("li");
+
+    for (var i = 0; i < cLevelItems.length; i++) {
+        // GET THE NAME OF THE IMAGE FILE AND MAKE
+        // A NEW ARRAY TO STORE IT'S PIXEL COORDINATES
+        var key = cLevelItems[i].id;
+        var pixelArray = new Array();
+
+        // NOW LOAD THE DATA FROM THE IMAGE
+        loadOffScreenLevel(key, pixelArray);
+
+        //SET THE WEAPON COUNT
+        pixelArray[5] = cLevelItems[i].value;
+            
+        // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
+        // BY KEY
+        cLevels[key] = pixelArray;
     }
     
 };

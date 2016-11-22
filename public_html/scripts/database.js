@@ -2,7 +2,7 @@
  *Javascript file for database
  */
 
-var userProgress = 1;
+var userProgress = 0;
 
 //Stores user progress as the level number 
 function setUserProgress(levelNum){
