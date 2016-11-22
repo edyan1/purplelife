@@ -20,14 +20,12 @@ function getUserProgress (){
     
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId);
-    dbRef.once('value').then(function(snapshot) {
-        
-        var progress = snapshot.val().progress;
-        if (progress!==undefined) userProgress = progress;
-        
+    dbRef.on('value', function(snapshot) {
+        if (snapshot.val().progress!==undefined) userProgress = snapshot.val().progress;
+        return userProgress;
     });
-    
     return userProgress;
+    
 }
 
 //controls user's access to levels based on their progress
@@ -39,13 +37,14 @@ function giveLevelAccess (levelNum){
 
 //not used, still debugging
 function levelSelectAccess (){
-    var j = getUserProgress();
-    alert(j);
-    if (userProgress !== undefined){
-        for (i = 1; i <= userProgress; i++){
-            giveLevelAccess(i);
+    var userId = firebase.auth().currentUser.uid;
+    var dbRef = firebase.database().ref('users/'+userId);
+    dbRef.on('value', function(snapshot) {
+        if (snapshot.val().progress!==undefined) progress = snapshot.val().progress;
+        for (i = 1; i <= progress; i++){
+            giveLevelAccess(i+1);
         }
-    }
+    });
 }
 
 //saves custom map to datastore based on slot selected

@@ -700,7 +700,10 @@ Game.prototype.renderGame = function () {
         // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
         if (currentlyPressedKeys[70]) {
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
-            if (getUserProgress() < levelNumber-1 )setUserProgress(levelNumber-1);
+            if (userSignedIn === true && getUserProgress() < levelNumber-1 ){
+                console.log(getUserProgress());
+                setUserProgress(levelNumber-1);
+            }
             giveLevelAccess(levelNumber);
             var tempCurrentLevel = currentLevel;
             savedPlacementCells.length = 0;
@@ -749,7 +752,10 @@ Game.prototype.renderGameWithoutSwapping = function()
         // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
         if (currentlyPressedKeys[70]) {
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
-            if (getUserProgress() < levelNumber-1 ) setUserProgress(levelNumber-1);
+            if (userSignedIn === true && getUserProgress() < levelNumber-1 ) {
+                console.log(getUserProgress());
+                setUserProgress(levelNumber-1);
+            }
             giveLevelAccess(levelNumber);
             this.resetGameOfLife();
             this.pausePurpleGame();
