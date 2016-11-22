@@ -32,7 +32,7 @@ function getUserProgress (){
 function giveLevelAccess (levelNum){
 
     document.getElementById("level"+levelNum.toString()).disabled = false;
-    
+    document.getElementById("l"+levelNum+"img").setAttribute("src", "images/levels/level"+levelNum+".png");
 }
 
 //not used, still debugging
