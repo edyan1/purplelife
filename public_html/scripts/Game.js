@@ -1168,6 +1168,9 @@ Game.prototype.startPurpleGame = function () {
             clearInterval(turretRenderTimer);
         }
 
+    // PLAY SOUND OF WEAPON SELECTED
+    playWeaponSound();
+
     // START A NEW TIMER
     timer = setInterval(this.stepPurpleGame, frameInterval);
 
@@ -1175,10 +1178,35 @@ Game.prototype.startPurpleGame = function () {
     var callMethod = function() {
         purpleGame.hasPlayerLost();
     }
+
     
     // CHECK IF PLAYER LOST, BY NOT BEATING THE LEVEL WITHIN 5 SECONDS
     waitTillPlayerLoses = setTimeout(function() { callMethod() }, 5000);
 };
+
+function playWeaponSound() {
+    var currentWeapon = weapon.substring(0, weapon.indexOf("_"));
+    if(currentWeapon == "")
+        currentWeapon = weapon.substring(0, weapon.indexOf("."));
+    var audio;
+    switch(currentWeapon) {
+        case "rocket":
+            audio = new Audio("./sounds/rocket.mp3");
+            audio.play();
+            audio.volume = 0.2;
+            break;
+        case "gun":
+            audio = new Audio("./sounds/gun.mp3");
+            audio.play();
+            audio.volume = 0.3;
+            audio.addEventListener("ended", function () {
+                audio = new Audio("./sounds/gunshell.mp3");
+                audio.play();
+                audio.volume = 0.3;
+            });
+            break;
+    }
+}
 
 Game.prototype.pausePurpleGame = function () {
     // TELL JavaScript TO STOP RUNNING THE LOOP

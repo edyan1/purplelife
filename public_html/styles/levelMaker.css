@@ -23,9 +23,11 @@ html, body {
   
   width: 25%;
   height: 90%;
-  border-style: solid;
-  border-color: #7b1fa2;
-  border-width: 3px;
+  background-color: #7b1fa2;
+    text-align: center;
+  /*border-style: solid;*/
+  /*border-color: #7b1fa2;*/
+  /*border-width: 3px;*/
   padding-left: 2%;
   padding-right: 2%;
   right: 0px;
