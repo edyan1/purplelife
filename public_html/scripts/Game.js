@@ -15,7 +15,9 @@ var TURRET_CELL;
 var TURRET_SPAWN_CELL;
 var LIVE_TURRET_CELL;
 var savedPlacementCells = [];
+var placedWeapons = [];
 var savedCellsCount = 0;
+var placedWeaponCount = 0;
 
 // COLORS
 var LIVE_COLOR;
@@ -92,6 +94,7 @@ var weaponCount;
 var undoArray;
 var undoCounter;
 var gameWon;
+var isWonPlayed = false;
 var gameLost;
 var waitTillPlayerLoses;
 var turretFireRate;
@@ -656,6 +659,7 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	            	purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
 	            	purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
 	            	purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
+                    // SAVE COORDINATES OF WEAPON FOR LEVEL RETRY
                     savedPlacementCells[savedCellsCount++] = col;
                     savedPlacementCells[savedCellsCount++] = row;
                     placed = true;
@@ -663,15 +667,30 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	        	
 	        }
 	        savedPlacementCells[savedCellsCount++] = -1;
+            // SAVE PLACED WEAPON IN AN ARRAY
+            var placedWeapon = weapon.substring(0, weapon.indexOf('_'));
+            if(placedWeapon.length == 0)
+                placedWeapon = weapon.substring(0, weapon.indexOf('.'));
+            if(!checkIfAvailable(placedWeapon))
+                placedWeapons[placedWeaponCount++] = placedWeapon;
+            alert(placedWeapons);
 	        
 	    // RENDER THE GAME IMMEDIATELY
 	    purpleGame.renderGameWithoutSwapping();
 
-        // ONLY DECREMENT WEAPONCOUNT IF WE DID IN FACT PLACE PIXELS
+        // ONLY DECREMENT "WEAPONCOUNT" IF WE DID IN FACT PLACE PIXELS
         if (placed)
 	       purpleGame.setWeaponCount(purpleGame.getWeaponCount()-1);
 	}
 };
+
+// THIS FUNCTION CHECKS IF PLACED WEAPON IS ALREADY IN "PLACEDWEAPONS" ARRAY
+function checkIfAvailable(placedWeapon) {
+    for(var i = 0; i < placedWeapons.length; i++)
+        if(placedWeapons[i] == placedWeapon)
+            return true;
+    return false;
+}
 
 Game.prototype.respondToMouseMove = function (event, purpleGame) {
     // GET THE PATTERN SELECTED IN THE DROP DOWN LIST
@@ -726,7 +745,8 @@ Game.prototype.renderGame = function () {
 
     // AND RENDER THE TEXT
     if (gameWon) {
-        this.renderYouWonText();
+        this.renderYouWon();
+        playWonSound();
         // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
         if (currentlyPressedKeys[70]) {
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
@@ -778,7 +798,8 @@ Game.prototype.renderGameWithoutSwapping = function()
     
     // AND RENDER THE TEXT
     if (gameWon) {
-        this.renderYouWonText();
+        this.renderYouWon();
+        playWonSound();
         // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
         if (currentlyPressedKeys[70]) {
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
@@ -946,7 +967,7 @@ Game.prototype.renderWeaponSelect = function() {
 /*
  * Renders the text on top of the grid.
  */
-Game.prototype.renderYouWonText = function() {
+Game.prototype.renderYouWon = function() {
     // SET THE PROPER COLOR
     canvas2D.fillStyle = TEXT_COLOR;
     
@@ -1185,26 +1206,33 @@ Game.prototype.startPurpleGame = function () {
 };
 
 function playWeaponSound() {
-    var currentWeapon = weapon.substring(0, weapon.indexOf("_"));
-    if(currentWeapon == "")
-        currentWeapon = weapon.substring(0, weapon.indexOf("."));
     var audio;
-    switch(currentWeapon) {
-        case "rocket":
-            audio = new Audio("./sounds/rocket.mp3");
-            audio.play();
-            audio.volume = 0.2;
-            break;
-        case "gun":
-            audio = new Audio("./sounds/gun.mp3");
-            audio.play();
-            audio.volume = 0.3;
-            audio.addEventListener("ended", function () {
-                audio = new Audio("./sounds/gunshell.mp3");
+    for(var i = 0; i < placedWeapons.length; i++)
+        switch(placedWeapons[i]) {
+            case "rocket":
+                audio = new Audio("./sounds/rocket.mp3");
+                audio.play();
+                audio.volume = 0.2;
+                break;
+            case "gun":
+                audio = new Audio("./sounds/gun.mp3");
                 audio.play();
                 audio.volume = 0.3;
-            });
-            break;
+                audio.addEventListener("ended", function () {
+                    audio = new Audio("./sounds/gunshell.mp3");
+                    audio.play();
+                    audio.volume = 0.3;
+                });
+                break;
+        }
+}
+
+function playWonSound() {
+    if(!isWonPlayed) {
+        var audio = new Audio("./sounds/winsound.mp3");
+        audio.play();
+        audio.volume = 0.25;
+        isWonPlayed = true;
     }
 }
 
@@ -1258,9 +1286,14 @@ Game.prototype.resetGameOfLife = function () {
                 purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
             }
         }
+        // RESET PREVIOUS PLACED CELLS
         savedPlacementCells.length = 0;
         savedCellsCount = 0;
     }
+    // RESET "PLACEDWEAPONS" ARRAY AND "ISWONPLAYED" FOR NEXT ROUND
+    placedWeapons.length = 0;
+    placedWeaponCount = 0;
+    isWonPlayed = false;
 
 
     // RENDER THE CLEARED SCREEN
