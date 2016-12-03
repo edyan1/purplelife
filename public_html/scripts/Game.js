@@ -1205,21 +1205,22 @@ Game.prototype.startPurpleGame = function () {
     waitTillPlayerLoses = setTimeout(function() { callMethod() }, 5000);
 };
 
+// EVERY WEAPON HAS A SOUND WHEN SHOT
 function playWeaponSound() {
     var audio;
     for(var i = 0; i < placedWeapons.length; i++)
         switch(placedWeapons[i]) {
             case "rocket":
-                audio = new Audio("./sounds/rocket.mp3");
+                audio = new Audio("./sounds/weapons/rocket.mp3");
                 audio.play();
                 audio.volume = 0.2;
                 break;
             case "gun":
-                audio = new Audio("./sounds/gun.mp3");
+                audio = new Audio("./sounds/weapons/gun.mp3");
                 audio.play();
                 audio.volume = 0.3;
                 audio.addEventListener("ended", function () {
-                    audio = new Audio("./sounds/gunshell.mp3");
+                    audio = new Audio("./sounds/weapons/gunshell.mp3");
                     audio.play();
                     audio.volume = 0.3;
                 });
@@ -1227,12 +1228,34 @@ function playWeaponSound() {
         }
 }
 
+// PLAYS FIREWORKS FOR WINNING
 function playWonSound() {
     if(!isWonPlayed) {
         var audio = new Audio("./sounds/winsound.mp3");
         audio.play();
         audio.volume = 0.25;
         isWonPlayed = true;
+    }
+}
+
+// AUDIO PLAYS FOR USER INSTRUCTIONS
+function playInstructions(instruction) {
+    switch(instruction) {
+        case "weapon":
+            var audio = new Audio("./sounds/instructions/weaponselect.mp3");
+            audio.play();
+            audio.volume = 0.25;
+            break;
+        case "direction":
+            var audio = new Audio("./sounds/instructions/directionselect.mp3");
+            audio.play();
+            audio.volume = 0.25;
+            break;
+        case "placement":
+            var audio = new Audio("./sounds/instructions/placementselect.mp3");
+            audio.play();
+            audio.volume = 0.25;
+            break;
     }
 }
 

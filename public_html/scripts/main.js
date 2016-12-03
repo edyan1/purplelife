@@ -209,6 +209,8 @@ $(document).ready(function() {
 // GRABS THE WEAPON SELECTED AND LOADS IT ON THE CANVAS
 $(document).ready(function() {
     $('#weaponSelect li').click(function() {
+        if(level1)
+            playInstructions("direction");
         weapon = $(this).find('.weaponSize').attr('src');
         weapon = weapon.substring(15);
         $.notify("Your Selected Weapon: " + weapon.substring(0, weapon.indexOf('.')), 'success');
@@ -241,6 +243,7 @@ $(document).ready(function() {
 // GRABS THE DIRECTIONS SELECTED, CONCATENATES IT TO THE WEAPON SELECTED, THEN LOADS THE WEAPON
 $(document).ready(function() {
     $('#weaponDirection li').click(function() {
+        playInstructions("placement");
         weapon = weapon.substring(0, weapon.indexOf('.')) + '_';
         direction = $(this).find('.weaponDir').attr('src');
         $.notify("Your Selected Direction: " + direction.substring(6, direction.indexOf('.')), 'success');
