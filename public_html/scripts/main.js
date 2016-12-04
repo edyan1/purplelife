@@ -130,12 +130,17 @@ PurpleLife.prototype.initCanvas = function() {
     // THAT WE'LL BE RENDERING THE FRAME RATE AND ZOOM LEVEL
     // ON THE CANVAS
     canvas2D.font = "24px Arial";
+
+    window.addEventListener('resize', this.resizeCanvas, false);
+    this.resizeCanvas();
     
     // NOTE THAT THESE DIMENSIONS SHOULD BE THE
     // SAME AS SPECIFIED IN THE WEB PAGE, WHERE
     // THE CANVAS IS SIZED
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
+
+    console.log(canvasWidth);
     
     mouseState = false;
 
@@ -153,6 +158,16 @@ PurpleLife.prototype.initCanvas = function() {
     currentlyPressedKeys[70] = false;
     currentlyPressedKeys[82] = false;
 };
+
+PurpleLife.prototype.resizeCanvas = function() {
+    canvas.width = Math.round(window.innerWidth* .533);
+    canvas.height = Math.round(window.innerHeight * .595);
+    canvasWidth = canvas.width;
+    canvasHeight = canvas.height;
+
+    if (purpleGame != undefined)
+      purpleGame.resizeCanvas();
+}
 
 function respondToMouseClick (event) {
   purpleGame.realMouseClick(event, purpleGame);

@@ -77,7 +77,8 @@ var tempGrid;
 var brightGrid;
 
 // RENDERING VARIABLES
-var cellLength;
+var cellLengthX;
+var cellLengthY;
 
 // PATTERN PIXELS
 var patterns;
@@ -208,7 +209,8 @@ Game.prototype.initPurpleGameData = function() {
     frameInterval = MILLISECONDS_IN_ONE_SECOND/fps;
 
     // INIT THE CELL LENGTH
-    cellLength = MIN_CELL_LENGTH;
+    cellLengthX = MIN_CELL_LENGTH;
+    cellLengthY = MIN_CELL_LENGTH;
 
 };
 
@@ -641,8 +643,8 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	    
 	    // CALCULATE THE ROW,COL OF THE CLICK
 	    var canvasCoords = purpleGame.getRelativeCoords(event);
-	    var clickCol = Math.floor(canvasCoords.x/cellLength);
-	    var clickRow = Math.floor(canvasCoords.y/cellLength);
+	    var clickCol = Math.floor(canvasCoords.x/cellLengthX);
+	    var clickRow = Math.floor(canvasCoords.y/cellLengthY);
 	    
         // TO CHECK IF WE ACTUALLY ENDED UP PLACING ANY PIXELS
         var placed = false;
@@ -703,8 +705,8 @@ Game.prototype.respondToMouseMove = function (event, purpleGame) {
     
     // CALCULATE THE ROW,COL OF THE CLICK
     var canvasCoords = purpleGame.getRelativeCoords(event);
-    var clickCol = Math.floor(canvasCoords.x/cellLength);
-    var clickRow = Math.floor(canvasCoords.y/cellLength);
+    var clickCol = Math.floor(canvasCoords.x/cellLengthX);
+    var clickRow = Math.floor(canvasCoords.y/cellLengthY);
     
     // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
     tempGrid = new Array();
@@ -731,7 +733,7 @@ Game.prototype.renderGame = function () {
     this.renderPlacementCells();
     
     // RENDER THE GRID LINES, IF NEEDED
-    if (cellLength >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
+    if (cellLengthX >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
         this.renderGridLines();
     
     // RENDER THE GAME CELLS
@@ -783,7 +785,7 @@ Game.prototype.renderGameWithoutSwapping = function()
     this.renderPlacementCells();
     
     // RENDER THE GRID LINES, IF NEEDED
-    if (cellLength >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
+    if (cellLengthX >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
         this.renderGridLines();
     
     // RENDER THE GAME CELLS
@@ -794,7 +796,6 @@ Game.prototype.renderGameWithoutSwapping = function()
 
     // RENDER WEAPON SELECT
     this.renderWeaponSelect();
-
     
     // AND RENDER THE TEXT
     if (gameWon) {
@@ -831,10 +832,10 @@ Game.prototype.renderPlacementCells = function() {
 	for (var i = 0; i < placements.length; i+=2) {
 		var col = placements[i];
         var row = placements[i+1];
-	    var x = col * cellLength;
-	    var y = row * cellLength;
+	    var x = col * cellLengthX;
+	    var y = row * cellLengthY;
 	    canvas2D.fillStyle = PLACEMENT_COLOR;
-	    canvas2D.fillRect(x, y, cellLength, cellLength);
+	    canvas2D.fillRect(x, y, cellLengthX, cellLengthY);
 	}
 };
 
@@ -845,7 +846,7 @@ Game.prototype.renderGridLines = function () {
     // VERTICAL LINES
     for (var i = 0; i < gridWidth; i++)
         {
-            var x1 = i * cellLength;
+            var x1 = i * cellLengthX;
             var y1 = 0;
             var x2 = x1;
             var y2 = canvasHeight;
@@ -859,7 +860,7 @@ Game.prototype.renderGridLines = function () {
     for (var j = 0; j < gridHeight; j++)
         {
             var x1 = 0;
-            var y1 = j * cellLength;
+            var y1 = j * cellLengthY;
             var x2 = canvasWidth;
             var y2 = y1;
             canvas2D.moveTo(x1, y1);
@@ -887,60 +888,60 @@ Game.prototype.renderCells = function() {
                    if (cell === LIVE_CELL)
                        {
                            canvas2D.fillStyle = LIVE_COLOR;
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                           var x = j * cellLengthX;
+                           var y = i * cellLengthY;
+                           canvas2D.fillRect(x, y, cellLengthX, cellLengthY);
                        }
                     else if (cell === VOID_CELL)
                        {
                            canvas2D.fillStyle = WALL_COLOR;
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillRect(x, y, cellLength, cellLength); 
+                           var x = j * cellLengthX;
+                           var y = i * cellLengthY;
+                           canvas2D.fillRect(x, y, cellLengthX, cellLengthY); 
                        } 
                     else if (cell === OBJ_CELL) {
                     	   objCellCount++;
                        	   canvas2D.fillStyle = OBJ_COLOR;
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                           var x = j * cellLengthX;
+                           var y = i * cellLengthY;
+                           canvas2D.fillRect(x, y, cellLengthX, cellLengthY);
                        }
                     else if (cell === TURRET_CELL) {
                            canvas2D.fillStyle = TURRET_COLOR;
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                           var x = j * cellLengthX;
+                           var y = i * cellLengthY;
+                           canvas2D.fillRect(x, y, cellLengthX, cellLengthY);
                        }
                     else if (cell === TURRET_SPAWN_CELL) {
                            canvas2D.fillStyle = TURRET_COLOR;
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                           var x = j * cellLengthX;
+                           var y = i * cellLengthY;
+                           canvas2D.fillRect(x, y, cellLengthX, cellLengthY);
                        }
                     else if (cell === LIVE_TURRET_CELL) {
                            canvas2D.fillStyle = LIVE_TURRET_COLOR;
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                           var x = j * cellLengthX;
+                           var y = i * cellLengthY;
+                           canvas2D.fillRect(x, y, cellLengthX, cellLengthY);
                     }
                     if (cell2 === HOVER_CELL) {
                            canvas2D.fillStyle = HOVER_COLOR;
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                           var x = j * cellLengthX;
+                           var y = i * cellLengthY;
+                           canvas2D.fillRect(x, y, cellLengthX, cellLengthY);
                     }
                     if (cell3 == PREV_CELL) {
                         canvas2D.fillStyle = PREV_COLOR;
-                        var x = j * cellLength;
-                        var y = i * cellLength;
-                        canvas2D.fillRect(x, y, cellLength, cellLength);
+                        var x = j * cellLengthX;
+                        var y = i * cellLengthY;
+                        canvas2D.fillRect(x, y, cellLengthX, cellLengthY);
                     }
                     
                     if (cell3 === NEW_CELL) {
                            canvas2D.fillStyle = BRIGHT_COLOR;
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                           var x = j * cellLengthX;
+                           var y = i * cellLengthY;
+                           canvas2D.fillRect(x, y, cellLengthX, cellLengthY);
                     }
                }
         } 
@@ -1274,8 +1275,10 @@ Game.prototype.pausePurpleGame = function () {
 
 Game.prototype.resetGameOfLife = function () {
     // RESET ALL THE DATA STRUCTURES TOO
-    gridWidth = canvasWidth/cellLength;
-    gridHeight = canvasHeight/cellLength;
+    cellLengthX = canvasWidth/64;
+    cellLengthY = canvasHeight/36;
+    gridWidth = canvasWidth/cellLengthX;
+    gridHeight = canvasHeight/cellLengthY;
     updateGrid = new Array();
     renderGrid = new Array();
     tempGrid = new Array();
@@ -1540,4 +1543,12 @@ Game.prototype.getWeaponDirection = function() {
 
 Game.prototype.hasPlayerLost = function() {
     if (!gameWon) gameLost = true;
+}
+
+Game.prototype.resizeCanvas = function() {
+    canvasWidth = canvas.width;
+    canvasHeight = canvas.height;
+
+    if (currentLevel != null)
+        this.resetLevel();
 }

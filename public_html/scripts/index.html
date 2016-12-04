@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Purple Life</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+         <!-- Material Design Lite -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+        <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+        <!-- Font link -->
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+        
+         <!-- App Styling -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/jquery.fanmenu.css">
+        <link rel="stylesheet" href="styles/buttonFont.css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="scripts/jquery.fanmenu.js"></script>
+       
+	<script src="scripts/Game.js"></script>
+        <script src="scripts/SceneManager.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/notify.js"></script>
+        
+        
+        <!-- Level Select style sheet and script -->
+        <link rel="stylesheet" href="styles/levelselect.css">
+        <script src="scripts/levelselect.js"></script>
+         
+    </head>
+    <body>
+        
+        <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+        <!-- Header section containing logo -->
+        <header class="mdl-layout__header mdl-color-text--white mdl-color--purple-700">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+            <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+              <h3>Purple Life</h3>
+              
+            </div>     
+            
+            <div id="user-container">  
+              
+              <button id="help" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='help.html'">
+              Help
+              </button>
+
+              <button id="about" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='about.html'">
+              About Us
+              </button>
+           
+                
+              <div hidden id="user-pic"></div>
+              <div hidden id="user-name"></div>
+              <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                Sign-out
+              </button>
+              <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                <i class="material-icons">account_circle</i>Sign-in with Google
+              </button>
+            </div>
+          </div>
+        </header>
+        
+        <div class="add_banner_left">
+          <div class="rotate">ADVERTISE HERE</div>
+        </div>
+        
+        
+        
+        
+        <div id="container">
+        
+          <div class="canvas">
+            <canvas id="game_canvas" width="1524" height="900" style="margin:0 auto;"></canvas>
+          </div>
+          
+
+          <!--LEVEL SELECT -->
+          <div  id="ls-section" hidden>
+            <div id="tabs" class="c-tabs no-js">
+              <div class="c-tabs-nav">
+                <a href="#" class="c-tabs-nav__link is-active">
+                  <i class="chapter1"></i>
+                  <span>Chapter 1</span>
+                </a>
+                <a href="#" class="c-tabs-nav__link">
+                  <i class="chapter2"></i>
+                  <span>Chapter 2</span>
+                </a>
+                <a href="#" class="c-tabs-nav__link">
+                  <i class="chapter3"></i>
+                  <span>Chapter 3</span>
+                </a>
+                <a href="#" class="c-tabs-nav__link">
+                  <i class="chapter4"></i>
+                  <span>Chapter 4</span>
+                </a>
+                <a href="#" class="c-tabs-nav__link">
+                  <i class="chapter5"></i>
+                  <span>Chapter 5</span>
+                </a>
+
+                <a href="#" class="c-tabs-nav__link">
+                  <i class="chapter6"></i>
+                  <span>Chapter 6</span>
+                </a>
+
+                <a href="#" class="c-tabs-nav__link">
+                  <i class="epilogue"></i>
+                  <span>Epilogue</span>
+                </a>
+
+                <a href="#" class="c-tabs-nav__link">
+                  <i class="custom"></i>
+                  <span>Custom</span>
+                </a>
+              </div>
+
+              <div class="c-tab is-active">
+                <div class="c-tab__content">
+                  <h2>Chapter 1</h2>
+                  <div class="level1" id="lev1">Level 1: <br><button class="levelButton" id="level1" type="button" onclick="sceneManager.loadGameLevel(1)"><img class="levelImg" id="l1img" src="images/levels/level1.png" /></button> </div>
+                  <div class="level2" id="lev2">Level 2: <br><button disabled class="levelButton" id="level2" type="button" onclick="sceneManager.loadGameLevel(2)"><img class="levelImg" id="l2img" src="images/levels/hidden.png" /></button> </div>
+                  <div class="level3" id="lev3">Level 3: <br><button disabled class="levelButton" id="level3" type="button" onclick="sceneManager.loadGameLevel(3)"><img class="levelImg" id="l3img" src="images/levels/hidden.png" /></button> </div>
+                  <div class="level4" id="lev4">Level 4: <br><button disabled class="levelButton" id="level4" type="button" onclick="sceneManager.loadGameLevel(4)"><img class="levelImg" id="l4img" src="images/levels/hidden.png" /></button> </div>
+                  <div class="level5" id="lev5">Level 5: <br><button disabled class="levelButton" id="level5" type="button" onclick="sceneManager.loadGameLevel(5)"><img class="levelImg" id="l5img" src="images/levels/hidden.png" /></button> </div>
+                  <div class="level6" id="lev6">Level 6: <br><button disabled class="levelButton" id="level6" type="button" onclick="sceneManager.loadGameLevel(6)"><img class="levelImg" id="l6img" src="images/levels/hidden.png" /></button> </div>
+                </div>
+              </div>
+
+              <div class="c-tab">
+                <div class="c-tab__content">
+                  <h2>Chapter 2</h2>
+                  <p>chap 2 test.</p>
+                </div>
+              </div>
+
+              <div class="c-tab">
+                <div class="c-tab__content">
+                  <h2>Chapter 3</h2>
+                  <p>chap 3 stuff goes here</p>
+                </div>
+              </div>
+
+              <div class="c-tab">
+                <div class="c-tab__content">
+                  <h2>Chapter 4</h2>
+                  <p>chap 4 levels go here</p>
+                </div>
+              </div>
+
+              <div class="c-tab">
+                <div class="c-tab__content">
+                  <h2>Chapter 5</h2>
+                  <p>chap 5 levels go here.</p>
+                </div>
+              </div>
+
+              <div class="c-tab">
+                <div class="c-tab__content">
+                  <h2>Chapter 6</h2>
+                  <p>chap 6 levels go here.</p>
+                </div>
+              </div>
+
+              <div class="c-tab">
+                <div class="c-tab__content">
+                  <h2>Epilogue</h2>
+                  <p>secret epilogue levels!!!</p>
+                </div>
+              </div>
+
+              <div class="c-tab">
+                <div class="c-tab__content">
+                  <h2>Custom Levels</h2>
+                  
+                  <div class="level1">Level Maker: <br><a href="levelcreate.html" class="button" style="padding-top: 12%; padding-bottom: 12%">Create custom levels</a></div>
+                  <div class="level2">Slot 1: <br><button class="levelButton" id="custom1" type="button" onclick=""><img class="levelImg" id="slot1" src="images/levels/empty.png" /></button> </div>
+                  <div class="level3">Slot 2 : <br><button class="levelButton" id="custom2" type="button" onclick=""><img class="levelImg" id="slot2" src="images/levels/empty.png" /></button> </div>
+                  <div class="level4">Slot 3: <br><button class="levelButton" id="custom3" type="button" onclick=""><img class="levelImg" id="slot3" src="images/levels/empty.png" /></button> </div>
+                  <div class="level5">Slot 4: <br><button class="levelButton" id="custom4" type="button" onclick=""><img class="levelImg" id="slot4" src="images/levels/empty.png" /></button> </div>
+                  <div class="level6">Slot 5: <br><button class="levelButton" id="custom5" type="button" onclick=""><img class="levelImg" id="slot5" src="images/levels/empty.png" /></button> </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <div id="toolbar" class="divBody">
+             
+            <div id='weaponMenu' class="fm_wrap">
+            <a class="fm_btntoggle" href="#" title="Toggle"><i>w</i></a>
+            <ul id="weaponSelect" class="fm_list">
+              <li><a><img class="weaponSize" src="images/weapons/rocket.png"><i class="icon-user icon-white"></i></a></li>
+              <li><a><img class="weaponSize" src="images/weapons/gun.png"><i class="icon-heart icon-white"></i></a></li>
+            </ul>
+            <ul id="weaponsList" style="list-style: none;">
+                <li id="rocket.png"></li>
+                <li id="gun.png"></li>
+                <li id="rocket_down.png"></li>
+                <li id="rocket_left.png"></li>
+                <li id="rocket_right.png"></li>
+                <li id="rocket_up.png"></li>
+                <li id="gun_downleft.png"></li>
+                <li id="gun_downright.png"></li>
+                <li id="gun_upleft.png"></li>
+                <li id="gun_upright.png"></li>
+            </ul>
+            <ul id="levelsList" style="list-style: none;">
+                <li id="level1.png" value="2"></li>
+                <li id="level2.png" value="2"></li>
+                <li id="level3.png" value="2"></li>
+                <li id="level4.png" value="4"></li>
+                <li id="level5.png" value="4"></li>
+                <li id="level6.png" value="3"></li>
+
+            </ul>
+            <ul id="customLevelsList" style="list-style: none;">
+                <li id="level1.png" value="2"></li>
+                <li id="level2.png" value="2"></li>
+                <li id="level3.png" value="2"></li>
+                <li id="level4.png" value="4"></li>
+                <li id="level5.png" value="4"></li>
+                <li id="level6.png" value="3"></li>
+
+            </ul>
+            </div> 
+
+
+              <button id="reset_button" type="button" value="Reset" class="resetBtn" onclick="purpleGame.resetLevel()">Reset</button>
+              <button id="start_button" type="button" value="Play" class="playBtn" onclick="purpleGame.startPurpleGame()">Play</button>
+              <button id="quit_button" type="button" value="Quit" class="quitBtn" onclick="sceneManager.goBack()">Quit</button>
+            <!--<button type ="button" value ="Help" onclick="function(){">Help</button>-->
+            <div id='directionMenu' class="fm_wrap">
+            <a class="fm_btntoggle" href="#" title="Toggle"><i>D</i></a>
+            <ul id="weaponDirection" class="fm_list">
+              <li><a><img class="weaponDir" id="leftdir" src="icons/left.png"><i class="icon-user icon-white"></i></a></li>
+              <li><a><img class="weaponDir" id="rightdir" src="icons/right.png"><i class="icon-heart icon-white"></i></a></li>
+              <li><a><img class="weaponDir" id="downdir" src="icons/down.png"><i class="icon-music icon-white"></i></a></li>
+              <li><a><img class="weaponDir" id="updir" src="icons/up.png"><i class="icon-home icon-white"></i></a></li>
+              <!--<li><a href="#"><i class="icon-flag icon-white"></i></a></li>-->
+            </ul>
+            </div>
+            
+          </div>
+          
+          
+          
+          <button id="Enter_button" type="button" onclick="sceneManager.loadGameLevel(1)">Play As A Guest</button>
+        </div>
+        </div>
+
+           <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+            <script>
+              // Initialize Firebase
+              var config = {
+                apiKey: "AIzaSyCsRoxPOj1iCWwfBGyKn_gz53fGeppw2eQ",
+                authDomain: "purplelifebuild3.firebaseapp.com",
+                databaseURL: "https://purplelifebuild3.firebaseio.com",
+                storageBucket: "purplelifebuild3.appspot.com",
+                messagingSenderId: "769499487844"
+              };
+              firebase.initializeApp(config);
+            </script>
+            
+            <script>
+              // Get a reference to the database service
+              var database = firebase.database();
+            </script>
+            <script src="scripts/database.js"></script>
+            <script>initLevelSelect(); </script>
+           
+    </body>
+</html>
