@@ -71,10 +71,12 @@ SceneManager.prototype.loadGameScene = function() {
   document.getElementById("toolbar").style.display = "block";
   document.getElementById("toolbar").style.visibility = "visible";
 
-    purpleGame.resetGameOfLife();
+  purpleGame.resetGameOfLife();
 };
 
 SceneManager.prototype.deloadGameScene = function() {
+  purpleGame.resetGameOfLife();
+  purpleGame.pausePurpleGame();
   canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
   document.getElementById("toolbar").style.display = "none";
   document.getElementById("toolbar").style.visibility = "hidden";

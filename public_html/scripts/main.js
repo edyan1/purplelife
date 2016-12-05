@@ -173,7 +173,7 @@ PurpleLife.prototype.resizeCanvas = function() {
     if (sceneManager != undefined) {
       if (sceneManager.getCurrentScene() == Scenes.GAME)
         purpleGame.resizeCanvas();
-      else
+      else if (sceneManager.getCurrentScene() == Scenes.SPLASH)
         sceneManager.changeScene(Scenes.SPLASH);
     }
 }
