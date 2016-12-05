@@ -105,6 +105,8 @@ var nextTimeTurretCanFire;
 var allSavedPlacements;
 var placedCount = 0;
 
+var gameRunning = false;
+
 
 // INITIALIZATION METHODS
 
@@ -789,7 +791,7 @@ Game.prototype.setMouseUp = function () {
 Game.prototype.realMouseClick = function(event, purpleGame) {
 
     // FIRST CHECK TO MAKE SURE WE CAN STILL PLACE A WEAPON
-	if (purpleGame.getWeaponCount() != 0) {
+	if (purpleGame.getWeaponCount() != 0 && !gameRunning) {
 	    // GET THE SELECTED WEAPON
 	    var patternsList = document.getElementById("weaponsList");
 	    var patternItems = patternsList.getElementsByTagName("li");
@@ -1551,10 +1553,11 @@ Game.prototype.startPurpleGame = function () {
     var callMethod = function() {
         purpleGame.hasPlayerLost();
     }
-
     
     // CHECK IF PLAYER LOST, BY NOT BEATING THE LEVEL WITHIN 5 SECONDS
     waitTillPlayerLoses = setTimeout(function() { callMethod() }, 5000);
+
+    gameRunning = true;
 };
 
 // EVERY WEAPON HAS A SOUND WHEN SHOT
@@ -1638,6 +1641,7 @@ Game.prototype.resetGameOfLife = function () {
     currentLevel = undefined;
     gameWon = false;
     gameLost = false;
+    gameRunning = false;
     clearTimeout(waitTillPlayerLoses);
     
     // INIT THE CELLS IN THE GRID
