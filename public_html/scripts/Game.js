@@ -1693,6 +1693,7 @@ Game.prototype.loadLastPlacedCells = function() {
             var row = undoArray[f + 1];
             purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
             purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
+            purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
         }
         weaponCount--;
     }
@@ -1706,9 +1707,11 @@ Game.prototype.undo = function() {
             var row = undoArray[i + 1];
             purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
             purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+            purpleGame.setGridCell(brightGrid, row, col, PLACEMENT_CELL);
         }
         placedCount--;
         weaponCount++;
+        
     }
 }
 // HELPER METHODS FOR THE EVENT HANDLERS
