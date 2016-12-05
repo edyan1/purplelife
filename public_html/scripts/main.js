@@ -8,6 +8,8 @@ var canvasWidth;
 var canvasHeight;
 var canvas;
 var canvas2D;
+var canvasScaleX;
+var canvasScaleY;
 var userSignedIn;
 
 //GAME VARIABLE
@@ -39,6 +41,9 @@ function PurpleLife() {
   // Saves message on form submit.
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
   this.signInButton.addEventListener('click', this.signIn.bind(this));
+
+  canvasScaleX = .645;
+  canvasScaleY = .72;
 
   this.initFirebase();
 
@@ -160,13 +165,17 @@ PurpleLife.prototype.initCanvas = function() {
 };
 
 PurpleLife.prototype.resizeCanvas = function() {
-    canvas.width = Math.round(window.innerWidth* .533);
-    canvas.height = Math.round(window.innerHeight * .595);
+    canvas.width = Math.round(window.innerWidth * canvasScaleX);
+    canvas.height = Math.round(window.innerHeight * canvasScaleY);
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
 
-    if (purpleGame != undefined)
-      purpleGame.resizeCanvas();
+    if (sceneManager != undefined) {
+      if (sceneManager.getCurrentScene() == Scenes.GAME)
+        purpleGame.resizeCanvas();
+      else
+        sceneManager.changeScene(Scenes.SPLASH);
+    }
 }
 
 function respondToMouseClick (event) {

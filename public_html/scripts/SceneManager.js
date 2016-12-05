@@ -9,10 +9,19 @@ var Scenes = {
 
 var currentScene;
 var level1 = false;
+var splashScreen;
 
 function SceneManager(currentScene) {
     this.currentScene = currentScene;
+
+    this.splashScreen = new Image();
+    this.splashScreen.src = "images/splash.png";
+    this.splashScreen.onload = function () {
+        canvas2D.drawImage(this, 60, 0, canvas.width-120, canvas.height - 60);
+    };
+
     this.changeScene(currentScene);
+
 }
 
 SceneManager.prototype.changeScene = function(scene) {
@@ -48,11 +57,8 @@ SceneManager.prototype.changeScene = function(scene) {
 };
 
 SceneManager.prototype.loadSplashScene = function() {
-    var splashScreen = new Image();
-    splashScreen.src = "images/splash.png";
-    splashScreen.onload = function () {
-    canvas2D.drawImage(this, 112, 60);
-    };
+    canvas2D.drawImage(this.splashScreen, 60, 0, canvas.width-120, canvas.height - 60);
+
     document.getElementById("Enter_button").style.visibility = "visible";
 };
 
@@ -102,4 +108,8 @@ SceneManager.prototype.loadGameLevel = function(levelToLoad) {
       level1 = true;
       playInstructions("weapon");
   }
+};
+
+SceneManager.prototype.getCurrentScene = function() {
+    return this.currentScene;
 };
