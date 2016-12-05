@@ -1421,6 +1421,96 @@ Game.prototype.spawnProjectile = function() {
         purpleGame.setGridCell(updateGrid, turretSpawnDDArray[i+1] - 2, turretSpawnDDArray[i] - 3, LIVE_TURRET_CELL);
         purpleGame.setGridCell(updateGrid, turretSpawnDDArray[i+1] - 3, turretSpawnDDArray[i] - 3, LIVE_TURRET_CELL);
     }
+
+    for (var i = 0; i < turretSpawnSRArray.length; i += 2) {
+        purpleGame.setGridCell(renderGrid, turretSpawnSRArray[i+1] - 0, turretSpawnSRArray[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSRArray[i+1] + 2, turretSpawnSRArray[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSRArray[i+1] - 1, turretSpawnSRArray[i] + 3, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSRArray[i+1] - 1, turretSpawnSRArray[i] + 4, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSRArray[i+1] - 1, turretSpawnSRArray[i] + 5, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSRArray[i+1] - 1, turretSpawnSRArray[i] + 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSRArray[i+1] - 0, turretSpawnSRArray[i] + 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSRArray[i+1] + 1, turretSpawnSRArray[i] + 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSRArray[i+1] + 2, turretSpawnSRArray[i] + 5, LIVE_TURRET_CELL);
+
+        purpleGame.setGridCell(updateGrid, turretSpawnSRArray[i+1] - 0, turretSpawnSRArray[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSRArray[i+1] + 2, turretSpawnSRArray[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSRArray[i+1] - 1, turretSpawnSRArray[i] + 3, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSRArray[i+1] - 1, turretSpawnSRArray[i] + 4, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSRArray[i+1] - 1, turretSpawnSRArray[i] + 5, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSRArray[i+1] - 1, turretSpawnSRArray[i] + 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSRArray[i+1] - 0, turretSpawnSRArray[i] + 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSRArray[i+1] + 1, turretSpawnSRArray[i] + 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSRArray[i+1] + 2, turretSpawnSRArray[i] + 5, LIVE_TURRET_CELL);
+    }
+
+    for (var i = 0; i < turretSpawnSLArray.length; i += 2) {
+        purpleGame.setGridCell(renderGrid, turretSpawnSLArray[i+1] - 0, turretSpawnSLArray[i] - 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSLArray[i+1] + 2, turretSpawnSLArray[i] - 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSLArray[i+1] - 1, turretSpawnSLArray[i] - 3, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSLArray[i+1] - 1, turretSpawnSLArray[i] - 4, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSLArray[i+1] - 1, turretSpawnSLArray[i] - 5, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSLArray[i+1] - 1, turretSpawnSLArray[i] - 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSLArray[i+1] - 0, turretSpawnSLArray[i] - 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSLArray[i+1] + 1, turretSpawnSLArray[i] - 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSLArray[i+1] + 2, turretSpawnSLArray[i] - 5, LIVE_TURRET_CELL);
+
+        purpleGame.setGridCell(updateGrid, turretSpawnSLArray[i+1] - 0, turretSpawnSLArray[i] - 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSLArray[i+1] + 2, turretSpawnSLArray[i] - 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSLArray[i+1] - 1, turretSpawnSLArray[i] - 3, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSLArray[i+1] - 1, turretSpawnSLArray[i] - 4, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSLArray[i+1] - 1, turretSpawnSLArray[i] - 5, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSLArray[i+1] - 1, turretSpawnSLArray[i] - 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSLArray[i+1] - 0, turretSpawnSLArray[i] - 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSLArray[i+1] + 1, turretSpawnSLArray[i] - 6, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSLArray[i+1] + 2, turretSpawnSLArray[i] - 5, LIVE_TURRET_CELL);
+    }
+
+    for (var i = 0; i < turretSpawnSUArray.length; i += 2) {
+        purpleGame.setGridCell(renderGrid, turretSpawnSUArray[i+1] - 2, turretSpawnSUArray[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSUArray[i+1] - 2, turretSpawnSUArray[i] - 0, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSUArray[i+1] - 3, turretSpawnSUArray[i] - 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSUArray[i+1] - 4, turretSpawnSUArray[i] - 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSUArray[i+1] - 5, turretSpawnSUArray[i] - 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSUArray[i+1] - 6, turretSpawnSUArray[i] - 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSUArray[i+1] - 6, turretSpawnSUArray[i] - 0, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSUArray[i+1] - 6, turretSpawnSUArray[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSUArray[i+1] - 5, turretSpawnSUArray[i] + 2, LIVE_TURRET_CELL);
+
+        purpleGame.setGridCell(updateGrid, turretSpawnSUArray[i+1] - 2, turretSpawnSUArray[i] + 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSUArray[i+1] - 2, turretSpawnSUArray[i] - 0, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSUArray[i+1] - 3, turretSpawnSUArray[i] - 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSUArray[i+1] - 4, turretSpawnSUArray[i] - 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSUArray[i+1] - 5, turretSpawnSUArray[i] - 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSUArray[i+1] - 6, turretSpawnSUArray[i] - 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSUArray[i+1] - 6, turretSpawnSUArray[i] - 0, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSUArray[i+1] - 6, turretSpawnSUArray[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSUArray[i+1] - 5, turretSpawnSUArray[i] + 2, LIVE_TURRET_CELL);
+
+    }
+
+    for (var i = 0; i < turretSpawnSDArray.length; i += 2) {
+        purpleGame.setGridCell(renderGrid, turretSpawnSDArray[i+1] + 2, turretSpawnSDArray[i] - 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSDArray[i+1] + 2, turretSpawnSDArray[i] + 0, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSDArray[i+1] + 3, turretSpawnSDArray[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSDArray[i+1] + 4, turretSpawnSDArray[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSDArray[i+1] + 5, turretSpawnSDArray[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSDArray[i+1] + 6, turretSpawnSDArray[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSDArray[i+1] + 6, turretSpawnSDArray[i] + 0, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSDArray[i+1] + 6, turretSpawnSDArray[i] - 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(renderGrid, turretSpawnSDArray[i+1] + 5, turretSpawnSDArray[i] - 2, LIVE_TURRET_CELL);
+
+        purpleGame.setGridCell(updateGrid, turretSpawnSDArray[i+1] + 2, turretSpawnSDArray[i] - 2, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSDArray[i+1] + 2, turretSpawnSDArray[i] + 0, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSDArray[i+1] + 3, turretSpawnSDArray[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSDArray[i+1] + 4, turretSpawnSDArray[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSDArray[i+1] + 5, turretSpawnSDArray[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSDArray[i+1] + 6, turretSpawnSDArray[i] + 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSDArray[i+1] + 6, turretSpawnSDArray[i] + 0, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSDArray[i+1] + 6, turretSpawnSDArray[i] - 1, LIVE_TURRET_CELL);
+        purpleGame.setGridCell(updateGrid, turretSpawnSDArray[i+1] + 5, turretSpawnSDArray[i] - 2, LIVE_TURRET_CELL);
+
+    }
 }
 
 Game.prototype.startPurpleGame = function () {
