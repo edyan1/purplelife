@@ -1706,7 +1706,6 @@ Game.prototype.undo = function() {
             var row = undoArray[i + 1];
             purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
             purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
-            this.renderGame();
         }
         placedCount--;
         weaponCount++;
