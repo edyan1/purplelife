@@ -31,6 +31,26 @@
   text-decoration: none;
 }
 
+.undoBtn {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Courier New;
+  color: #fffcff;
+  font-size: 21px;
+  background: #9c2194;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  height: 50px;
+  position: absolute;
+  left: 55.5%
+}
+
+.undoBtn:hover {
+  background: #fc0505;
+  text-decoration: none;
+}
+
 /* pause button style*/
 .quitBtn {
   -webkit-border-radius: 28;
@@ -44,7 +64,7 @@
   text-decoration: none;
   height: 50px;
   position: absolute;
-  left: 55.5%
+  left: 65.5%
 }
 
 .quitBtn:hover {

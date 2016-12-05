@@ -94,7 +94,6 @@ var cLevels; //custom levels array
 //Level Stuff
 var currentLevel;
 var weaponCount;
-var undoArray;
 var undoCounter;
 var gameWon;
 var isWonPlayed = false;
@@ -102,6 +101,10 @@ var gameLost;
 var waitTillPlayerLoses;
 var turretFireRate;
 var nextTimeTurretCanFire;
+
+var allSavedPlacements;
+var placedCount = 0;
+
 
 // INITIALIZATION METHODS
 
@@ -195,6 +198,9 @@ var nextTimeTurretCanFire;
     turretFireRate = 2000;
     cellcountX = 64;
     cellcountY = 36;
+
+    allSavedPlacements = new Array();
+    allSavedPlacements[0] = new Array();
 };
 
 Game.prototype.initCanvas = function(canvas, canvas2D, canvasWidth, canvasHeight, mouseState) {
@@ -658,6 +664,7 @@ Game.prototype.loadLevel = function (levelToLoad) {
     cellcountX = level[13];
     cellcountY = level[14];
     nextTimeTurretCanFire = Date.now();
+    placedCount = 0;
 
     // START A NEW TIMER
     turretRenderTimer = setInterval(this.stepTurretTime, frameInterval);
@@ -799,6 +806,9 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
         // TO CHECK IF WE ACTUALLY ENDED UP PLACING ANY PIXELS
         var placed = false;
 
+        var undoArrayCount = 0;
+        var undoArray = new Array();
+
 	    // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
 	    for (var i = 0; i < pixels.length; i += 2)
 	        {
@@ -811,6 +821,9 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	            	purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
 	            	purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
 	            	purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
+                    // SAVE FOR UNDO
+                    undoArray[undoArrayCount++] = col;
+                    undoArray[undoArrayCount++] = row;
                     // SAVE COORDINATES OF WEAPON FOR LEVEL RETRY
                     savedPlacementCells[savedCellsCount++] = col;
                     savedPlacementCells[savedCellsCount++] = row;
@@ -818,6 +831,10 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	        	}
 	        	
 	        }
+
+            allSavedPlacements[placedCount] = undoArray;
+            placedCount++;
+
 	        savedPlacementCells[savedCellsCount++] = -1;
             // SAVE PLACED WEAPON IN AN ARRAY
             var placedWeapon = weapon.substring(0, weapon.indexOf('_'));
@@ -1617,7 +1634,6 @@ Game.prototype.resetGameOfLife = function () {
     renderGrid = new Array();
     tempGrid = new Array();
     brightGrid = new Array();
-    undoArray = new Array();
     undoCounter = -1;
     currentLevel = undefined;
     gameWon = false;
@@ -1655,7 +1671,6 @@ Game.prototype.resetGameOfLife = function () {
     placedWeaponCount = 0;
     isWonPlayed = false;
 
-
     // RENDER THE CLEARED SCREEN
     this.renderGame();
 };
@@ -1664,9 +1679,38 @@ Game.prototype.resetLevel = function() {
     var levelToReset = currentLevel;
     this.resetGameOfLife();
     this.pausePurpleGame();
+    var temp = placedCount;
     this.loadLevel(levelToReset);
+    placedCount = temp;
+    this.loadLastPlacedCells();
 };
 
+Game.prototype.loadLastPlacedCells = function() {
+    for (var i = 0; i < placedCount; i++) {
+        var undoArray = allSavedPlacements[i];
+        for (var f = 0; f < undoArray.length; f += 2) {
+            var col = undoArray[f];
+            var row = undoArray[f + 1];
+            purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
+            purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
+        }
+        weaponCount--;
+    }
+}
+
+Game.prototype.undo = function() {
+    if (placedCount != 0) {
+        var undoArray = allSavedPlacements[placedCount-1];
+        for (var i = 0; i < undoArray.length; i++) {
+            var col = undoArray[i];
+            var row = undoArray[i + 1];
+            purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
+            purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+        }
+        placedCount--;
+        weaponCount++;
+    }
+}
 // HELPER METHODS FOR THE EVENT HANDLERS
 
 /*
