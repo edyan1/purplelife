@@ -1701,11 +1701,12 @@ Game.prototype.loadLastPlacedCells = function() {
 Game.prototype.undo = function() {
     if (placedCount != 0) {
         var undoArray = allSavedPlacements[placedCount-1];
-        for (var i = 0; i < undoArray.length; i++) {
+        for (var i = 0; i < undoArray.length; i += 2) {
             var col = undoArray[i];
             var row = undoArray[i + 1];
             purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
             purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+            this.renderGame();
         }
         placedCount--;
         weaponCount++;
