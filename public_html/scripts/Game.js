@@ -77,6 +77,8 @@ var tempGrid;
 var brightGrid;
 
 // RENDERING VARIABLES
+var cellcountX;
+var cellcountY;
 var cellLengthX;
 var cellLengthY;
 
@@ -191,6 +193,8 @@ var nextTimeTurretCanFire;
     CELL_LENGTH_Y = 480;
 
     turretFireRate = 2000;
+    cellcountX = 64;
+    cellcountY = 36;
 };
 
 Game.prototype.initCanvas = function(canvas, canvas2D, canvasWidth, canvasHeight, mouseState) {
@@ -316,6 +320,8 @@ Game.prototype.initLevels = function () {
 
         //SET THE WEAPON COUNT
         pixelArray[5] = levelItems[i].value;
+        pixelArray[6] = levelItems[i].getAttribute("cellcountX");
+        pixelArray[7] = levelItems[i].getAttribute("cellcountY");
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
@@ -344,6 +350,8 @@ Game.prototype.initCustLevels = function () {
 
         //SET THE WEAPON COUNT
         pixelArray[5] = cLevelItems[i].value;
+        pixelArray[6] = levelItems[i].getAttribute("cellcountX");
+        pixelArray[7] = levelItems[i].getAttribute("cellcountY");
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
@@ -563,6 +571,8 @@ Game.prototype.loadLevel = function (levelToLoad) {
     var turrets = level[3];
     var turretSpawns = level[4];
     weaponCount = level[5];
+    cellcountX = level[6];
+    cellcountY = level[7];
     nextTimeTurretCanFire = Date.now();
 
     // START A NEW TIMER
@@ -1275,8 +1285,8 @@ Game.prototype.pausePurpleGame = function () {
 
 Game.prototype.resetGameOfLife = function () {
     // RESET ALL THE DATA STRUCTURES TOO
-    cellLengthX = canvasWidth/64;
-    cellLengthY = canvasHeight/36;
+    cellLengthX = canvasWidth/cellcountX;
+    cellLengthY = canvasHeight/cellcountY;
     gridWidth = canvasWidth/cellLengthX;
     gridHeight = canvasHeight/cellLengthY;
     updateGrid = new Array();
