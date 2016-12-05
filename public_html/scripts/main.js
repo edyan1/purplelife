@@ -42,8 +42,8 @@ function PurpleLife() {
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
   this.signInButton.addEventListener('click', this.signIn.bind(this));
 
-  canvasScaleX = .645;
-  canvasScaleY = .72;
+  canvasScaleX = .672;
+  canvasScaleY = .75;
 
   this.initFirebase();
 
@@ -167,6 +167,8 @@ PurpleLife.prototype.initCanvas = function() {
 PurpleLife.prototype.resizeCanvas = function() {
     canvas.width = Math.round(window.innerWidth * canvasScaleX);
     canvas.height = Math.round(window.innerHeight * canvasScaleY);
+    document.getElementById("container").style.height = canvas.height + "px";
+    document.getElementById("toolbar").style.width = canvas.width + "px";
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
 

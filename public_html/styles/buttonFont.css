@@ -75,7 +75,7 @@
 
 /*THIS IS THE WEAPON MENU*/
 #weaponMenu {
-  bottom: 5px;
+  bottom: 6.5%;
   left: 1%;
   position: absolute;
   width: 100%;
@@ -84,7 +84,7 @@
 
 /*THIS IS THE DIRECTION MENU*/
 #directionMenu {
-  bottom: 5px;
+  bottom: 6.5%;
   left: 95%;
   position: absolute;
   width: 100%;
