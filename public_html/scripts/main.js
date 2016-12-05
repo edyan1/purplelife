@@ -144,8 +144,6 @@ PurpleLife.prototype.initCanvas = function() {
     // THE CANVAS IS SIZED
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
-
-    console.log(canvasWidth);
     
     mouseState = false;
 
