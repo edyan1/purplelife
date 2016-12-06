@@ -267,7 +267,10 @@ $(document).ready(function() {
 // GRABS THE DIRECTIONS SELECTED, CONCATENATES IT TO THE WEAPON SELECTED, THEN LOADS THE WEAPON
 $(document).ready(function() {
     $('#weaponDirection li').click(function() {
-        playInstructions("placement");
+        if(level1) {
+            level1 = false;
+            playInstructions("placement");
+        }
         weapon = weapon.substring(0, weapon.indexOf('.')) + '_';
         direction = $(this).find('.weaponDir').attr('src');
         $.notify("Your Selected Direction: " + direction.substring(6, direction.indexOf('.')), 'success');

@@ -102,8 +102,8 @@ SceneManager.prototype.goBack = function() {
 };
 
 SceneManager.prototype.loadGameLevel = function(levelToLoad) {
-  this.changeScene(Scenes.GAME);
-  purpleGame.loadLevel("level" + levelToLoad + ".png");
+    this.changeScene(Scenes.GAME);
+    purpleGame.loadLevel("level" + levelToLoad + ".png");
 
   if (levelToLoad === 1) {
       showHelpNotes();

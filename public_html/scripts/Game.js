@@ -913,6 +913,8 @@ Game.prototype.renderGame = function () {
         playWonSound();
         // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
         if (currentlyPressedKeys[70]) {
+            placedWeapons.length = 0;
+            placedWeaponCount = 0;
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
             if (userSignedIn === true && getUserProgress() < levelNumber-1 ){
                 console.log(getUserProgress());
@@ -1648,9 +1650,7 @@ Game.prototype.resetGameOfLife = function () {
                     this.setGridCell(brightGrid, i, j, DEAD_CELL);
                 }
         }
-    // RESET "PLACEDWEAPONS" ARRAY AND "ISWONPLAYED" FOR NEXT ROUND
-    placedWeapons.length = 0;
-    placedWeaponCount = 0;
+    // RESET "ISWONPLAYED" FOR NEXT ROUND
     isWonPlayed = false;
 
     // RENDER THE CLEARED SCREEN
@@ -1694,6 +1694,8 @@ Game.prototype.undo = function() {
             }
             placedCount--;
             weaponCount++;
+            placedWeapons.length -= 1;
+            placedWeaponCount--;
             
         }
     }
