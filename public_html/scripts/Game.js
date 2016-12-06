@@ -972,10 +972,15 @@ Game.prototype.loadLevel = function (levelToLoad) {
     this.renderGameWithoutSwapping();
 }
 
-Game.prototype.loadCustomLevel = function (levelToLoad) {
+Game.prototype.customLevelExists = function(levelToLoad) {
     var level = levels[(customLevelsBegin + levelToLoad)];
     if (level[0] != null)
-        this.loadLevel((customLevelsBegin + levelToLoad).toString());
+        return true;
+    return false;
+}
+
+Game.prototype.loadCustomLevel = function (levelToLoad) {
+    this.loadLevel((customLevelsBegin + levelToLoad).toString());
 }
 
 Game.prototype.initEventHandlers = function () {
