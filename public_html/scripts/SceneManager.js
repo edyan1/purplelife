@@ -112,6 +112,13 @@ SceneManager.prototype.loadGameLevel = function(levelToLoad) {
   }
 };
 
+SceneManager.prototype.loadCustomLevel = function(levelNum) {
+    this.changeScene(Scenes.GAME);
+    purpleGame.loadCustomLevel(levelNum);
+}
+
+
+
 SceneManager.prototype.getCurrentScene = function() {
     return this.currentScene;
 };

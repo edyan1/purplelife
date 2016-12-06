@@ -112,6 +112,7 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
     sceneManager.changeScene(Scenes.LEVELSELECT);
     customLevelSelect();
     levelSelectAccess();
+    purpleGame.initCustLevels();
     
  } else { // User is signed out!
     // Hide user's profile and sign-out button.

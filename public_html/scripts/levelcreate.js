@@ -324,7 +324,6 @@ function saveCanvas() {
     
     var imgSave = offscreenCanvas.toDataURL("image/png");
     
-    
     var thumbnail = document.getElementById("thumbnail");
     thumbnail.setAttribute("src",imgSave);
     thumbnail.setAttribute("width", "64px");

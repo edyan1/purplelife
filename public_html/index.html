@@ -192,8 +192,8 @@ and open the template in the editor.
                   <h2>Custom Levels</h2>
                   
                   <div class="level1">Level Maker: <br><a href="levelcreate.html" class="button" style="padding-top: 12%; padding-bottom: 12%">Create custom levels</a></div>
-                  <div class="level2">Slot 1: <br><button class="levelButton" id="custom1" type="button" onclick=""><img class="levelImg" id="slot1" src="images/levels/empty.png" /></button> </div>
-                  <div class="level3">Slot 2 : <br><button class="levelButton" id="custom2" type="button" onclick=""><img class="levelImg" id="slot2" src="images/levels/empty.png" /></button> </div>
+                  <div class="level2">Slot 1: <br><button class="levelButton" id="custom1" type="button" onclick="sceneManager.loadCustomLevel(0)"><img class="levelImg" id="slot1" src="images/levels/empty.png" /></button> </div>
+                  <div class="level3">Slot 2 : <br><button class="levelButton" id="custom2" type="button" onclick="sceneManager.loadCustomLevel(1)"><img class="levelImg" id="slot2" src="images/levels/empty.png" /></button> </div>
                   <div class="level4">Slot 3: <br><button class="levelButton" id="custom3" type="button" onclick=""><img class="levelImg" id="slot3" src="images/levels/empty.png" /></button> </div>
                   <div class="level5">Slot 4: <br><button class="levelButton" id="custom4" type="button" onclick=""><img class="levelImg" id="slot4" src="images/levels/empty.png" /></button> </div>
                   <div class="level6">Slot 5: <br><button class="levelButton" id="custom5" type="button" onclick=""><img class="levelImg" id="slot5" src="images/levels/empty.png" /></button> </div>
@@ -242,8 +242,6 @@ and open the template in the editor.
                 <li id="level3.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
                 <li id="level4.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
                 <li id="level5.png" value="4" cellcountX="96" cellcountY="35" gameLostTimeout="8000"></li>
-                <li id="level6.png" value="3" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
-
             </ul>
             </div> 
 

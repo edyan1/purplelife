@@ -104,6 +104,7 @@ var allSavedPlacements;
 var placedCount = 0;
 var gameRunning;
 
+var customLevelsBegin = 0;
 
 // INITIALIZATION METHODS
 
@@ -332,6 +333,7 @@ Game.prototype.initLevels = function () {
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
         levels[key] = pixelArray;
+        customLevelsBegin++;
     }
     
 };
@@ -345,24 +347,29 @@ Game.prototype.initCustLevels = function () {
     var cLevelList = document.getElementById("customLevelsList");
     var cLevelItems = cLevelList.getElementsByTagName("li");
 
+    var keyNum = 0;
     for (var i = 0; i < cLevelItems.length; i++) {
         // GET THE NAME OF THE IMAGE FILE AND MAKE
         // A NEW ARRAY TO STORE IT'S PIXEL COORDINATES
         var key = cLevelItems[i].id;
         var pixelArray = new Array();
 
+        loadCustomMap(i+1);
+        var mapLoaded = document.getElementById("slot" + (i+1).toString());
+
         // NOW LOAD THE DATA FROM THE IMAGE
-        loadOffScreenLevel(key, pixelArray);
+        loadOffScreenCustomLevel(mapLoaded, pixelArray);
 
         //SET THE WEAPON COUNT
         pixelArray[12] = cLevelItems[i].value;
-        pixelArray[13] = levelItems[i].getAttribute("cellcountX");
-        pixelArray[14] = levelItems[i].getAttribute("cellcountY");
-        pixelArray[15] = levelItems[i].getAttribute("gameLostTimeout");
+        pixelArray[13] = cLevelItems[i].getAttribute("cellcountX");
+        pixelArray[14] = cLevelItems[i].getAttribute("cellcountY");
+        pixelArray[15] = cLevelItems[i].getAttribute("gameLostTimeout");
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
-        cLevels[key] = pixelArray;
+        levels[customLevelsBegin + keyNum] = pixelArray;
+        keyNum++;
     }
     
 };
@@ -385,6 +392,14 @@ function loadOffScreenLevel(imgName, pixelArray)
     var indexLocation = path.indexOf("index.html");
     path = path.substring(0, indexLocation);
     img.src = path + levelDir + imgName;
+}
+
+function loadOffScreenCustomLevel(img, pixelArray)
+{    
+    // NOTE THAT THE IMAGE WILL LOAD IN THE BACKGROUND, BUT
+    // WE CAN TELL JavaScript TO LET US KNOW WHEN IT HAS FULLY
+    // LOADED AND RESPOND THEN.
+    img.onload = function() { respondToLoadedCustomLevelImage(img, pixelArray); };
 }
 
 /*
@@ -431,6 +446,184 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
     // NOW GET THE DATA FROM THE IMAGE WE JUST DREW TO OUR OFFSCREEN CANVAS
     var imgData = offscreenCanvas2D.getImageData( 0, 0, img.width, img.height );
     
+    // THIS WILL COUNT THE FOUND NON-WHITE PIXLS
+    var voidArrayCounter = 0;
+    var objArrayCounter = 0;
+    var placementArrayCounter = 0;
+    var turretArrayCounter = 0;
+    var turretSpawnDRArrayCounter = 0;
+    var turretSpawnDLArrayCounter = 0;
+    var turretSpawnDUArrayCounter = 0;
+    var turretSpawnDDArrayCounter = 0;
+    var turretSpawnSRArrayCounter = 0;
+    var turretSpawnSLArrayCounter = 0;
+    var turretSpawnSUArrayCounter = 0;
+    var turretSpawnSDArrayCounter = 0;
+
+    //LEVEL DATA ARRAYS
+    var voidArray = new Array();
+    var objArray = new Array();
+    var placementArray = new Array();
+    var turretArray = new Array();
+    var turretSpawnDRArray = new Array();
+    var turretSpawnDLArray = new Array();
+    var turretSpawnDUArray = new Array();
+    var turretSpawnDDArray = new Array();
+    var turretSpawnSRArray = new Array();
+    var turretSpawnSLArray = new Array();
+    var turretSpawnSUArray = new Array();
+    var turretSpawnSDArray = new Array();
+   
+    // GO THROUGH THE IMAGE DATA AND PICK OUT THE COORDINATES
+    for (var i = 0; i < imgData.data.length; i+=4)
+        {
+            // THE DATA ARRAY IS STRIPED RGBA, WE'LL IGNORE 
+            // THE ALPHA CHANNEL
+            var r = imgData.data[i];
+            var g = imgData.data[i+1];
+            var b = imgData.data[i+2];
+            
+            // KEEP THE PIXEL IF IT'S PART OF THE GAME DATA LOGIC
+            if ((r < 255) && (g < 255) && (b < 255))
+                {
+                    // CALCULATE THE LOCAL COORDINATE OF
+                    // THE FOUND PIXEL. WE DO THIS BECAUSE WE'RE
+                    // NOT KEEPING ALL THE PIXELS
+                    var x = Math.floor((i/4)) % img.width;
+                    var y = Math.floor(Math.floor((i/4)) / img.width);
+
+                    // IF WALL (GRAY)
+                    if (((r == 128) && (g == 128) && (b == 128)) || 
+                        ((r == 129) && (g == 129) && (b == 129)) ) {
+                        // STORE THE COORDINATES OF OUR PIXELS
+                        voidArray[voidArrayCounter] = x;
+                        voidArray[voidArrayCounter+1] = y;
+                        voidArrayCounter += 2;
+                    }
+
+                    // IF OBJECTIVE (PURPLE)
+                    else if (((r == 128) && (g == 0) && (b == 128)) ||
+                             ((r == 129) && (g == 0) && (b == 129)) ) {
+                        objArray[objArrayCounter] = x;
+                        objArray[objArrayCounter+1] = y;
+                        objArrayCounter += 2;
+                    }
+
+                    // IF PLACEMENT CELL (LIGHT GRAY)
+                    else if (((r == 232) && (g == 232) && (b == 232)) ||
+                             ((r == 233) && (g == 233) && (b == 233))) {
+                        placementArray[placementArrayCounter] = x;
+                        placementArray[placementArrayCounter+1] = y;
+                        placementArrayCounter += 2;
+                    }
+
+                    // IF TURRET CELL (GREEN)
+                    else if (((r == 28) && (g == 147) && (b == 64)) ||
+                             ((r == 21) && (g == 148) && (b == 62))) {
+                        turretArray[turretArrayCounter] = x;
+                        turretArray[turretArrayCounter+1] = y;
+                        turretArrayCounter += 2;
+                    }
+
+                    // IF TURRET SPAWN CELL DR (PINK)
+                    else if (((r == 253) && (g == 174) && (b == 201)) ||
+                             ((r == 253) && (g == 176) && (b == 202))) {
+                        turretSpawnDRArray[turretSpawnDRArrayCounter] = x;
+                        turretSpawnDRArray[turretSpawnDRArrayCounter+1] = y;
+                        turretSpawnDRArrayCounter += 2;
+                    }
+
+                    // IF TURRET SPAWN CELL DL (PINK)
+                    else if (((r == 233) && (g == 174) && (b == 201)) ||
+                             ((r == 233) && (g == 176) && (b == 202))) {
+                        turretSpawnDLArray[turretSpawnDLArrayCounter] = x;
+                        turretSpawnDLArray[turretSpawnDLArrayCounter+1] = y;
+                        turretSpawnDLArrayCounter += 2;
+                    }
+
+                    // IF TURRET SPAWN CELL DU (PINK)
+                    else if (((r == 213) && (g == 174) && (b == 201)) ||
+                             ((r == 213) && (g == 176) && (b == 202))) {
+                        turretSpawnDUArray[turretSpawnDUArrayCounter] = x;
+                        turretSpawnDUArray[turretSpawnDUArrayCounter+1] = y;
+                        turretSpawnDUArrayCounter += 2;
+                    }
+
+                    // IF TURRET SPAWN CELL DD (PINK)
+                    else if (((r == 193) && (g == 174) && (b == 201)) ||
+                             ((r == 193) && (g == 176) && (b == 202))) {
+                        turretSpawnDDArray[turretSpawnDDArrayCounter] = x;
+                        turretSpawnDDArray[turretSpawnDDArrayCounter+1] = y;
+                        turretSpawnDDArrayCounter += 2;
+                    }
+
+                    // IF TURRET SPAWN CELL SR (PINK)
+                    else if (((r == 253) && (g == 0) && (b == 0)) ||
+                             ((r == 253) && (g == 0) && (b == 0))) {
+                        turretSpawnSRArray[turretSpawnSRArrayCounter] = x;
+                        turretSpawnSRArray[turretSpawnSRArrayCounter+1] = y;
+                        turretSpawnSRArrayCounter += 2;
+                    }
+
+                    // IF TURRET SPAWN CELL SL (PINK)
+                    else if (((r == 233) && (g == 0) && (b == 0)) ||
+                             ((r == 233) && (g == 0) && (b == 0))) {
+                        turretSpawnSLArray[turretSpawnSLArrayCounter] = x;
+                        turretSpawnSLArray[turretSpawnSLArrayCounter+1] = y;
+                        turretSpawnSLArrayCounter += 2;
+                    }
+
+                    // IF TURRET SPAWN CELL SU (PINK)
+                    else if (((r == 213) && (g == 0) && (b == 0)) ||
+                             ((r == 213) && (g == 0) && (b == 0))) {
+                        turretSpawnSUArray[turretSpawnSUArrayCounter] = x;
+                        turretSpawnSUArray[turretSpawnSUArrayCounter+1] = y;
+                        turretSpawnSUArrayCounter += 2;
+                    }
+
+                    // IF TURRET SPAWN CELL SD (PINK)
+                    else if (((r == 193) && (g == 0) && (b == 0)) ||
+                             ((r == 193) && (g == 0) && (b == 0))) {
+                        turretSpawnSDArray[turretSpawnSDArrayCounter] = x;
+                        turretSpawnSDArray[turretSpawnSDArrayCounter+1] = y;
+                        turretSpawnSDArrayCounter += 2;
+                    }
+
+                    // **DEBUG** CHECK FOR BROWSER DESCREPENCIES
+                    else {
+                        console.log(r +'\n' + g + '\n' + b + '\n');
+                    }
+
+                }            
+        }  
+    // SAVE THE DATA SO IT'S ACCESSIBLE LATER
+    pixelArray[0] = voidArray;
+    pixelArray[1] = objArray; 
+    pixelArray[2] = placementArray; 
+    pixelArray[3] = turretArray;
+    pixelArray[4] = turretSpawnDRArray;
+    pixelArray[5] = turretSpawnDLArray;
+    pixelArray[6] = turretSpawnDUArray;
+    pixelArray[7] = turretSpawnDDArray;
+    pixelArray[8] = turretSpawnSRArray;
+    pixelArray[9] = turretSpawnSLArray;
+    pixelArray[10] = turretSpawnSUArray;
+    pixelArray[11] = turretSpawnSDArray;   
+}
+
+function respondToLoadedCustomLevelImage(img, pixelArray)
+{
+    // WE'LL EXAMINE THE PIXELS BY FIRST DRAWING THE LOADED
+    // IMAGE TO AN OFFSCREEN CANVAS. SO FIRST WE NEED TO
+    // MAKE THE CANVAS, WHICH WILL NEVER ACTUALLY BE VISIBLE.
+    var offscreenCanvas = document.createElement("canvas");
+    offscreenCanvas.width = 64;
+    offscreenCanvas.height = 33;
+    var offscreenCanvas2D = offscreenCanvas.getContext("2d");
+    offscreenCanvas2D.drawImage(img, 0, 0, 64, 33);
+    
+    // NOW GET THE DATA FROM THE IMAGE WE JUST DREW TO OUR OFFSCREEN CANVAS
+    var imgData = offscreenCanvas2D.getImageData( 0, 0, img.width, img.height );
     // THIS WILL COUNT THE FOUND NON-WHITE PIXLS
     var voidArrayCounter = 0;
     var objArrayCounter = 0;
@@ -777,6 +970,10 @@ Game.prototype.loadLevel = function (levelToLoad) {
 
     // RENDER THE GAME IMMEDIATELY
     this.renderGameWithoutSwapping();
+}
+
+Game.prototype.loadCustomLevel = function (levelToLoad) {
+    this.loadLevel((customLevelsBegin + levelToLoad).toString());
 }
 
 Game.prototype.initEventHandlers = function () {

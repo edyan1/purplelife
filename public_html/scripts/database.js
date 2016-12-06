@@ -122,6 +122,24 @@ function loadUserMap (slot) {
     
 }
 
+//load map in user selected slot (in level editor)
+function loadCustomMap (slot) {
+    var userId = firebase.auth().currentUser.uid;
+    var dbRef = firebase.database().ref('users/'+userId+'/maps/');
+    dbRef.once('value').then(function(snapshot) {
+        var thumbnail = document.getElementById("custom" + slot);
+        if (slot === "1") thumbnail.setAttribute("src",snapshot.val().map1);
+        if (slot === "2") thumbnail.setAttribute("src",snapshot.val().map2);
+        if (slot === "3") thumbnail.setAttribute("src",snapshot.val().map3);
+        if (slot === "4") thumbnail.setAttribute("src",snapshot.val().map4);
+        if (slot === "5") thumbnail.setAttribute("src",snapshot.val().map5);
+        thumbnail.setAttribute("width", "64px");
+        thumbnail.setAttribute("height","33px");
+     
+    });
+    
+}
+
 //populate custom maps screen in level select with user created maps
 function customLevelSelect (){
     var userId = firebase.auth().currentUser.uid;
