@@ -820,7 +820,7 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 	            if (cell === PLACEMENT_CELL) {
 	            	purpleGame.setGridCell(renderGrid, row, col, LIVE_CELL);
 	            	purpleGame.setGridCell(updateGrid, row, col, LIVE_CELL);
-	            	purpleGame.setGridCell(brightGrid, row, col, NEW_CELL);
+	            	purpleGame.setGridCell(brightGrid, row, col, PLACEMENT_CELL);
                     // SAVE FOR UNDO
                     undoArray[undoArrayCount++] = col;
                     undoArray[undoArrayCount++] = row;
@@ -1707,7 +1707,7 @@ Game.prototype.undo = function() {
             var row = undoArray[i + 1];
             purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
             purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
-            purpleGame.setGridCell(brightGrid, row, col, PLACEMENT_CELL);
+            purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
         }
         placedCount--;
         weaponCount++;
