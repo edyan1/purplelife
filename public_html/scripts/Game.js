@@ -645,6 +645,8 @@ function respondToLoadedImage(imgName, img, pixelArray)
 
 Game.prototype.loadLevel = function (levelToLoad) {
     // LOAD THE COORDINATES OF THE PIXELS TO DRAW
+    if(levelToLoad.substring(levelToLoad.indexOf("l", levelToLoad.indexOf("l") + 1) + 1, levelToLoad.indexOf(".")) != 1)
+        level1 = false;
     currentLevel = levelToLoad;
     var level = levels[levelToLoad];
     var walls = level[0];

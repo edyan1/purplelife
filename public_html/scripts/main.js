@@ -268,7 +268,6 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('#weaponDirection li').click(function() {
         if(level1) {
-            level1 = false;
             playInstructions("placement");
         }
         weapon = weapon.substring(0, weapon.indexOf('.')) + '_';
