@@ -1115,7 +1115,7 @@ Game.prototype.renderWeaponCountText = function() {
     canvas2D.fillStyle = TEXT_COLOR;
 
     canvas2D.textAlign="left";
-    canvas2D.fillText("Weapon Countundo: " + this.getWeaponCount(), 25,canvasHeight*(6/7));
+    canvas2D.fillText("Weapon Count: " + this.getWeaponCount(), 25,canvasHeight*(6/7));
 }
 
 Game.prototype.renderWeaponSelect = function() {
@@ -1682,18 +1682,20 @@ Game.prototype.loadLastPlacedCells = function() {
 }
 
 Game.prototype.undo = function() {
-    if (placedCount != 0) {
-        var undoArray = allSavedPlacements[placedCount-1];
-        for (var i = 0; i < undoArray.length; i += 2) {
-            var col = undoArray[i];
-            var row = undoArray[i + 1];
-            purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
-            purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
-            purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
+    if (!gameRunning) {
+        if (placedCount != 0) {
+            var undoArray = allSavedPlacements[placedCount-1];
+            for (var i = 0; i < undoArray.length; i += 2) {
+                var col = undoArray[i];
+                var row = undoArray[i + 1];
+                purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
+                purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+                purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
+            }
+            placedCount--;
+            weaponCount++;
+            
         }
-        placedCount--;
-        weaponCount++;
-        
     }
 }
 // HELPER METHODS FOR THE EVENT HANDLERS
