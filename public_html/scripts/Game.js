@@ -102,6 +102,7 @@ var nextTimeTurretCanFire;
 
 var allSavedPlacements;
 var placedCount = 0;
+var gameRunning;
 
 
 // INITIALIZATION METHODS
@@ -1523,30 +1524,33 @@ Game.prototype.spawnProjectile = function() {
 }
 
 Game.prototype.startPurpleGame = function () {
-    // CLEAR OUT ANY OLD TIMER
-    if (timer !== null)
-        {
-            clearInterval(timer);
+    if (!gameRunning) {
+        // CLEAR OUT ANY OLD TIMER
+        if (timer !== null)
+            {
+                clearInterval(timer);
+            }
+        if (turretRenderTimer !== null) 
+            {
+                clearInterval(turretRenderTimer);
+            }
+
+        // PLAY SOUND OF WEAPON SELECTED
+        playWeaponSound();
+
+        // START A NEW TIMER
+        timer = setInterval(this.stepPurpleGame, frameInterval);
+
+        var purpleGame = this;
+        var callMethod = function() {
+            purpleGame.hasPlayerLost();
         }
-    if (turretRenderTimer !== null) 
-        {
-            clearInterval(turretRenderTimer);
-        }
 
-    // PLAY SOUND OF WEAPON SELECTED
-    playWeaponSound();
-
-    // START A NEW TIMER
-    timer = setInterval(this.stepPurpleGame, frameInterval);
-
-    var purpleGame = this;
-    var callMethod = function() {
-        purpleGame.hasPlayerLost();
+        
+        // CHECK IF PLAYER LOST, BY NOT BEATING THE LEVEL WITHIN 5 SECONDS
+        waitTillPlayerLoses = setTimeout(function() { callMethod() }, 5000);
+        gameRunning = true;
     }
-
-    
-    // CHECK IF PLAYER LOST, BY NOT BEATING THE LEVEL WITHIN 5 SECONDS
-    waitTillPlayerLoses = setTimeout(function() { callMethod() }, 5000);
 };
 
 // EVERY WEAPON HAS A SOUND WHEN SHOT
@@ -1630,6 +1634,7 @@ Game.prototype.resetGameOfLife = function () {
     currentLevel = undefined;
     gameWon = false;
     gameLost = false;
+    gameRunning = false;
     clearTimeout(waitTillPlayerLoses);
     
     // INIT THE CELLS IN THE GRID
