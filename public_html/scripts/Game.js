@@ -825,8 +825,8 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
                     undoArray[undoArrayCount++] = col;
                     undoArray[undoArrayCount++] = row;
                     // SAVE COORDINATES OF WEAPON FOR LEVEL RETRY
-                    // savedPlacementCells[savedCellsCount++] = col;
-                    // savedPlacementCells[savedCellsCount++] = row;
+                    savedPlacementCells[savedCellsCount++] = col;
+                    savedPlacementCells[savedCellsCount++] = row;
                     placed = true;
 	        	}
 	        	
@@ -834,9 +834,8 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
 
             allSavedPlacements[placedCount] = undoArray;
             placedCount++;
-            alert(allSavedPlacements);
 
-	        // savedPlacementCells[savedCellsCount++] = -1;
+	        savedPlacementCells[savedCellsCount++] = -1;
             // SAVE PLACED WEAPON IN AN ARRAY
             var placedWeapon = weapon.substring(0, weapon.indexOf('_'));
             if(placedWeapon.length == 0)
@@ -926,10 +925,8 @@ Game.prototype.renderGame = function () {
             }
             giveLevelAccess(levelNumber);
             var tempCurrentLevel = currentLevel;
-            allSavedPlacements.length = 0;
-            placedCount = 0;
-            // savedPlacementCells.length = 0;
-            // savedCellsCount = 0;
+            savedPlacementCells.length = 0;
+            savedCellsCount = 0;
             this.resetGameOfLife();
             this.pausePurpleGame();
             this.loadLevel(tempCurrentLevel.substring(0,5) + levelNumber + ".png");
@@ -1656,28 +1653,18 @@ Game.prototype.resetGameOfLife = function () {
         }
 
     if(placedCount != 0) {
-        for(var i = 0; i < allSavedPlacements.length; i++) {
-            var placedWeapon = allSavedPlacements[i];
-            for(var j = 0; j < placedWeapon.length; j += 2) {
-                var col = placedWeapon[j];
-                var row = placedWeapon[j + 1];
-                purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
-                purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+        for(var i = 0; i < allSavedPlacements.length; i += 2) {
+            if(savedPlacementCells[i] == -1)
+                i--;
+            else {
+                var col = savedPlacementCells[i];
+                var row = savedPlacementCells[i + 1];
                 purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
             }
-            // if(savedPlacementCells[i] == -1)
-            //     i--;
-            // else {
-            //     var col = savedPlacementCells[i];
-            //     var row = savedPlacementCells[i + 1];
-            //     purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
-            // }
         }
         // RESET PREVIOUS PLACED CELLS
-        allSavedPlacements.length = 0;
-        placedCount = 0;
-        // savedPlacementCells.length = 0;
-        // savedCellsCount = 0;
+        savedPlacementCells.length = 0;
+        savedCellsCount = 0;
     }
     // RESET "PLACEDWEAPONS" ARRAY AND "ISWONPLAYED" FOR NEXT ROUND
     placedWeapons.length = 0;
