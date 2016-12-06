@@ -1124,7 +1124,7 @@ Game.prototype.renderWeaponCountText = function() {
     canvas2D.fillStyle = TEXT_COLOR;
 
     canvas2D.textAlign="left";
-    canvas2D.fillText("Weapon Count: " + this.getWeaponCount(), 25,canvasHeight*(6/7));
+    canvas2D.fillText("Weapon Countundo: " + this.getWeaponCount(), 25,canvasHeight*(6/7));
 }
 
 Game.prototype.renderWeaponSelect = function() {
