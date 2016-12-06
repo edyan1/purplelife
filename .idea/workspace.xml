@@ -27,7 +27,7 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public_html/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
+            <state relative-caret-position="47">
               <caret line="202" column="27" selection-start-line="202" selection-start-column="21" selection-end-line="202" selection-end-column="27" />
               <folding>
                 <element signature="n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -84,8 +84,8 @@
       <file leaf-file-name="Game.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public_html/scripts/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="747">
-              <caret line="1126" column="39" selection-start-line="1126" selection-start-column="39" selection-end-line="1126" selection-end-column="39" />
+            <state relative-caret-position="502">
+              <caret line="1662" column="40" selection-start-line="1662" selection-start-column="40" selection-end-line="1662" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -707,12 +707,12 @@
       <workItem from="1480831756920" duration="156000" />
       <workItem from="1480870460658" duration="495000" />
       <workItem from="1480900402337" duration="7234000" />
-      <workItem from="1480946404970" duration="329000" />
+      <workItem from="1480946404970" duration="2536000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57113000" />
+    <option name="totallyTimeSpent" value="59320000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="874" extended-state="0" />
@@ -1172,7 +1172,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public_html/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
+        <state relative-caret-position="47">
           <caret line="202" column="27" selection-start-line="202" selection-start-column="21" selection-end-line="202" selection-end-column="27" />
           <folding>
             <element signature="n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -1187,8 +1187,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public_html/scripts/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="747">
-          <caret line="1126" column="39" selection-start-line="1126" selection-start-column="39" selection-end-line="1126" selection-end-column="39" />
+        <state relative-caret-position="502">
+          <caret line="1662" column="40" selection-start-line="1662" selection-start-column="40" selection-end-line="1662" selection-end-column="40" />
           <folding />
         </state>
       </provider>
