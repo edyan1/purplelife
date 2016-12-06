@@ -973,7 +973,9 @@ Game.prototype.loadLevel = function (levelToLoad) {
 }
 
 Game.prototype.loadCustomLevel = function (levelToLoad) {
-    this.loadLevel((customLevelsBegin + levelToLoad).toString());
+    var level = levels[(customLevelsBegin + levelToLoad)];
+    if (level[0] != null)
+        this.loadLevel((customLevelsBegin + levelToLoad).toString());
 }
 
 Game.prototype.initEventHandlers = function () {
@@ -1098,7 +1100,7 @@ Game.prototype.renderGame = function () {
     canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
 
     if (currentLevel != undefined)
-    this.renderPlacementCells();
+        this.renderPlacementCells();
     
     // RENDER THE GRID LINES, IF NEEDED
     if (cellLengthX >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
@@ -1150,7 +1152,8 @@ Game.prototype.renderGameWithoutSwapping = function()
     // CLEAR THE CANVAS
     canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    this.renderPlacementCells();
+    if (currentLevel != undefined)
+        this.renderPlacementCells();
     
     // RENDER THE GRID LINES, IF NEEDED
     if (cellLengthX >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
