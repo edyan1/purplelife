@@ -327,6 +327,7 @@ Game.prototype.initLevels = function () {
         pixelArray[12] = levelItems[i].value;
         pixelArray[13] = levelItems[i].getAttribute("cellcountX");
         pixelArray[14] = levelItems[i].getAttribute("cellcountY");
+        pixelArray[15] = levelItems[i].getAttribute("gameLostTimeout");
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
@@ -357,6 +358,7 @@ Game.prototype.initCustLevels = function () {
         pixelArray[12] = cLevelItems[i].value;
         pixelArray[13] = levelItems[i].getAttribute("cellcountX");
         pixelArray[14] = levelItems[i].getAttribute("cellcountY");
+        pixelArray[15] = levelItems[i].getAttribute("gameLostTimeout");
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
@@ -664,6 +666,11 @@ Game.prototype.loadLevel = function (levelToLoad) {
     weaponCount = level[12];
     cellcountX = level[13];
     cellcountY = level[14];
+    gameLostTimeout = level[15];
+    cellLengthX = canvasWidth/cellcountX;
+    cellLengthY = canvasHeight/cellcountY;
+    gridWidth = canvasWidth/cellLengthX;
+    gridHeight = canvasHeight/cellLengthY;
     nextTimeTurretCanFire = Date.now();
     placedCount = 0;
 
@@ -1552,7 +1559,7 @@ Game.prototype.startPurpleGame = function () {
 
         
         // CHECK IF PLAYER LOST, BY NOT BEATING THE LEVEL WITHIN 5 SECONDS
-        waitTillPlayerLoses = setTimeout(function() { callMethod() }, 5000);
+        waitTillPlayerLoses = setTimeout(function() { callMethod() }, gameLostTimeout);
         gameRunning = true;
     }
 };

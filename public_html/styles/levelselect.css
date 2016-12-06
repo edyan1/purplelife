@@ -197,3 +197,98 @@ button.levelButton{
   position:absolute;
   
 }
+
+.level7 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 10%;
+  top: 25%;
+  position:absolute;
+}
+
+.level8 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 35%;
+  top: 25%;
+  position:absolute;
+  
+}
+
+.level9 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 60%;
+  top: 25%;
+  position:absolute;
+  
+}
+
+.level10 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 10%;
+  bottom: 15%;
+  position:absolute;
+  
+}
+
+.level11 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 35%;
+  bottom: 15%;
+  position:absolute;
+  
+}
+
+.level12 {
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 10%;
+  left: 60%;
+  bottom: 15%;
+  position:absolute;
+  
+}
