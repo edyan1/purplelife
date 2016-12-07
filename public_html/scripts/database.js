@@ -117,7 +117,7 @@ function customLevelSelect (){
             var editBtn = document.createElement("button");
             editBtn.className = "levelButtonLM";
             editBtn.innerHTML = "Edit";
-            editBtn.onclick = "";
+            editBtn.onclick = function(){editCustomLevel(data.val().name)};
             var delBtn = document.createElement("button");
             delBtn.className = "levelButtonLM";
             delBtn.innerHTML = "Delete";
@@ -155,4 +155,11 @@ function customLevelDelete (name) {
     
     }
     
+}
+
+function editCustomLevel(name) {
+    var userId = firebase.auth().currentUser.uid;
+    var dbRef = firebase.database().ref('users/'+userId+'/maps/'+name);
+    window.location = 'levelcreate.html';
+    loadCustomMap(name);
 }

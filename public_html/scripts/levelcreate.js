@@ -303,7 +303,7 @@ function initEventHandlers()
     //document.getElementById("undo_button").onclick=pauseGameOfLife;
     document.getElementById("reset_button").onclick=resetGameOfLife;
     document.getElementById("save_upload").onclick=saveCanvas;
-    document.getElementById("load_from_save").onclick=loadCustomMap;
+    document.getElementById("load_from_save").onclick=loadCustomMap("");
     //document.getElementById("dec_cell_length_button").onclick=decCellLength;
     //document.getElementById("inc_cell_length_button").onclick=incCellLength;
 }
@@ -339,11 +339,15 @@ function saveCanvas() {
     writeUserData(customName,imgSave);
 }
 
-function loadCustomMap() {
-    
+function loadCustomMap(mapName) {
+    var name;
+    if(mapName != "")
+        name = mapName;
+    else
+        name = document.getElementById("loadName").value;
+
     //var storedCustoms = document.getElementById("stored_customs");
     //var slot = storedCustoms.options[storedCustoms.selectedIndex].value;
-    var name = document.getElementById("loadName").value;
     
     
     resetGameOfLife();
