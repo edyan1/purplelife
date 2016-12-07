@@ -157,7 +157,7 @@ function customLevelSelect (){
             levelThumb.setAttribute("src", data.val().map);
             var playBtn = document.createElement("button");
             playBtn.className = "levelButtonLM";
-            playBtn.onclick = "sceneManager.loadCustomLevel("+data.val().name+")";
+            playBtn.onclick = function(){sceneManager.loadCustomLevel(data.val().name)};
             playBtn.innerHTML = "Play";
             var editBtn = document.createElement("button");
             editBtn.className = "levelButtonLM";
