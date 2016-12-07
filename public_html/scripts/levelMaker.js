@@ -1,12 +1,30 @@
 'use strict';
 
+//KEYS
+var currentlyPressedKeys = {};
+
 // CANVAS VARIABLES
 var canvasWidth;
 var canvasHeight;
 var canvas;
 var canvas2D;
+var canvasScaleX;
+var canvasScaleY;
+var userSignedIn;
 var mouseState;
 
+//GAME VARIABLE
+var purpleGameLM;
+
+//Toolbar
+var toolbar;
+
+//Scene Manager
+var sceneManager;
+
+//Weapon Manager
+var weapon;
+var direction;
 // Initializes Purple Life
 function PurpleLifeLM() {
   //this.checkSetup();
@@ -23,7 +41,8 @@ function PurpleLifeLM() {
 
   this.initFirebase();
 
-  //this.initCanvas();
+  this.initCanvas();
+  this.initGame();
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -74,9 +93,9 @@ PurpleLifeLM.prototype.onAuthStateChanged = function(user) {
 
     // Hide sign-in button.
     this.signInButton.setAttribute('hidden', 'true');
-
-    // We load currently existing chant messages.
-    //this.loadMessages();
+    customLevelSelect();
+    purpleGameLM.initCustLevels();
+ 
  } else { // User is signed out!
     // Hide user's profile and sign-out button.
     this.userName.setAttribute('hidden', 'true');
@@ -100,6 +119,9 @@ PurpleLifeLM.prototype.initCanvas = function() {
     // ON THE CANVAS
     canvas2D.font = "24px Arial";
     
+    window.addEventListener('resize', this.resizeCanvas, false);
+    this.resizeCanvas();
+    
     // NOTE THAT THESE DIMENSIONS SHOULD BE THE
     // SAME AS SPECIFIED IN THE WEB PAGE, WHERE
     // THE CANVAS IS SIZED
@@ -108,25 +130,53 @@ PurpleLifeLM.prototype.initCanvas = function() {
     
     mouseState = false;
 
+    this.initWeapons();
+    this.initDirections();
+    
+    canvas.onclick = respondToMouseClick;
+    canvas.onmousemove = respondToMouseMove;
 
+    document.onkeydown = handleKeyDown;
+    document.onkeyup = handleKeyUp;
+    
+    //SET ALL KEYS WE'RE GONNA USE
+    currentlyPressedKeys[70] = false;
+    currentlyPressedKeys[81] = false;
+    currentlyPressedKeys[82] = false;
+};
 
-    //@TODO ADD CHECK FOR COOKIES REGARDING SPLASH SCREEN
-    this.initGridScreen();
-    this.initWall();
-    this.initObstacles();
-    this.initObjectives();
-}
+PurpleLifeLM.prototype.resizeCanvas = function() {
+    canvas.width = Math.round(window.innerWidth * canvasScaleX);
+    canvas.height = Math.round(window.innerHeight * canvasScaleY);
+    document.getElementById("container2").style.height = canvas.height + "px";
+    document.getElementById("toolbarLM").style.width = canvas.width + "px";
+    canvasWidth = canvas.width;
+    canvasHeight = canvas.height;
 
-PurpleLifeLM.prototype.initGridScreen = function() {
-    var gridScreen = new Image();
-    gridScreen.src = "images/emptyGrid.png";
-    gridScreen.onload = function () {
-       canvas2D.drawImage(this, 0, 0, canvasWidth, canvasHeight*0.9);
+    if (sceneManager != undefined) {
+      if (sceneManager.getCurrentScene() == Scenes.GAME)
+        purpleGameLM.resizeCanvas();
+      else if (sceneManager.getCurrentScene() == Scenes.SPLASH)
+        sceneManager.changeScene(Scenes.SPLASH);
     }
-}
+};
 
-PurpleLifeLM.prototype.initWall = function() {
-  $('#wallMenu').fanmenu({
+function respondToMouseClick (event) {
+  purpleGameLM.realMouseClick(event, purpleGame);
+};
+
+function respondToMouseMove (event) {
+  if (sceneManager.currentScene == Scenes.GAME) {
+    purpleGameLM.respondToMouseMove(event, purpleGame);
+  }
+};
+
+PurpleLifeLM.prototype.initGame = function() {
+	purpleGameLM = new customGame(canvas, canvas2D, canvasWidth, canvasHeight, mouseState);
+};
+
+PurpleLifeLM.prototype.initWeapons = function() {
+  $('#weaponMenu').fanmenu({
     eventName:'click',
     hideOnClick: true,
     hideOnClickExcept: 'fm_antihide',
@@ -139,26 +189,10 @@ PurpleLifeLM.prototype.initWall = function() {
     cssMenuToggle: '.fm_btntoggle',
     cssMenuItem: '.fm_list>*'
   });
-}
+};
 
-PurpleLifeLM.prototype.initObstacles = function() {
-  $('#obstacleMenu').fanmenu({
-    eventName:'click',
-    hideOnClick: true,
-    hideOnClickExcept: 'fm_antihide',
-    initAngle: -90,
-    angleDisplay: 180,
-    radius: 100,
-    clActive:'fm_active',
-    clDeactive:'fm_off',
-    clToggleEffect:'fm_rotate',
-    cssMenuToggle: '.fm_btntoggle',
-    cssMenuItem: '.fm_list>*'
-  });
-}
-
-PurpleLifeLM.prototype.initObjectives = function() {
-  $('#objectiveMenu').fanmenu({
+PurpleLifeLM.prototype.initDirections = function() {
+  $('#directionMenu').fanmenu({
     eventName:'click',
     hideOnClick: true,
     hideOnClickExcept: 'fm_antihide',
@@ -172,6 +206,67 @@ PurpleLifeLM.prototype.initObjectives = function() {
     cssMenuItem: '.fm_list>*'
   });
 };
+
+$(document).ready(function() {
+    weapon = $(this).find('.weaponSize').attr('src');
+    weapon = weapon.substring(15);
+});
+
+// GRABS THE WEAPON SELECTED AND LOADS IT ON THE CANVAS
+$(document).ready(function() {
+    $('#weaponSelect li').click(function() {
+    
+        weapon = $(this).find('.weaponSize').attr('src');
+        weapon = weapon.substring(15);
+        $.notify("Your Selected Weapon: " + weapon.substring(0, weapon.indexOf('.')), 'success');
+        $('#weaponsList li:first').prop('id', weapon);
+        // CHANGE DIRECTIONS TO DIAGONALS WHEN GUN WEAPON IS SELECTED
+        if(weapon.localeCompare("gun.png") == 0) {
+            $('#leftdir').attr('src', 'icons/downleft.png');
+            $('#leftdir').css("transform", "rotate(-50deg)")
+            $('#rightdir').attr('src', 'icons/downright.png');
+            $('#rightdir').css("transform", "rotate(10deg)");
+            $('#downdir').attr('src', 'icons/upleft.png');
+            $('#downdir').css("transform", "rotate(100deg)");
+            $('#updir').attr('src', 'icons/upright.png');
+            $('#updir').css("transform", "rotate(-50deg)");
+        }
+        // CHANGE DIRECTIONS TO NORMAL WHEN OTHER WEAPONS ARE SELECTED
+        else {
+            $('#leftdir').attr('src', 'icons/left.png');
+            $('#leftdir').css("transform", "rotate(182deg)")
+            $('#rightdir').attr('src', 'icons/right.png');
+            $('#rightdir').css("transform", "rotate(-118deg)");
+            $('#downdir').attr('src', 'icons/down.png');
+            $('#downdir').css("transform", "rotate(-119deg)");
+            $('#updir').attr('src', 'icons/up.png');
+            $('#updir').css("transform", "rotate(-90deg)");
+        }
+    });
+});
+
+// GRABS THE DIRECTIONS SELECTED, CONCATENATES IT TO THE WEAPON SELECTED, THEN LOADS THE WEAPON
+$(document).ready(function() {
+    $('#weaponDirection li').click(function() {
+        if(level1) {
+            playInstructions("placement");
+        }
+        weapon = weapon.substring(0, weapon.indexOf('.')) + '_';
+        direction = $(this).find('.weaponDir').attr('src');
+        $.notify("Your Selected Direction: " + direction.substring(6, direction.indexOf('.')), 'success');
+        direction = '_' + direction.substring(6, direction.indexOf('.'));
+        weapon = weapon.substring(0, weapon.indexOf('_')) + direction + '.png';
+        $('#weaponsList li:first').prop('id', weapon);
+    });
+});
+
+function handleKeyDown(event) {
+  currentlyPressedKeys[event.keyCode] = true;
+}
+
+function handleKeyUp(event) {
+  currentlyPressedKeys[event.keyCode] = false;
+}
 
 window.onload = function() {
   window.purpleLifeLM = new PurpleLifeLM();

@@ -36,6 +36,97 @@ html, body {
 
 }
 
+/* CSS FOR BUTTONS IN LEVEL MAKER PAGE
+.LM_buttons {
+  font-size: 13px;
+  display: inline-block;
+  color: #7b1fa2;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 10%;
+  bottom: 1%;
+  left: 38%;
+}*/
+
+a.button {
+  font-size: 20px;
+  width: 90%;
+  height: 10%;
+  display: inline-block;
+  color: white;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  background-color: #800080;
+  border: none;
+  border-radius: 10%;
+}
+
+a.newLevel {
+  margin: auto;
+  font-size: 20px;
+  width: 50%;
+  height: 2%;
+  display: inline-block;
+  color: white;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  background-color: #800080;
+  border: none;
+  border-radius: 10%;
+}
+
+img.levelImg2 {
+    float: left;
+    top: 5%;
+    left: 18%;
+    position: relative;
+    width: 15%;
+    height: 90%;
+}
+
+button.levelButtonLM{
+  float: left;
+  font-size: 20px;
+  display: inline-block;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  top: 45%;
+  left: 20%;
+  position:relative;
+  
+}
+
+.custLevBar{
+    position: relative;
+    height: 120px;
+    width: 100%;
+    margin-top: 2%;
+    color: purple;
+    border-style: solid;
+    
+}
+
+.custLevBar:hover{
+  
+    background: rgba(80, 0, 80, 0.5);
+    
+}
+
+/*THIS IS THE DIV WHERE THE BUTTONS ARE PLACED IN*/
+#container2 {
+  width: 67%;
+  float: left;
+  position: relative;
+  margin: 0 auto;
+}
+
 /*THIS IS THE DIV WHERE THE BUTTONS ARE PLACED IN*/
 #levelMaker {
   width: 100%;
@@ -44,30 +135,19 @@ html, body {
   position: relative;
   margin: 0 auto;
 }
-/*THIS IS THE CANVAS*/
-#level_maker_canvas {
-  margin: 0 auto;
-}
-/*THIS IS THE WALL FANOUT*/
-#wallMenu {
-  bottom: 1%;
-  left: 1%;
-  position: absolute;
-  width: 100%;
-}
-/*THIS IS THE OBSTACLE FANOUT*/
-#obstacleMenu {
-  bottom: 1%;
-  left: 50%;
-  position: absolute;
-  width: 100%;
-}
-/*THIS IS THE OBJECTIVE FANOUT*/
-#objectiveMenu {
-  bottom: 1%;
-  left: 95%;
-  position: absolute;
-  width: 100%;
+
+button.levelButton{
+    width: 150%;
+    height: 150%;
 }
 
-
+.title {
+  font-size: 20px;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  left: 30%;
+  top: 0;
+  position: absolute;
+}

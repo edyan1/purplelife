@@ -21,6 +21,7 @@ and open the template in the editor.
          <!-- App Styling -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
         <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/levelMaker.css">
         <link rel="stylesheet" href="styles/fanmenu.css">
         <link rel="stylesheet" href="styles/buttonFont.css">
         
@@ -52,6 +53,10 @@ and open the template in the editor.
             
             <div id="user-container">  
               
+              <button id="levelmaker" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='levelMaker.html'">
+              Level Maker
+              </button>
+                
               <button id="help" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='help.html'">
               Help
               </button>
@@ -191,12 +196,12 @@ and open the template in the editor.
                 <div class="c-tab__content">
                   <h2>Custom Levels</h2>
                   
-                  <div class="level1">Level Maker: <br><a href="levelcreate.html" class="button" style="padding-top: 12%; padding-bottom: 12%">Create custom levels</a></div>
-                  <div class="level2">Slot 1: <br><button class="levelButton" id="custom1" type="button" onclick="sceneManager.loadCustomLevel(1)"><img class="levelImg" id="slot1" src="images/levels/empty.png" /></button> </div>
-                  <div class="level3">Slot 2 : <br><button class="levelButton" id="custom2" type="button" onclick="sceneManager.loadCustomLevel(2)"><img class="levelImg" id="slot2" src="images/levels/empty.png" /></button> </div>
-                  <div class="level4">Slot 3: <br><button class="levelButton" id="custom3" type="button" onclick="sceneManager.loadCustomLevel(3)"><img class="levelImg" id="slot3" src="images/levels/empty.png" /></button> </div>
-                  <div class="level5">Slot 4: <br><button class="levelButton" id="custom4" type="button" onclick="sceneManager.loadCustomLevel(4)"><img class="levelImg" id="slot4" src="images/levels/empty.png" /></button> </div>
-                  <div class="level6">Slot 5: <br><button class="levelButton" id="custom5" type="button" onclick="sceneManager.loadCustomLevel(5)"><img class="levelImg" id="slot5" src="images/levels/empty.png" /></button> </div>
+                  <div class="level1" >Level Maker: <br><a href="levelcreate.html" class="button" style="padding-top: 12%; padding-bottom: 12%">Create custom levels</a></div>
+                  <div class="level2" >Slot 1: <br><button class="levelButton" id="custom1" type="button" onclick="sceneManager.loadCustomLevel(1)"><img class="levelImg" id="slot1" src="images/levels/empty.png" /></button> </div>
+                  <div class="level3" >Slot 2: <br><button class="levelButton" id="custom2" type="button" onclick="sceneManager.loadCustomLevel(2)"><img class="levelImg" id="slot2" src="images/levels/empty.png" /></button> </div>
+                  <div class="level4" >Slot 3: <br><button class="levelButton" id="custom3" type="button" onclick="sceneManager.loadCustomLevel(3)"><img class="levelImg" id="slot3" src="images/levels/empty.png" /></button> </div>
+                  <div class="level5" >Slot 4: <br><button class="levelButton" id="custom4" type="button" onclick="sceneManager.loadCustomLevel(4)"><img class="levelImg" id="slot4" src="images/levels/empty.png" /></button> </div>
+                  <div class="level6" >Slot 5: <br><button class="levelButton" id="custom5" type="button" onclick="sceneManager.loadCustomLevel(5)"><img class="levelImg" id="slot5" src="images/levels/empty.png" /></button> </div>
                 </div>
               </div>
 
@@ -239,9 +244,9 @@ and open the template in the editor.
 
             </ul>
             <ul id="customLevelsList" style="list-style: none;">
-                <li id="level1.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
-                <li id="level2.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
-                <li id="level3.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
+                <li id="level1.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
+                <li id="level2.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
+                <li id="level3.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
                 <li id="level4.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
                 <li id="level5.png" value="4" cellcountX="96" cellcountY="35" gameLostTimeout="8000"></li>
             </ul>
@@ -272,18 +277,19 @@ and open the template in the editor.
         </div>
         </div>
 
-           <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
-            <script>
-              // Initialize Firebase
-              var config = {
-                apiKey: "AIzaSyCsRoxPOj1iCWwfBGyKn_gz53fGeppw2eQ",
-                authDomain: "purplelifebuild3.firebaseapp.com",
-                databaseURL: "https://purplelifebuild3.firebaseio.com",
-                storageBucket: "purplelifebuild3.appspot.com",
-                messagingSenderId: "769499487844"
-              };
-              firebase.initializeApp(config);
-            </script>
+           
+<script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC6slAjklxnSFWpkpIDZaPixrPlBEXKF-4",
+    authDomain: "purplelifebuild4.firebaseapp.com",
+    databaseURL: "https://purplelifebuild4.firebaseio.com",
+    storageBucket: "purplelifebuild4.appspot.com",
+    messagingSenderId: "264333607485"
+  };
+  firebase.initializeApp(config);
+</script>
             
             <script>
               // Get a reference to the database service

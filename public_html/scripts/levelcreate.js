@@ -345,6 +345,7 @@ function loadCustomMap() {
     //var slot = storedCustoms.options[storedCustoms.selectedIndex].value;
     var name = document.getElementById("loadName").value;
     
+    
     resetGameOfLife();
     loadUserMap(name);
     var mapLoaded = document.getElementById("thumbnail");
