@@ -18,9 +18,6 @@ var purpleGame;
 //Toolbar
 var toolbar;
 
-//Scene Manager
-var sceneManager;
-
 //Weapon Manager
 var weapon;
 var direction;
@@ -52,7 +49,7 @@ function PurpleLife() {
   this.initGame();
 
   //Initialize the Scene Manager
-  sceneManager = new SceneManager(Scenes.SPLASH);
+  initSceneManager(Scenes.SPLASH);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -106,7 +103,7 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
     this.signInButton.setAttribute('hidden', 'true');
     
     //document.getElementById("game_canvas").style.visibility = 'hidden';
-    sceneManager.changeScene(Scenes.LEVELSELECT);
+    changeScene(Scenes.LEVELSELECT);
     
     levelSelectAccess();
     purpleGame.initCustLevels();
@@ -169,12 +166,10 @@ PurpleLife.prototype.resizeCanvas = function() {
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
 
-    if (sceneManager != undefined) {
-      if (sceneManager.getCurrentScene() == Scenes.GAME)
+      if (getCurrentScene() == Scenes.GAME)
         purpleGame.resizeCanvas();
-      else if (sceneManager.getCurrentScene() == Scenes.SPLASH)
-        sceneManager.changeScene(Scenes.SPLASH);
-    }
+      else if (getCurrentScene() == Scenes.SPLASH)
+        changeScene(Scenes.SPLASH);
 };
 
 function respondToMouseClick (event) {
@@ -182,7 +177,7 @@ function respondToMouseClick (event) {
 };
 
 function respondToMouseMove (event) {
-  if (sceneManager.currentScene == Scenes.GAME) {
+  if (currentScene == Scenes.GAME) {
     purpleGame.respondToMouseMove(event, purpleGame);
   }
 };
