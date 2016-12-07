@@ -95,6 +95,18 @@ SceneManager.prototype.deloadLevelSelectScene = function() {
   
 };
 
+SceneManager.prototype.loadLevelMakerScene = function() {
+  
+  document.getElementById("level_maker_menu").removeAttribute('hidden');
+  
+};
+
+SceneManager.prototype.deloadLevelMakerScene = function() {
+  
+  document.getElementById("level_maker_menu").setAttribute('hidden', 'hidden');
+  
+};
+
 SceneManager.prototype.goBack = function() {
   purpleGame.pausePurpleGame();
   if (userSignedIn) this.changeScene(Scenes.LEVELSELECT);

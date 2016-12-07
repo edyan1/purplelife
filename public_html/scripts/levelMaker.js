@@ -20,7 +20,7 @@ var purpleGameLM;
 var toolbar;
 
 //Scene Manager
-var sceneManager;
+var sceneManager2;
 
 //Weapon Manager
 var weapon;
@@ -43,6 +43,9 @@ function PurpleLifeLM() {
 
   this.initCanvas();
   this.initGame();
+  
+  //Initialize the Scene Manager
+  sceneManager2 = new SceneManager(Scenes.LEVELMAKER);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -93,7 +96,10 @@ PurpleLifeLM.prototype.onAuthStateChanged = function(user) {
 
     // Hide sign-in button.
     this.signInButton.setAttribute('hidden', 'true');
+    
+    //generate level maker menu
     customLevelSelect();
+    //initialize custom levels
     purpleGameLM.initCustLevels();
  
  } else { // User is signed out!
@@ -153,21 +159,21 @@ PurpleLifeLM.prototype.resizeCanvas = function() {
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
 
-    if (sceneManager != undefined) {
-      if (sceneManager.getCurrentScene() == Scenes.GAME)
+    if (sceneManager2 != undefined) {
+      if (sceneManager2.getCurrentScene() == Scenes.GAME)
         purpleGameLM.resizeCanvas();
-      else if (sceneManager.getCurrentScene() == Scenes.SPLASH)
-        sceneManager.changeScene(Scenes.SPLASH);
+      else if (sceneManager2.getCurrentScene() == Scenes.SPLASH)
+        sceneManager2.changeScene(Scenes.SPLASH);
     }
 };
 
 function respondToMouseClick (event) {
-  purpleGameLM.realMouseClick(event, purpleGame);
+  purpleGameLM.realMouseClick(event, purpleGameLM);
 };
 
 function respondToMouseMove (event) {
-  if (sceneManager.currentScene == Scenes.GAME) {
-    purpleGameLM.respondToMouseMove(event, purpleGame);
+  if (sceneManager2.currentScene == Scenes.GAME) {
+    purpleGameLM.respondToMouseMove(event, purpleGameLM);
   }
 };
 

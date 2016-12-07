@@ -132,8 +132,7 @@ var totalLevels = 0;
     // LOAD THE PATTERNS FROM IMAGES
     this.initPatterns();
 
-    this.initCustLevels();
-            
+    
     // SETUP THE EVENT HANDLERS
     this.initEventHandlers();
 
@@ -276,7 +275,7 @@ customGame.prototype.initCellLookup = function() {
     // CENTER
     var centerArray         = new Array(-1, -1, -1, 0, -1, 1, 0, 1, 1, 1, 1, 0, 1, -1, 0, -1);
     cellLookup[CENTER]      = new CellType(8, centerArray);
-}
+};
 
 customGame.prototype.initPatterns = function () {
     // THIS IS WHERE ALL THE IMAGES SHOULD BE
@@ -310,7 +309,7 @@ customGame.prototype.initCustLevels = function () {
     
     // THIS WILL STORE ALL THE PATTERNS IN AN ASSOCIATIVE ARRAY
     cLevels = new Array();
-
+   
     // RECEIEVE THE LEVELS FROM THE HTML
     var cLevelList = document.getElementById("customLevelsListLM");
     var cLevelItems = cLevelList.getElementsByTagName("li");
@@ -326,7 +325,7 @@ customGame.prototype.initCustLevels = function () {
         var mapLoaded = document.getElementById(key+"img");
 
         // NOW LOAD THE DATA FROM THE IMAGE
-        loadOffScreenCustomLevel(mapLoaded, pixelArray);
+        respondToLoadedCustomLevelImage(mapLoaded, pixelArray);
 
         //SET THE WEAPON COUNT
         pixelArray[12] = cLevelItems[i].value;
@@ -336,7 +335,9 @@ customGame.prototype.initCustLevels = function () {
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
-        levels["level" + (customLevelsBegin + keyNum).toString() + ".png"] = pixelArray;
+        console.log(key);
+        cLevels[key] = pixelArray;
+       
         keyNum++;
     }
     
@@ -659,7 +660,7 @@ function respondToLoadedCustomLevelImage(img, pixelArray)
                         objArrayCounter += 2;
                     }
 
-                    // IF PLACEMENT CELL (LIGHT GRAY)
+                    // IF PLACEMENT CELL (LIGHT GRAY) or (LIGHT GREEN)
                     else if (((r == 232) && (g == 232) && (b == 232)) ||
                              ((r == 233) && (g == 233) && (b == 233)) ||
                              ((r == 90) && (g == 180) && (b == 90))  ||
@@ -822,7 +823,8 @@ customGame.prototype.loadLevel = function (levelToLoad) {
     if(levelToLoad.substring(levelToLoad.indexOf("l", levelToLoad.indexOf("l") + 1) + 1, levelToLoad.indexOf(".")) != 1)
         level1 = false;
     currentLevel = levelToLoad;
-    var level = levels[levelToLoad];
+    var level = cLevels[levelToLoad];
+    console.log(levelToLoad);
     var walls = level[0];
     var objectives = level[1];
     var placements = level[2];
@@ -952,7 +954,7 @@ customGame.prototype.loadLevel = function (levelToLoad) {
 };
 
 customGame.prototype.customLevelExists = function(levelToLoad) {
-    var level = levels[levelToLoad];
+    var level = cLevels[levelToLoad];
     if (level[0] != null)
         return true;
     return false;
@@ -1187,7 +1189,7 @@ customGame.prototype.renderGameWithoutSwapping = function()
 
 customGame.prototype.renderPlacementCells = function() {
     //GET THE CURRENT LEVEL
-	var level = levels[currentLevel];
+	var level = cLevels[currentLevel];
     //GET THE PLACEMENT CELL LOCATIONS
 	var placements = level[2];
 
