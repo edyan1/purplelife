@@ -1121,7 +1121,7 @@ Game.prototype.renderGame = function () {
     
     // RENDER THE GRID LINES, IF NEEDED
     if (cellLengthX >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
-        this.renderGridLines();
+        //this.renderGridLines();
     
     // RENDER THE GAME CELLS
     this.renderCells();
@@ -1174,7 +1174,7 @@ Game.prototype.renderGameWithoutSwapping = function()
     
     // RENDER THE GRID LINES, IF NEEDED
     if (cellLengthX >= GRID_LINE_LENGTH_RENDERING_THRESHOLD)
-        this.renderGridLines();
+        //this.renderGridLines();
     
     // RENDER THE GAME CELLS
     this.renderCells();
