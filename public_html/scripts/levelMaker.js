@@ -96,8 +96,6 @@ PurpleLifeLM.prototype.onAuthStateChanged = function(user) {
     
     //generate level maker menu
     customLevelSelect();
-    //initialize custom levels
-    purpleGameLM.initCustLevels();
  
  } else { // User is signed out!
     // Hide user's profile and sign-out button.

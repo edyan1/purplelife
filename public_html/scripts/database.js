@@ -183,7 +183,8 @@ function customLevelSelect (){
             item.setAttribute("gameLostTimeout", "9001");
             customList.appendChild(item);
         });
-        
+        //initialize custom levels
+        purpleGameLM.initCustLevels();
     });
    /* 
     dbRef.on('value', function(snapshot) {
