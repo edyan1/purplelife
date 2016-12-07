@@ -74,7 +74,7 @@ PurpleLifeLM.prototype.onAuthStateChanged = function(user) {
 
     // Hide sign-in button.
     this.signInButton.setAttribute('hidden', 'true');
-
+    customLevelSelect();
     // We load currently existing chant messages.
     //this.loadMessages();
  } else { // User is signed out!

@@ -27,8 +27,10 @@ and open the template in the editor.
             <link rel="stylesheet" href="styles/levelMaker.css" type="text/css"/>
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-            <script src="scripts/main.js"></script>
+            <!--<script src="scripts/main.js"></script> -->
+            <script src ="scripts/levelMaker.js"></script>
             <script src="scripts/SceneManager.js"></script>
+         
             
         
     </head>
@@ -74,21 +76,21 @@ and open the template in the editor.
             <h2></h2>
             <div style="text-align: center;"> <a href="levelcreate.html" class="newLevel" >Create New Level</a></div>
             
-            <div id="customlevels" class="custLevBar">
-                
+           <!-- <div id="customleve" class="custLevBar">
+                <div class="title">Tesewffewfewfewfewt:</div>
                 <img class="levelImg" id="slot1" src="images/levels/empty.png" />
                 <button class="levelButtonLM" type="button" onclick="sceneManager.loadCustomLevel(1)">Play</button> 
                 <button class="levelButtonLM" type="button" onclick="sceneManager.loadCustomLevel(1)">Edit</button> 
                 <button class="levelButtonLM" type="button" onclick="sceneManager.loadCustomLevel(1)">Delete</button> 
             </div>
              
-            <div id="customlevels2" class="custLevBar">
-             
+            <div id="customleve2" class="custLevBar">
+                <div class="title">Test2:</div>
                 <img class="levelImg" id="slot2" src="images/levels/empty.png" />
                 <button class="levelButtonLM" type="button" onclick="sceneManager.loadCustomLevel(1)">Play</button> 
                 <button class="levelButtonLM" type="button"  onclick="sceneManager.loadCustomLevel(1)">Edit</button> 
                 <button class="levelButtonLM" type="button" onclick="sceneManager.loadCustomLevel(1)">Delete</button> 
-            </div>
+            </div> -->
         </div>
 
         
@@ -106,6 +108,7 @@ and open the template in the editor.
   };
   firebase.initializeApp(config);
 </script>
+       
             
             <script>
               // Get a reference to the database service
@@ -113,7 +116,7 @@ and open the template in the editor.
             </script>
             <script src="scripts/database.js"></script>
             
-            <script src="scripts/levelMaker.js"></script>
+            
          </div>
     </body>
 </html>

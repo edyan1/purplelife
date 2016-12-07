@@ -67,7 +67,8 @@ function writeUserData(name, data) {
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/'+n);
     dbRef.update({
-        customMap : data
+        "name" : n,
+        "map" : data
     });
 }
 
@@ -124,7 +125,7 @@ function loadUserMap (name) {
     dbRef.once('value').then(function(snapshot) {
         var thumbnail = document.getElementById("thumbnail");
         //if (slot === "1") 
-            thumbnail.setAttribute("src",snapshot.val().customMap);
+        thumbnail.setAttribute("src",snapshot.val().map);
         //if (slot === "2") thumbnail.setAttribute("src",snapshot.val().map2);
         //if (slot === "3") thumbnail.setAttribute("src",snapshot.val().map3);
         //if (slot === "4") thumbnail.setAttribute("src",snapshot.val().map4);
@@ -139,10 +140,41 @@ function loadUserMap (name) {
 //populate custom maps screen in level select with user created maps
 function customLevelSelect (){
     var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('users/'+userId+'/maps/'+"c1");
-    dbRef.on('value', function(snapshot) {
-        var slot1 = document.getElementById("slot1");
-        if (snapshot.val().customMap !== undefined) slot1.setAttribute("src",snapshot.val().customMap);
+    var dbRef = firebase.database().ref('users/'+userId+'/maps/');
+   
+    dbRef.once('value', function(snapshot) {
+        var nameArray = [dbRef.length];
+        var mapArray = [dbRef.length];
+        
+        snapshot.forEach(function(data) {
+            var customContainer = document.getElementById("container2");
+            var newLevel = document.createElement("div");
+            newLevel.className = "custLevBar";
+            //newLevel.id = "customlevel"+j;
+            var title = document.createElement("div");
+            title.className = "title";
+            var mapTitle = document.createTextNode(data.val().name);
+            title.appendChild(mapTitle);
+            var levelThumb = document.createElement("img");
+            levelThumb.className = "levelImg";
+            levelThumb.setAttribute("src", data.val().map);
+            var playBtn = document.createElement("button");
+            playBtn.className = "levelButtonLM";
+            playBtn.innerHTML = "Play";
+            var editBtn = document.createElement("button");
+            editBtn.className = "levelButtonLM";
+            editBtn.innerHTML = "Edit";
+            var delBtn = document.createElement("button");
+            delBtn.className = "levelButtonLM";
+            delBtn.innerHTML = "Delete";
+            newLevel.appendChild(title);
+            newLevel.appendChild(levelThumb);
+            newLevel.appendChild(playBtn);
+            newLevel.appendChild(editBtn);
+            newLevel.appendChild(delBtn);
+            customContainer.appendChild(newLevel);
+        });
+        
     });
    /* 
     dbRef.on('value', function(snapshot) {

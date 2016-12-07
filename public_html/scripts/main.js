@@ -110,7 +110,7 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
     
     //document.getElementById("game_canvas").style.visibility = 'hidden';
     sceneManager.changeScene(Scenes.LEVELSELECT);
-    customLevelSelect();
+   
     levelSelectAccess();
     purpleGame.initCustLevels();
     
