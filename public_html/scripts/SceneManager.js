@@ -11,8 +11,11 @@ var currentScene;
 var level1 = false;
 var splashScreen;
 
-function initSceneManager(currentScene) {
+var game;
+
+function initSceneManager(currentScene, gameReference) {
     currentScene = currentScene;
+    game = gameReference;
 
     splashScreen = new Image();
     splashScreen.src = "images/splash.png";
@@ -71,12 +74,12 @@ function loadGameScene() {
   document.getElementById("toolbar").style.display = "block";
   document.getElementById("toolbar").style.visibility = "visible";
 
-  purpleGame.resetGameOfLife();
+  game.resetGameOfLife();
 };
 
 function deloadGameScene() {
-  purpleGame.resetGameOfLife();
-  purpleGame.pausePurpleGame();
+  game.resetGameOfLife();
+  game.pausePurpleGame();
   canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
   document.getElementById("toolbar").style.display = "none";
   document.getElementById("toolbar").style.visibility = "hidden";
@@ -108,14 +111,14 @@ function deloadLevelMakerScene() {
 };
 
 function goBack() {
-  purpleGame.pausePurpleGame();
+  game.pausePurpleGame();
   if (userSignedIn) changeScene(Scenes.LEVELSELECT);
   else changeScene(Scenes.SPLASH);
 };
 
 function loadGameLevel(levelToLoad) {
     changeScene(Scenes.GAME);
-    purpleGame.loadLevel("level" + levelToLoad + ".png");
+    game.loadLevel("level" + levelToLoad + ".png");
 
   if (levelToLoad === 1) {
       showHelpNotes();
@@ -125,10 +128,10 @@ function loadGameLevel(levelToLoad) {
 };
 
 function loadCustomLevel(levelNum) {
-    if (purpleGameLM.customLevelExists(levelNum)) {
+    if (game.customLevelExists(levelNum)) {
         this.changeScene(Scenes.GAME);
         //isCustomLevel = true;
-        purpleGameLM.loadCustomLevel(levelNum);
+        game.loadCustomLevel(levelNum);
     }
 }
 

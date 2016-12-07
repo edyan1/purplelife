@@ -42,7 +42,7 @@ function PurpleLifeLM() {
   this.initGame();
   
   //Initialize the Scene Manager
-  initSceneManager(Scenes.LEVELMAKER);
+  initSceneManager(Scenes.LEVELMAKER, purpleGameLM);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -149,7 +149,7 @@ PurpleLifeLM.prototype.initCanvas = function() {
 PurpleLifeLM.prototype.resizeCanvas = function() {
     canvas.width = Math.round(window.innerWidth * canvasScaleX);
     canvas.height = Math.round(window.innerHeight * canvasScaleY);
-    document.getElementById("container2").style.height = canvas.height + "px";
+    document.getElementById("container").style.height = canvas.height + "px";
     document.getElementById("toolbar").style.width = canvas.width + "px";
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;

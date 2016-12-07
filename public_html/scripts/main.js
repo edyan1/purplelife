@@ -49,7 +49,7 @@ function PurpleLife() {
   this.initGame();
 
   //Initialize the Scene Manager
-  initSceneManager(Scenes.SPLASH);
+  initSceneManager(Scenes.SPLASH, purpleGame);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
