@@ -36,6 +36,9 @@ function PurpleLifeLM() {
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
   this.signInButton.addEventListener('click', this.signIn.bind(this));
 
+  canvasScaleX = .672;
+  canvasScaleY = .75;
+
   this.initFirebase();
 
   this.initCanvas();

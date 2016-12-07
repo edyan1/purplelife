@@ -73,7 +73,7 @@ function deloadSplashScene() {
 function loadGameScene() {
   document.getElementById("toolbar").style.display = "block";
   document.getElementById("toolbar").style.visibility = "visible";
-
+  document.getElementById("game_canvas").removeAttribute('hidden');
   game.resetGameOfLife();
 };
 
@@ -99,7 +99,7 @@ function deloadLevelSelectScene() {
 };
 
 function loadLevelMakerScene() {
-  
+  document.getElementById("game_canvas").setAttribute('hidden', 'hidden');
   document.getElementById("level_maker_menu").removeAttribute('hidden');
   
 };

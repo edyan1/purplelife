@@ -120,7 +120,7 @@ button.levelButtonLM{
 }
 
 /*THIS IS THE DIV WHERE THE BUTTONS ARE PLACED IN*/
-#container2 {
+#container {
   width: 67%;
   float: left;
   position: relative;
@@ -150,4 +150,12 @@ button.levelButton{
   left: 30%;
   top: 0;
   position: absolute;
+}
+
+#level_maker_menu {
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
