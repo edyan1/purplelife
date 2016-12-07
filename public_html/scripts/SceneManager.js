@@ -115,6 +115,7 @@ SceneManager.prototype.loadGameLevel = function(levelToLoad) {
 SceneManager.prototype.loadCustomLevel = function(levelNum) {
     if (purpleGame.customLevelExists(levelNum)) {
         this.changeScene(Scenes.GAME);
+        isCustomLevel = true;
         purpleGame.loadCustomLevel(levelNum);
     }
 }

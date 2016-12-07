@@ -160,6 +160,7 @@ PurpleLife.prototype.initCanvas = function() {
 
     //SET ALL KEYS WE'RE GONNA USE
     currentlyPressedKeys[70] = false;
+    currentlyPressedKeys[81] = false;
     currentlyPressedKeys[82] = false;
 };
 

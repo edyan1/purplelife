@@ -94,6 +94,7 @@ var currentLevel;
 var weaponCount;
 var undoCounter;
 var gameWon;
+var isCustomLevel;
 var isWonPlayed = false;
 var gameLost;
 var waitTillPlayerLoses;
@@ -1183,7 +1184,7 @@ Game.prototype.renderGameWithoutSwapping = function()
     this.renderWeaponSelect();
     
     // AND RENDER THE TEXT
-    if (gameWon) {
+    if (gameWon && !isCustomLevel) {
         this.renderYouWon();
         playWonSound();
         // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
@@ -1197,6 +1198,15 @@ Game.prototype.renderGameWithoutSwapping = function()
             this.resetGameOfLife();
             this.pausePurpleGame();
             this.loadLevel(currentLevel.substring(0,5) + levelNumber + ".png");
+        }
+    } else if(gameWon && isCustomLevel) {
+        this.renderYouWon();
+        playWonSound();
+        if(currentlyPressedKeys[81]) {
+            this.resetGameOfLife();
+            this.pausePurpleGame();
+            isCustomLevel = false;
+            sceneManager.goBack();
         }
     } else if (gameLost) {
         this.renderYouLostText();
@@ -1358,8 +1368,11 @@ Game.prototype.renderYouWon = function() {
     canvas2D.fillStyle = TEXT_COLOR;
     
     // RENDER THE TEXT
-    canvas2D.textAlign="center"; 
-    canvas2D.fillText("You Won! Press F to Continue!", canvasWidth/2, canvasHeight/2);
+    canvas2D.textAlign="center";
+    if(!isCustomLevel)
+        canvas2D.fillText("You Won! Press F to Continue!", canvasWidth/2, canvasHeight/2);
+    else
+        canvas2D.fillText("You Won! Press Q to Return!", canvasWidth/2, canvasHeight/2);
 }
 
 Game.prototype.renderYouLostText = function() {
