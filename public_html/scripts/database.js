@@ -72,50 +72,6 @@ function writeUserData(name, data) {
     });
 }
 
-//save map to slot 1
-function writeUserData1(data) {
-    var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('users/'+userId+'/maps/');
-    dbRef.update({
-        "map1" : data
-    });
-}
-
-//save map to slot 2
-function writeUserData2(data) {
-    var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('users/'+userId+'/maps/');
-    dbRef.update({
-        "map2" : data
-    });
-}
-
-//save map to slot 3
-function writeUserData3(data) {
-    var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('users/'+userId+'/maps/');
-    dbRef.update({
-        "map3" : data
-    });
-}
-
-//save map to slot 4
-function writeUserData4(data) {
-    var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('users/'+userId+'/maps/');
-    dbRef.update({
-        "map4" : data
-    });
-}
-
-//save map to slot 5
-function writeUserData5(data) {
-    var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('users/'+userId+'/maps/');
-    dbRef.update({
-        "map5" : data
-    });
-}
 
 //load map in user selected slot (in level editor)
 function loadUserMap (name) {
@@ -141,7 +97,6 @@ function customLevelSelect (){
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
 
     dbRef.once('value', function(snapshot) {
-        
         snapshot.forEach(function(data) {
             var customContainer = document.getElementById("level_maker_menu");
             var newLevel = document.createElement("div");
@@ -166,7 +121,7 @@ function customLevelSelect (){
             var delBtn = document.createElement("button");
             delBtn.className = "levelButtonLM";
             delBtn.innerHTML = "Delete";
-            delBtn.onclick = "";
+            delBtn.onclick = function(){customLevelDelete(data.val().name)};
             newLevel.appendChild(title);
             newLevel.appendChild(levelThumb);
             newLevel.appendChild(playBtn);
@@ -186,24 +141,18 @@ function customLevelSelect (){
         //initialize custom levels
         purpleGameLM.initCustLevels();
     });
-   /* 
-    dbRef.on('value', function(snapshot) {
-        var slot2 = document.getElementById("slot2");
-        if (snapshot.val().map2 !== undefined) slot2.setAttribute("src",snapshot.val().map2);
-    });
+  
+}
+
+function customLevelDelete (name) {
     
-    dbRef.on('value', function(snapshot) {
-        var slot3 = document.getElementById("slot3");
-        if (snapshot.val().map3 !== undefined) slot3.setAttribute("src",snapshot.val().map3);
-    });
+    var userId = firebase.auth().currentUser.uid;
+    var dbRef = firebase.database().ref('users/'+userId+'/maps/'+name);
+    if (confirm('Are you sure you want to delete this map forever?')) {
+        document.getElementById(name).setAttribute('hidden', 'hidden');
+        dbRef.remove();
+    } else {
     
-    dbRef.on('value', function(snapshot) {
-        var slot4 = document.getElementById("slot4");
-        if (snapshot.val().map4 !== undefined) slot4.setAttribute("src",snapshot.val().map4);
-    });
+    }
     
-    dbRef.on('value', function(snapshot) {
-        var slot5 = document.getElementById("slot5");
-        if (snapshot.val().map5 !== undefined) slot5.setAttribute("src",snapshot.val().map5);
-    });*/
 }
