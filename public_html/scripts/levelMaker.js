@@ -10,6 +10,7 @@ var canvas;
 var canvas2D;
 var canvasScaleX;
 var canvasScaleY;
+var defaultFontSize;
 var userSignedIn;
 var mouseState;
 
@@ -38,6 +39,7 @@ function PurpleLifeLM() {
 
   canvasScaleX = .672;
   canvasScaleY = .75;
+  defaultFontSize = 40;
 
   this.initFirebase();
 
@@ -156,6 +158,9 @@ PurpleLifeLM.prototype.resizeCanvas = function() {
     document.getElementById("toolbar").style.width = canvas.width + "px";
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
+
+    var hyp = Math.sqrt(canvasScaleX * canvasScaleX, canvasScaleY * canvasScaleY);
+    canvas2D.font = defaultFontSize * hyp + "px Arial";
 
       if (getCurrentScene() == Scenes.GAME)
         purpleGameLM.resizeCanvas();
