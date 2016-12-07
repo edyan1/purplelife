@@ -695,7 +695,10 @@ function respondToLoadedCustomLevelImage(img, pixelArray)
 
                     // IF PLACEMENT CELL (LIGHT GRAY)
                     else if (((r == 232) && (g == 232) && (b == 232)) ||
-                             ((r == 233) && (g == 233) && (b == 233))) {
+                             ((r == 233) && (g == 233) && (b == 233)) ||
+                             ((r == 90) && (g == 180) && (b == 90))  ||
+                             ((r == 91) && (g == 181) && (b == 91))) { 
+                             
                         placementArray[placementArrayCounter] = x;
                         placementArray[placementArrayCounter+1] = y;
                         placementArrayCounter += 2;
