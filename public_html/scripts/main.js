@@ -104,13 +104,10 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
 
     // Hide sign-in button.
     this.signInButton.setAttribute('hidden', 'true');
-
-    // We load currently existing chant messages.
-    //this.loadMessages();
     
     //document.getElementById("game_canvas").style.visibility = 'hidden';
     sceneManager.changeScene(Scenes.LEVELSELECT);
-   
+    
     levelSelectAccess();
     purpleGame.initCustLevels();
     
@@ -178,7 +175,7 @@ PurpleLife.prototype.resizeCanvas = function() {
       else if (sceneManager.getCurrentScene() == Scenes.SPLASH)
         sceneManager.changeScene(Scenes.SPLASH);
     }
-}
+};
 
 function respondToMouseClick (event) {
   purpleGame.realMouseClick(event, purpleGame);
@@ -230,7 +227,7 @@ PurpleLife.prototype.initDirections = function() {
 $(document).ready(function() {
     weapon = $(this).find('.weaponSize').attr('src');
     weapon = weapon.substring(15);
-})
+});
 
 // GRABS THE WEAPON SELECTED AND LOADS IT ON THE CANVAS
 $(document).ready(function() {

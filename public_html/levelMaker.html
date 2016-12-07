@@ -27,10 +27,11 @@ and open the template in the editor.
             <link rel="stylesheet" href="styles/levelMaker.css" type="text/css"/>
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-            <!--<script src="scripts/main.js"></script> -->
+            <script src="scripts/fanmenu.js"></script>
             <script src ="scripts/levelMaker.js"></script>
             <script src="scripts/SceneManager.js"></script>
-         
+            <script src="scripts/customGame.js"></script>
+            <script src="scripts/notify.js"></script>
             
         
     </head>
@@ -73,9 +74,59 @@ and open the template in the editor.
         </header>
        
         <div id="container2">
+            <div class="canvas">
+            <canvas id="game_canvas" width="1024" height="580" style="margin:0 auto;"></canvas>
+            </div>
+            <div id="level_maker_menu">
             <h2></h2>
             <div style="text-align: center;"> <a href="levelcreate.html" class="newLevel" >Create New Level</a></div>
+            </div>
             
+            <div id="toolbarLM" class="divBody">
+             
+            <div id='weaponMenu' class="fm_wrap">
+            <a class="fm_btntoggle" href="#" title="Toggle"><i>w</i></a>
+            <ul id="weaponSelect" class="fm_list">
+              <li><a><img class="weaponSize" src="images/weapons/rocket.png"><i class="icon-user icon-white"></i></a></li>
+              <li><a><img class="weaponSize" src="images/weapons/gun.png"><i class="icon-heart icon-white"></i></a></li>
+            </ul>
+            <ul id="weaponsList" style="list-style: none;">
+                <li id="rocket.png"></li>
+                <li id="gun.png"></li>
+                <li id="rocket_down.png"></li>
+                <li id="rocket_left.png"></li>
+                <li id="rocket_right.png"></li>
+                <li id="rocket_up.png"></li>
+                <li id="gun_downleft.png"></li>
+                <li id="gun_downright.png"></li>
+                <li id="gun_upleft.png"></li>
+                <li id="gun_upright.png"></li>
+            </ul>
+         
+            <ul id="customLevelsListLM" style="list-style: none;">
+                <li id="level1.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
+             
+            </ul>
+            </div> 
+
+
+              <button id="reset_button" type="button" value="Reset" class="resetBtn" onclick="purpleGameLM.resetLevel()">Reset</button>
+              <button id="start_button" type="button" value="Play" class="playBtn" onclick="purpleGameLM.startPurpleGame()">Play</button>
+              <button id="undo_button" type="button" value="Undo" class="undoBtn" onclick="purpleGameLM.undo()">Undo</button>
+              <button id="quit_button" type="button" value="Quit" class="quitBtn" onclick="sceneManager.goBack()">Quit</button>
+            <!--<button type ="button" value ="Help" onclick="function(){">Help</button>-->
+            <div id='directionMenu' class="fm_wrap">
+            <a class="fm_btntoggle" href="#" title="Toggle"><i>D</i></a>
+            <ul id="weaponDirection" class="fm_list">
+              <li><a><img class="weaponDir" id="leftdir" src="icons/left.png"><i class="icon-user icon-white"></i></a></li>
+              <li><a><img class="weaponDir" id="rightdir" src="icons/right.png"><i class="icon-heart icon-white"></i></a></li>
+              <li><a><img class="weaponDir" id="downdir" src="icons/down.png"><i class="icon-music icon-white"></i></a></li>
+              <li><a><img class="weaponDir" id="updir" src="icons/up.png"><i class="icon-home icon-white"></i></a></li>
+              <!--<li><a href="#"><i class="icon-flag icon-white"></i></a></li>-->
+            </ul>
+            </div>
+            
+          </div>
            <!-- <div id="customleve" class="custLevBar">
                 <div class="title">Tesewffewfewfewfewt:</div>
                 <img class="levelImg" id="slot1" src="images/levels/empty.png" />
@@ -92,6 +143,13 @@ and open the template in the editor.
                 <button class="levelButtonLM" type="button" onclick="sceneManager.loadCustomLevel(1)">Delete</button> 
             </div> -->
         </div>
+        
+            <div>
+                <ul id="customLevelsListLM" style="list-style: none;">
+                <li id="level1.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
+          
+                </ul>
+            </div>
 
         
        

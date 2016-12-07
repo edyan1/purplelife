@@ -124,12 +124,9 @@ function loadUserMap (name) {
     var dbRef = firebase.database().ref('users/'+userId+'/maps/'+n);
     dbRef.once('value').then(function(snapshot) {
         var thumbnail = document.getElementById("thumbnail");
-        //if (slot === "1") 
+  
         thumbnail.setAttribute("src",snapshot.val().map);
-        //if (slot === "2") thumbnail.setAttribute("src",snapshot.val().map2);
-        //if (slot === "3") thumbnail.setAttribute("src",snapshot.val().map3);
-        //if (slot === "4") thumbnail.setAttribute("src",snapshot.val().map4);
-        //if (slot === "5") thumbnail.setAttribute("src",snapshot.val().map5);
+        
         thumbnail.setAttribute("width", "64px");
         thumbnail.setAttribute("height","33px");
      
@@ -137,42 +134,54 @@ function loadUserMap (name) {
     
 }
 
+
 //populate custom maps screen in level select with user created maps
 function customLevelSelect (){
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
    
     dbRef.once('value', function(snapshot) {
-        var nameArray = [dbRef.length];
-        var mapArray = [dbRef.length];
         
         snapshot.forEach(function(data) {
-            var customContainer = document.getElementById("container2");
+            var customContainer = document.getElementById("level_maker_menu");
             var newLevel = document.createElement("div");
             newLevel.className = "custLevBar";
-            //newLevel.id = "customlevel"+j;
+            newLevel.id = data.val().name;
             var title = document.createElement("div");
             title.className = "title";
             var mapTitle = document.createTextNode(data.val().name);
             title.appendChild(mapTitle);
             var levelThumb = document.createElement("img");
-            levelThumb.className = "levelImg";
+            levelThumb.className = "levelImg2";
+            levelThumb.id = data.val().name+"img";
             levelThumb.setAttribute("src", data.val().map);
             var playBtn = document.createElement("button");
             playBtn.className = "levelButtonLM";
             playBtn.innerHTML = "Play";
+            playBtn.onclick = "sceneManager.loadCustomLevel(1)";
             var editBtn = document.createElement("button");
             editBtn.className = "levelButtonLM";
             editBtn.innerHTML = "Edit";
+            playBtn.onclick = "";
             var delBtn = document.createElement("button");
             delBtn.className = "levelButtonLM";
             delBtn.innerHTML = "Delete";
+            playBtn.onclick = "";
             newLevel.appendChild(title);
             newLevel.appendChild(levelThumb);
             newLevel.appendChild(playBtn);
             newLevel.appendChild(editBtn);
             newLevel.appendChild(delBtn);
             customContainer.appendChild(newLevel);
+            
+            var customList = document.getElementById("customLevelsListLM");
+            var item = document.createElement("li");
+            item.id = data.val().name;
+            item.value = "4";
+            item.setAttribute("cellcountX", "64");
+            item.setAttribute("cellcountY", "35");
+            item.setAttribute("gameLostTimeout", "9001");
+            customList.appendChild(item);
         });
         
     });
