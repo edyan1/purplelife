@@ -877,7 +877,7 @@ Game.prototype.loadLevel = function (levelToLoad) {
     cellLengthY = canvasHeight/cellcountY;
     gridWidth = canvasWidth/cellLengthX;
     gridHeight = canvasHeight/cellLengthY;
-    nextTimeTurretCanFire = Date.now();
+    nextTimeTurretCanFire = 2000;
     placedCount = 0;
 
     // START A NEW TIMER
@@ -1391,11 +1391,11 @@ Game.prototype.renderYouLostText = function() {
 
 Game.prototype.stepPurpleGame = function() {
     // CHECK TO SEE IF TURRET IS ALLOWED TO FIRE
-    var now = Date.now();
-    if (nextTimeTurretCanFire <= now) {
+    if (nextTimeTurretCanFire >= turretFireRate) {
         purpleGame.spawnProjectile();
-        nextTimeTurretCanFire += turretFireRate;
-    }
+        nextTimeTurretCanFire = 0;
+    } else 
+    	nextTimeTurretCanFire += 1000/fps;
 
 	//REMOVE BRIGHT ARRAY
     brightGrid = new Array();
@@ -1411,12 +1411,12 @@ Game.prototype.stepPurpleGame = function() {
 };
 
 Game.prototype.stepTurretTime = function() {
-    //CHECK TO SEE IF TURRET IS ALLOWED TO FIRE
-    var now = Date.now();
-    if (nextTimeTurretCanFire <= now) {
+    // CHECK TO SEE IF TURRET IS ALLOWED TO FIRE
+    if (nextTimeTurretCanFire >= turretFireRate) {
         purpleGame.spawnProjectile();
-        nextTimeTurretCanFire += turretFireRate;
-    }
+        nextTimeTurretCanFire = 0;
+    } else 
+    	nextTimeTurretCanFire += 1000/fps;
     
     // FIRST PERFORM GAME LOGIC
     purpleGame.updateTurretProjectiles();
