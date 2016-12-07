@@ -94,7 +94,7 @@ var currentLevel;
 var weaponCount;
 var undoCounter;
 var gameWon;
-var isCustomLevel;
+var isCustomLevel = false;
 var isWonPlayed = false;
 var gameLost;
 var waitTillPlayerLoses;
@@ -1202,12 +1202,12 @@ Game.prototype.renderGameWithoutSwapping = function()
     } else if(gameWon && isCustomLevel) {
         this.renderYouWon();
         playWonSound();
-        if(currentlyPressedKeys[81]) {
-            this.resetGameOfLife();
-            this.pausePurpleGame();
-            isCustomLevel = false;
+        //if(isCustomLevel) {
+            //isCustomLevel = false;
+            //this.resetGameOfLife();
+           // this.pausePurpleGame();
             sceneManager.goBack();
-        }
+        //}
     } else if (gameLost) {
         this.renderYouLostText();
         // IF THE PLAYER WANTS TO PRESS R TO RESTART THE LEVEL
@@ -1372,7 +1372,7 @@ Game.prototype.renderYouWon = function() {
     if(!isCustomLevel)
         canvas2D.fillText("You Won! Press F to Continue!", canvasWidth/2, canvasHeight/2);
     else
-        canvas2D.fillText("You Won! Press Q to Return!", canvasWidth/2, canvasHeight/2);
+        canvas2D.fillText("You Won! Click Quit to Return!", canvasWidth/2, canvasHeight/2);
 }
 
 Game.prototype.renderYouLostText = function() {
