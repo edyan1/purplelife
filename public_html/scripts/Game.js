@@ -340,41 +340,41 @@ Game.prototype.initLevels = function () {
     
 };
 
-Game.prototype.initCustLevels = function () {
-    
-    // THIS WILL STORE ALL THE PATTERNS IN AN ASSOCIATIVE ARRAY
-    cLevels = new Array();
-
-    // RECEIEVE THE LEVELS FROM THE HTML
-    var cLevelList = document.getElementById("customLevelsList");
-    var cLevelItems = cLevelList.getElementsByTagName("li");
-
-    var keyNum = 1;
-    for (var i = 0; i < cLevelItems.length; i++) {
-        // GET THE NAME OF THE IMAGE FILE AND MAKE
-        // A NEW ARRAY TO STORE IT'S PIXEL COORDINATES
-        var key = cLevelItems[i].id;
-        var pixelArray = new Array();
-
-        loadCustomMap(i+1);
-        var mapLoaded = document.getElementById("slot" + (i+1).toString());
-
-        // NOW LOAD THE DATA FROM THE IMAGE
-        loadOffScreenCustomLevel(mapLoaded, pixelArray);
-
-        //SET THE WEAPON COUNT
-        pixelArray[12] = cLevelItems[i].value;
-        pixelArray[13] = cLevelItems[i].getAttribute("cellcountX");
-        pixelArray[14] = cLevelItems[i].getAttribute("cellcountY");
-        pixelArray[15] = cLevelItems[i].getAttribute("gameLostTimeout");
-            
-        // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
-        // BY KEY
-        levels["level" + (customLevelsBegin + keyNum).toString() + ".png"] = pixelArray;
-        keyNum++;
-    }
-    
-};
+// Game.prototype.initCustLevels = function () {
+//
+//     // THIS WILL STORE ALL THE PATTERNS IN AN ASSOCIATIVE ARRAY
+//     cLevels = new Array();
+//
+//     // RECEIEVE THE LEVELS FROM THE HTML
+//     var cLevelList = document.getElementById("customLevelsList");
+//     var cLevelItems = cLevelList.getElementsByTagName("li");
+//
+//     var keyNum = 1;
+//     for (var i = 0; i < cLevelItems.length; i++) {
+//         // GET THE NAME OF THE IMAGE FILE AND MAKE
+//         // A NEW ARRAY TO STORE IT'S PIXEL COORDINATES
+//         var key = cLevelItems[i].id;
+//         var pixelArray = new Array();
+//
+//         loadCustomMap(i+1);
+//         var mapLoaded = document.getElementById("slot" + (i+1).toString());
+//
+//         // NOW LOAD THE DATA FROM THE IMAGE
+//         loadOffScreenCustomLevel(mapLoaded, pixelArray);
+//
+//         //SET THE WEAPON COUNT
+//         pixelArray[12] = cLevelItems[i].value;
+//         pixelArray[13] = cLevelItems[i].getAttribute("cellcountX");
+//         pixelArray[14] = cLevelItems[i].getAttribute("cellcountY");
+//         pixelArray[15] = cLevelItems[i].getAttribute("gameLostTimeout");
+//
+//         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
+//         // BY KEY
+//         levels["level" + (customLevelsBegin + keyNum).toString() + ".png"] = pixelArray;
+//         keyNum++;
+//     }
+//
+// };
 
 function loadOffScreenLevel(imgName, pixelArray)
 {    

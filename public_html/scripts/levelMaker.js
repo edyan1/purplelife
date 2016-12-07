@@ -150,7 +150,7 @@ PurpleLifeLM.prototype.resizeCanvas = function() {
     canvas.width = Math.round(window.innerWidth * canvasScaleX);
     canvas.height = Math.round(window.innerHeight * canvasScaleY);
     document.getElementById("container2").style.height = canvas.height + "px";
-    document.getElementById("toolbarLM").style.width = canvas.width + "px";
+    document.getElementById("toolbar").style.width = canvas.width + "px";
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
 
