@@ -105,6 +105,7 @@ var placedCount = 0;
 var gameRunning;
 
 var customLevelsBegin = 0;
+var totalLevels = 0;
 
 // INITIALIZATION METHODS
 
@@ -347,7 +348,7 @@ Game.prototype.initCustLevels = function () {
     var cLevelList = document.getElementById("customLevelsList");
     var cLevelItems = cLevelList.getElementsByTagName("li");
 
-    var keyNum = 0;
+    var keyNum = 1;
     for (var i = 0; i < cLevelItems.length; i++) {
         // GET THE NAME OF THE IMAGE FILE AND MAKE
         // A NEW ARRAY TO STORE IT'S PIXEL COORDINATES
@@ -368,7 +369,7 @@ Game.prototype.initCustLevels = function () {
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
-        levels[customLevelsBegin + keyNum] = pixelArray;
+        levels["level" + (customLevelsBegin + keyNum).toString() + ".png"] = pixelArray;
         keyNum++;
     }
     
@@ -608,7 +609,11 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
     pixelArray[8] = turretSpawnSRArray;
     pixelArray[9] = turretSpawnSLArray;
     pixelArray[10] = turretSpawnSUArray;
-    pixelArray[11] = turretSpawnSDArray;   
+    pixelArray[11] = turretSpawnSDArray;  
+
+    if (voidArrayCounter != 0) {
+        totalLevels++;
+    } 
 }
 
 function respondToLoadedCustomLevelImage(img, pixelArray)
@@ -786,7 +791,11 @@ function respondToLoadedCustomLevelImage(img, pixelArray)
     pixelArray[8] = turretSpawnSRArray;
     pixelArray[9] = turretSpawnSLArray;
     pixelArray[10] = turretSpawnSUArray;
-    pixelArray[11] = turretSpawnSDArray;   
+    pixelArray[11] = turretSpawnSDArray;  
+
+    if (voidArrayCounter != 0) {
+        totalLevels++;
+    }  
 }
 
 /*
@@ -973,14 +982,14 @@ Game.prototype.loadLevel = function (levelToLoad) {
 }
 
 Game.prototype.customLevelExists = function(levelToLoad) {
-    var level = levels[(customLevelsBegin + levelToLoad)];
+    var level = levels["level" + (customLevelsBegin + levelToLoad).toString() + ".png"];
     if (level[0] != null)
         return true;
     return false;
 }
 
 Game.prototype.loadCustomLevel = function (levelToLoad) {
-    this.loadLevel((customLevelsBegin + levelToLoad).toString());
+    this.loadLevel("level" + (customLevelsBegin + levelToLoad).toString() + ".png");
 }
 
 Game.prototype.initEventHandlers = function () {
@@ -1125,7 +1134,7 @@ Game.prototype.renderGame = function () {
         this.renderYouWon();
         playWonSound();
         // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
-        if (currentlyPressedKeys[70]) {
+        if (currentlyPressedKeys[70] && parseInt(currentLevel.match(/\d+/), 10) != totalLevels) {
             placedWeapons.length = 0;
             placedWeaponCount = 0;
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
