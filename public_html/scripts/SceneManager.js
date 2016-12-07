@@ -112,8 +112,15 @@ function deloadLevelMakerScene() {
 
 function goBack() {
   game.pausePurpleGame();
+  
   if (userSignedIn) changeScene(Scenes.LEVELSELECT);
   else changeScene(Scenes.SPLASH);
+};
+
+function goBackToLevelMaker() {
+  game.pausePurpleGame();
+  
+  changeScene(Scenes.LEVELMAKER);
 };
 
 function loadGameLevel(levelToLoad) {
