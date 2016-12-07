@@ -132,8 +132,7 @@ var totalLevels = 0;
     // LOAD THE PATTERNS FROM IMAGES
     this.initPatterns();
 
-    // LOAD THE LEVELS FROM IMAGES
-    this.initLevels();
+    this.initCustLevels();
             
     // SETUP THE EVENT HANDLERS
     this.initEventHandlers();
@@ -950,18 +949,18 @@ customGame.prototype.loadLevel = function (levelToLoad) {
 
     // RENDER THE GAME IMMEDIATELY
     this.renderGameWithoutSwapping();
-}
+};
 
 customGame.prototype.customLevelExists = function(levelToLoad) {
-    var level = levels["level" + (customLevelsBegin + levelToLoad).toString() + ".png"];
+    var level = levels[levelToLoad];
     if (level[0] != null)
         return true;
     return false;
-}
+};
 
 customGame.prototype.loadCustomLevel = function (levelToLoad) {
-    this.loadLevel("level" + (customLevelsBegin + levelToLoad).toString() + ".png");
-}
+    this.loadLevel(levelToLoad);
+};
 
 customGame.prototype.initEventHandlers = function () {
   canvas.onmousedown = this.setMouseDown;

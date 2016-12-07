@@ -339,13 +339,12 @@ function saveCanvas() {
     writeUserData(customName,imgSave);
 }
 
-function loadCustomMap(mapName) {
+function loadCustomMap() {
     
     //var storedCustoms = document.getElementById("stored_customs");
     //var slot = storedCustoms.options[storedCustoms.selectedIndex].value;
-    var name;
-    if (mapName === undefined) name = document.getElementById("loadName").value;
-    else name = mapName;
+    var name = document.getElementById("loadName").value;
+    
     
     resetGameOfLife();
     loadUserMap(name);
