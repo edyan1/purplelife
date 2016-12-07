@@ -57,6 +57,18 @@ function storeMap(slot, img){
     if (slot === "4") writeUserData4(img);
     if (slot === "5") writeUserData5(img);
     
+    
+    //writeUserData(slot,img);
+}
+
+//save custom map under the directory map in firebase database
+function writeUserData(name, data) {
+    var n = name;
+    var userId = firebase.auth().currentUser.uid;
+    var dbRef = firebase.database().ref('users/'+userId+'/maps/'+n);
+    dbRef.update({
+        customMap : data
+    });
 }
 
 //save map to slot 1
@@ -105,34 +117,18 @@ function writeUserData5(data) {
 }
 
 //load map in user selected slot (in level editor)
-function loadUserMap (slot) {
+function loadUserMap (name) {
+    var n = name;
     var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('users/'+userId+'/maps/');
+    var dbRef = firebase.database().ref('users/'+userId+'/maps/'+n);
     dbRef.once('value').then(function(snapshot) {
         var thumbnail = document.getElementById("thumbnail");
-        if (slot === "1") thumbnail.setAttribute("src",snapshot.val().map1);
-        if (slot === "2") thumbnail.setAttribute("src",snapshot.val().map2);
-        if (slot === "3") thumbnail.setAttribute("src",snapshot.val().map3);
-        if (slot === "4") thumbnail.setAttribute("src",snapshot.val().map4);
-        if (slot === "5") thumbnail.setAttribute("src",snapshot.val().map5);
-        thumbnail.setAttribute("width", "64px");
-        thumbnail.setAttribute("height","33px");
-     
-    });
-    
-}
-
-//load map in user selected slot (in level editor)
-function loadCustomMap (slot) {
-    var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('users/'+userId+'/maps/');
-    dbRef.once('value').then(function(snapshot) {
-        var thumbnail = document.getElementById("custom" + slot);
-        if (slot === "1") thumbnail.setAttribute("src",snapshot.val().map1);
-        if (slot === "2") thumbnail.setAttribute("src",snapshot.val().map2);
-        if (slot === "3") thumbnail.setAttribute("src",snapshot.val().map3);
-        if (slot === "4") thumbnail.setAttribute("src",snapshot.val().map4);
-        if (slot === "5") thumbnail.setAttribute("src",snapshot.val().map5);
+        //if (slot === "1") 
+            thumbnail.setAttribute("src",snapshot.val().customMap);
+        //if (slot === "2") thumbnail.setAttribute("src",snapshot.val().map2);
+        //if (slot === "3") thumbnail.setAttribute("src",snapshot.val().map3);
+        //if (slot === "4") thumbnail.setAttribute("src",snapshot.val().map4);
+        //if (slot === "5") thumbnail.setAttribute("src",snapshot.val().map5);
         thumbnail.setAttribute("width", "64px");
         thumbnail.setAttribute("height","33px");
      
@@ -143,12 +139,12 @@ function loadCustomMap (slot) {
 //populate custom maps screen in level select with user created maps
 function customLevelSelect (){
     var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('users/'+userId+'/maps/');
+    var dbRef = firebase.database().ref('users/'+userId+'/maps/'+"c1");
     dbRef.on('value', function(snapshot) {
         var slot1 = document.getElementById("slot1");
-        if (snapshot.val().map1 !== undefined) slot1.setAttribute("src",snapshot.val().map1);
+        if (snapshot.val().customMap !== undefined) slot1.setAttribute("src",snapshot.val().customMap);
     });
-    
+   /* 
     dbRef.on('value', function(snapshot) {
         var slot2 = document.getElementById("slot2");
         if (snapshot.val().map2 !== undefined) slot2.setAttribute("src",snapshot.val().map2);
@@ -167,5 +163,5 @@ function customLevelSelect (){
     dbRef.on('value', function(snapshot) {
         var slot5 = document.getElementById("slot5");
         if (snapshot.val().map5 !== undefined) slot5.setAttribute("src",snapshot.val().map5);
-    });
+    });*/
 }
