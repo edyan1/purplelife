@@ -324,23 +324,29 @@ function saveCanvas() {
     
     var imgSave = offscreenCanvas.toDataURL("image/png");
     
+    
     var thumbnail = document.getElementById("thumbnail");
     thumbnail.setAttribute("src",imgSave);
     thumbnail.setAttribute("width", "64px");
     thumbnail.setAttribute("height","33px");
     
-    var storedCustoms = document.getElementById("stored_customs");
-    var slot = storedCustoms.options[storedCustoms.selectedIndex].value;
-    storeMap(slot, imgSave);
+    //var storedCustoms = document.getElementById("stored_customs");
+    //var slot = storedCustoms.options[storedCustoms.selectedIndex].value;//
+    
+    var customName = document.getElementById("customLevelName").value;
+    //storeMap(slot, imgSave);
+    //storeMap(customName,imgSave);
+    writeUserData(customName,imgSave);
 }
 
 function loadCustomMap() {
     
-    var storedCustoms = document.getElementById("stored_customs");
-    var slot = storedCustoms.options[storedCustoms.selectedIndex].value;
+    //var storedCustoms = document.getElementById("stored_customs");
+    //var slot = storedCustoms.options[storedCustoms.selectedIndex].value;
+    var name = document.getElementById("loadName").value;
     
     resetGameOfLife();
-    loadUserMap(slot);
+    loadUserMap(name);
     var mapLoaded = document.getElementById("thumbnail");
     
     pixelArray = new Array();
