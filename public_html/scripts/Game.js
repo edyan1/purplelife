@@ -1058,11 +1058,14 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
             placedCount++;
 
             // SAVE PLACED WEAPON IN AN ARRAY
-            var placedWeapon = weapon.substring(0, weapon.indexOf('_'));
-            if(placedWeapon.length == 0)
-                placedWeapon = weapon.substring(0, weapon.indexOf('.'));
-            if(!checkIfAvailable(placedWeapon))
-                placedWeapons[placedWeaponCount++] = placedWeapon;
+            if(cell == PLACEMENT_CELL) {
+                var placedWeapon = weapon.substring(0, weapon.indexOf('_'));
+                if(placedWeapon.length == 0)
+                    placedWeapon = weapon.substring(0, weapon.indexOf('.'));
+                if(!checkIfAvailable(placedWeapon))
+                    placedWeapons[placedWeaponCount++] = placedWeapon;
+                alert("IN PLACEMENT CELL");
+            }
 	        
 	    // RENDER THE GAME IMMEDIATELY
 	    purpleGame.renderGameWithoutSwapping();
