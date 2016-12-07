@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d437b82-76df-42c4-81b2-183af60fbae5" name="Default" comment="fixed fanmenu.js">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public_html/scripts/Game.js" afterPath="$PROJECT_DIR$/public_html/scripts/Game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public_html/scripts/SceneManager.js" afterPath="$PROJECT_DIR$/public_html/scripts/SceneManager.js" />
     </list>
     <ignored path="purplelife.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,8 +56,8 @@
       <file leaf-file-name="Game.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public_html/scripts/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="96" column="25" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="25" />
+            <state relative-caret-position="235">
+              <caret line="1061" column="66" selection-start-line="1061" selection-start-column="66" selection-end-line="1061" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -705,12 +703,12 @@
       <workItem from="1480946404970" duration="3349000" />
       <workItem from="1480999334233" duration="4588000" />
       <workItem from="1481016229017" duration="5237000" />
-      <workItem from="1481072191155" duration="5975000" />
+      <workItem from="1481072191155" duration="6538000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75933000" />
+    <option name="totallyTimeSpent" value="76496000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="874" extended-state="6" />
@@ -1127,8 +1125,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public_html/scripts/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="96" column="25" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="25" />
+        <state relative-caret-position="235">
+          <caret line="1061" column="66" selection-start-line="1061" selection-start-column="66" selection-end-line="1061" selection-end-column="66" />
           <folding />
         </state>
       </provider>

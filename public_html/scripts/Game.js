@@ -1060,7 +1060,6 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
                 placedWeapon = weapon.substring(0, weapon.indexOf('.'));
             if(!checkIfAvailable(placedWeapon))
                 placedWeapons[placedWeaponCount++] = placedWeapon;
-            alert(placedWeapons);
 	        
 	    // RENDER THE GAME IMMEDIATELY
 	    purpleGame.renderGameWithoutSwapping();
