@@ -20,6 +20,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/levelMaker.css">
+        <link rel="stylesheet" href="styles/levelCreate.css">
         <!-- Scripts to load  -->
      
         <script src="scripts/levelMaker.js"></script>
@@ -47,7 +48,7 @@ and open the template in the editor.
                 </div>
               </div>
             </header>
-        
+    <!--    
         <div class="lm_info_box">
             <p style="font-size:150%;"><br>Level Maker Info - </p>
         </div> 
@@ -60,8 +61,8 @@ and open the template in the editor.
         
         <div id="toolbar">
             <input type="button" onclick="window.location.href='index.html'" value="Go Back To Purple Life Game" />
-            <input id="undo_button" type="button" value="Undo (not functional yet)" />
-            <input id="reset_button" type="button" value="Reset" />
+            <!--<input id="undo_button" type="button" value="Undo (not functional yet)" />-->
+            <input id="reset_button" class="bottomButton" type="button" value="Reset" />
             
             <!-- Here's the drop down list, it contains a reference
             to all the image patterns to be used. -->
@@ -81,17 +82,20 @@ and open the template in the editor.
         </canvas>
         
         <div> 
-            <input id="save_upload" type="button" value="Save and Upload" />
+            <input id="save_upload" class="bottomButton" type="button" value="Save and Upload" />
+            <input id="customLevelName" type="text" value="Custom Name"/><br>
             
+            <input id="load_from_save" class="bottomButton" type="button" value="Load from Save" />
+            <input id="loadName" type="text" value="Name of file"/><br>
+            <!--
             <select id="stored_customs">
                 <option value="1">Slot 1</option>
                 <option value="2">Slot 2</option>
                 <option value="3">Slot 3</option>
                 <option value="4">Slot 4</option>
                 <option value="5">Slot 5</option>
-            </select>
-            
-            <input id="load_from_save" type="button" value="Load from Save" />
+            </select><br>
+            -->
             <input id="dec_cell_length_button" type="button" value="Upload to Marketplace (not functional yet)" />
             <input id="inc_cell_length_button" type="button" value="(Placeholder)" />
             <img id="thumbnail" src="" alt="custom made level"/>
