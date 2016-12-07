@@ -1102,21 +1102,6 @@ customGame.prototype.renderGame = function () {
     if (gameWon) {
         this.renderYouWon();
         playWonSound();
-        // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
-        if (currentlyPressedKeys[70] && parseInt(currentLevel.match(/\d+/), 10) != totalLevels) {
-            placedWeapons.length = 0;
-            placedWeaponCount = 0;
-            var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
-            if (userSignedIn === true && getUserProgress() < levelNumber-1 ){
-                console.log(getUserProgress());
-                setUserProgress(levelNumber-1);
-            }
-            giveLevelAccess(levelNumber);
-            var tempCurrentLevel = currentLevel;
-            this.resetGameOfLife();
-            this.pausePurpleGame();
-            this.loadLevel(tempCurrentLevel.substring(0,5) + levelNumber + ".png");
-        }
     } else if (gameLost) {
         this.renderYouLostText();
         // IF THE PLAYER WANTS TO PRESS R TO RESTART THE LEVEL
@@ -1155,18 +1140,6 @@ customGame.prototype.renderGameWithoutSwapping = function()
     if (gameWon && !isCustomLevel) {
         this.renderYouWon();
         playWonSound();
-        // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
-        if (currentlyPressedKeys[70]) {
-            var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
-            if (userSignedIn === true && getUserProgress() < levelNumber-1 ) {
-                console.log(getUserProgress());
-                setUserProgress(levelNumber-1);
-            }
-            giveLevelAccess(levelNumber);
-            this.resetGameOfLife();
-            this.pausePurpleGame();
-            this.loadLevel(currentLevel.substring(0,5) + levelNumber + ".png");
-        }
     } else if(gameWon && isCustomLevel) {
         this.renderYouWon();
         playWonSound();
@@ -1338,9 +1311,9 @@ customGame.prototype.renderYouWon = function() {
     // RENDER THE TEXT
     canvas2D.textAlign="center";
     if(!isCustomLevel)
-        canvas2D.fillText("You Won! Press F to Continue!", canvasWidth/2, canvasHeight/2);
+        canvas2D.fillText("You Won!", canvasWidth/2, canvasHeight/2);
     else
-        canvas2D.fillText("You Won! Click Quit to Return!", canvasWidth/2, canvasHeight/2);
+        canvas2D.fillText("You Won!", canvasWidth/2, canvasHeight/2);
 }
 
 customGame.prototype.renderYouLostText = function() {
