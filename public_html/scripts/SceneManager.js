@@ -11,70 +11,70 @@ var currentScene;
 var level1 = false;
 var splashScreen;
 
-function SceneManager(currentScene) {
-    this.currentScene = currentScene;
+function initSceneManager(currentScene) {
+    currentScene = currentScene;
 
-    this.splashScreen = new Image();
-    this.splashScreen.src = "images/splash.png";
-    this.splashScreen.onload = function () {
+    splashScreen = new Image();
+    splashScreen.src = "images/splash.png";
+    splashScreen.onload = function () {
         canvas2D.drawImage(this, 60, 0, canvas.width-120, canvas.height - 60);
     };
 
-    this.changeScene(currentScene);
+    changeScene(currentScene);
 
 }
 
-SceneManager.prototype.changeScene = function(scene) {
-    switch(this.currentScene) {
+function changeScene (scene) {
+    switch(currentScene) {
         case Scenes.SPLASH:
-            this.deloadSplashScene();
+            deloadSplashScene();
             break;
         case Scenes.GAME:
-            this.deloadGameScene();
+            deloadGameScene();
             break;
         case Scenes.LEVELSELECT:
-            this.deloadLevelSelectScene();
+            deloadLevelSelectScene();
             break;
         case Scenes.LEVELMAKER:
-            this.deloadLevelMakerScene();
+            deloadLevelMakerScene();
             break;
     }
-    this.currentScene = scene;
+    currentScene = scene;
     switch(scene) {
         case Scenes.SPLASH:
-            this.loadSplashScene();
+            loadSplashScene();
             break;
         case Scenes.GAME:
-            this.loadGameScene();
+            loadGameScene();
             break;
         case Scenes.LEVELSELECT:
-            this.loadLevelSelectScene();
+            loadLevelSelectScene();
             break;
         case Scenes.LEVELMAKER:
-            this.loadLevelMakerScene();
+            loadLevelMakerScene();
             break;
     }
 };
 
-SceneManager.prototype.loadSplashScene = function() {
+function loadSplashScene() {
     canvas2D.drawImage(this.splashScreen, 60, 0, canvas.width-120, canvas.height - 60);
 
     document.getElementById("Enter_button").style.visibility = "visible";
 };
 
-SceneManager.prototype.deloadSplashScene = function() {
+function deloadSplashScene() {
   canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
   document.getElementById("Enter_button").style.visibility = "hidden";
 };
 
-SceneManager.prototype.loadGameScene = function() {
+function loadGameScene() {
   document.getElementById("toolbar").style.display = "block";
   document.getElementById("toolbar").style.visibility = "visible";
 
   purpleGame.resetGameOfLife();
 };
 
-SceneManager.prototype.deloadGameScene = function() {
+function deloadGameScene() {
   purpleGame.resetGameOfLife();
   purpleGame.pausePurpleGame();
   canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -83,38 +83,38 @@ SceneManager.prototype.deloadGameScene = function() {
 
 };
 
-SceneManager.prototype.loadLevelSelectScene = function() {
+function loadLevelSelectScene() {
   document.getElementById("Enter_button").style.visibility = "hidden";
   document.getElementById("ls-section").removeAttribute('hidden');
   
 };
 
-SceneManager.prototype.deloadLevelSelectScene = function() {
+function deloadLevelSelectScene() {
   
   document.getElementById("ls-section").setAttribute('hidden', 'hidden');
   
 };
 
-SceneManager.prototype.loadLevelMakerScene = function() {
+function loadLevelMakerScene() {
   
   document.getElementById("level_maker_menu").removeAttribute('hidden');
   
 };
 
-SceneManager.prototype.deloadLevelMakerScene = function() {
+function deloadLevelMakerScene() {
   
   document.getElementById("level_maker_menu").setAttribute('hidden', 'hidden');
   
 };
 
-SceneManager.prototype.goBack = function() {
+function goBack() {
   purpleGame.pausePurpleGame();
-  if (userSignedIn) this.changeScene(Scenes.LEVELSELECT);
-  else this.changeScene(Scenes.SPLASH);
+  if (userSignedIn) changeScene(Scenes.LEVELSELECT);
+  else changeScene(Scenes.SPLASH);
 };
 
-SceneManager.prototype.loadGameLevel = function(levelToLoad) {
-    this.changeScene(Scenes.GAME);
+function loadGameLevel(levelToLoad) {
+    changeScene(Scenes.GAME);
     purpleGame.loadLevel("level" + levelToLoad + ".png");
 
   if (levelToLoad === 1) {
@@ -124,7 +124,7 @@ SceneManager.prototype.loadGameLevel = function(levelToLoad) {
   }
 };
 
-SceneManager.prototype.loadCustomLevel = function(levelNum) {
+function loadCustomLevel(levelNum) {
     if (purpleGameLM.customLevelExists(levelNum)) {
         this.changeScene(Scenes.GAME);
         //isCustomLevel = true;
@@ -134,6 +134,6 @@ SceneManager.prototype.loadCustomLevel = function(levelNum) {
 
 
 
-SceneManager.prototype.getCurrentScene = function() {
-    return this.currentScene;
+function getCurrentScene() {
+    return currentScene;
 };

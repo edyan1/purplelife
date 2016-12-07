@@ -139,7 +139,7 @@ function loadUserMap (name) {
 function customLevelSelect (){
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
-   
+
     dbRef.once('value', function(snapshot) {
         
         snapshot.forEach(function(data) {
@@ -157,7 +157,7 @@ function customLevelSelect (){
             levelThumb.setAttribute("src", data.val().map);
             var playBtn = document.createElement("button");
             playBtn.className = "levelButtonLM";
-            playBtn.onclick = function(){sceneManager.loadCustomLevel(data.val().name)};
+            playBtn.onclick = function(){loadCustomLevel(data.val().name)};
             playBtn.innerHTML = "Play";
             var editBtn = document.createElement("button");
             editBtn.className = "levelButtonLM";

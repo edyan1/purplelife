@@ -19,9 +19,6 @@ var purpleGameLM;
 //Toolbar
 var toolbar;
 
-//Scene Manager
-var sceneManager2;
-
 //Weapon Manager
 var weapon;
 var direction;
@@ -45,7 +42,7 @@ function PurpleLifeLM() {
   this.initGame();
   
   //Initialize the Scene Manager
-  sceneManager2 = new SceneManager(Scenes.LEVELMAKER);
+  initSceneManager(Scenes.LEVELMAKER);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -159,12 +156,10 @@ PurpleLifeLM.prototype.resizeCanvas = function() {
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
 
-    if (sceneManager2 != undefined) {
-      if (sceneManager2.getCurrentScene() == Scenes.GAME)
+      if (getCurrentScene() == Scenes.GAME)
         purpleGameLM.resizeCanvas();
-      else if (sceneManager2.getCurrentScene() == Scenes.SPLASH)
-        sceneManager2.changeScene(Scenes.SPLASH);
-    }
+      else if (getCurrentScene() == Scenes.SPLASH)
+        changeScene(Scenes.SPLASH);
 };
 
 function respondToMouseClick (event) {
@@ -172,7 +167,7 @@ function respondToMouseClick (event) {
 };
 
 function respondToMouseMove (event) {
-  if (sceneManager2.currentScene == Scenes.GAME) {
+  if (currentScene == Scenes.GAME) {
     purpleGameLM.respondToMouseMove(event, purpleGameLM);
   }
 };
