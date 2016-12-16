@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Purple Life Level Maker</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+          <!-- Material Design Lite -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+        <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+        <!-- Font/App Google Styling -->
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/levelMaker.css">
+        <!-- Scripts to load  -->
+     
+        <script src="scripts/levelMaker.js"></script>
+        <script src="scripts/levelcreate.js"></script>
+    </head>
+    <body>
+        
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+            <!-- Header section containing logo -->
+            <header class="mdl-layout__header mdl-color-text--white mdl-color--purple-700">
+              <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+                <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                  <h3>Purple Life Level Maker</h3>
+                </div>
+                <div id="user-container">
+                  <div hidden id="user-pic"></div>
+                  <div hidden id="user-name"></div>
+                  <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                    Sign-out
+                  </button>
+                  <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                    <i class="material-icons">account_circle</i>Sign-in with Google
+                  </button>
+                </div>
+              </div>
+            </header>
+
+        <!-- This is the toolbar with buttons for starting, pausing,
+        and resetting the simulation, as well as containing a drop
+        down list for selecting patterns to add to the game.
+        -->
+        <div id="levelMaker">
+            <div class="lm_info_box">
+                <input class="LM_buttons" type="button" onclick="window.location.href='index.html'" value="Go Back To Purple Life Game" />
+                <input class="LM_buttons" id="undo_button" type="button" value="Undo (not functional yet)" />
+                <input class="LM_buttons" id="reset_button" type="button" value="Reset" />
+                <select class="LM_buttons" id="game_of_life_patterns">
+                    <option value="2x2.png">Objective: Box</option>
+                    <option value="ship.png">Objective: Ship</option>
+                    <option value="VoidCell.png">Void Cell</option>
+                    <option value="Placement.png">Placement Cell</option>
+                    <option value="RemoveVC">Eraser (1x1)</option>
+                </select>
+            </div>
+
+            <canvas id="level_maker_canvas" width="1024" height="528">
+            </canvas>
+        
+        <div> 
+            <input id="save_upload" type="button" value="Save and Upload" />
+            
+            <select id="stored_customs">
+                <option value="1">Slot 1</option>
+                <option value="2">Slot 2</option>
+                <option value="3">Slot 3</option>
+                <option value="4">Slot 4</option>
+                <option value="5">Slot 5</option>
+            </select>
+            
+            <input id="load_from_save" type="button" value="Load from Save" />
+            <input id="dec_cell_length_button" type="button" value="Upload to Marketplace (not functional yet)" />
+            <input id="inc_cell_length_button" type="button" value="(Placeholder)" />
+            <img id="thumbnail" src="" alt="custom made level"/>
+        </div>
+        </div>
+    </div>
+           <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+            <script>
+              // Initialize Firebase
+              var config = {
+                apiKey: "AIzaSyCsRoxPOj1iCWwfBGyKn_gz53fGeppw2eQ",
+                authDomain: "purplelifebuild3.firebaseapp.com",
+                databaseURL: "https://purplelifebuild3.firebaseio.com",
+                storageBucket: "purplelifebuild3.appspot.com",
+                messagingSenderId: "769499487844"
+              };
+              firebase.initializeApp(config);
+
+              initLevelMaker(); 
+              var database = firebase.database(); 
+              
+            </script>
+            <script src="scripts/database.js"></script>
+          
+    </body>
+</html>

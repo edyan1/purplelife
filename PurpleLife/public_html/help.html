@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+            <title>Help</title>
+            <meta charset="UTF-8">
+	
+            <!-- styles -->
+            <link rel="stylesheet" href="styles/about.css">
+            <link rel="stylesheet" href="styles/help.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+            <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+		
+		<!-- Font link -->
+            <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+		
+		<!-- App Styling -->
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+            <link rel="stylesheet" href="styles/main.css">
+            <link rel="stylesheet" href="styles/jquery.fanmenu.css">
+            <link rel="stylesheet" href="styles/buttonFont.css">
+		
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <script src="scripts/main.js"></script>
+            <script src="scripts/SceneManager.js"></script>
+	</head>
+<body>
+		<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+	    <!-- Header section containing logo -->
+        <header class="mdl-layout__header mdl-color-text--white mdl-color--purple-700">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+            <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+              <h3>Purple Life</h3>
+              
+            </div>
+            <div id="user-container">
+                
+                <button id="home" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='index.html'">
+                    Home
+                  </button>   
+                   
+                <button id="help" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='help.html'">
+                    Help
+                  </button>
+
+                <button id="about" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='about.html'">
+                    About Us
+                  </button>
+               
+                
+              <div hidden id="user-pic"></div>
+              <div hidden id="user-name"></div>
+              <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                Sign-out
+              </button>
+              <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                <i class="material-icons">account_circle</i>Sign-in with Google
+              </button>
+            </div>
+          </div>
+        </header>
+		
+		<h3>Objective</h3>
+		<p class="helpP">The objective of this game is quite simple. You must destroy the target with the given weapons.</p>
+		<figure>
+			<img src="images/help/rocketHelp.png" alt="Rocket" width="250" height="228">
+			<figcaption>Weapon: Rocket</figcaption>
+		</figure>
+		<p class="helpP">Once you have selected your weapon of choice from the left fan-out menu "W" you can adjust its direction 
+			with the right fan-out menu labeled "D" and then place it on the field within the green area.</p>
+		<figure>
+			<img src="images/help/placeHelp.png" alt="Place" width="550" height="400">
+			<figcaption>Level: 1st Level</figcaption>
+		</figure>
+		<p class="helpP">When the play button is pressed the game will begin and the weaopons will launch in the direction that was chosen.
+		<br>
+		If the targets are successfully destroyed then you have the option of advancing to the the next level.
+		</p>
+		<figure>
+			<img src="images/help/playHelp.png" alt="Play" width="550" height="400">
+			<figcaption>Level: 1st Level</figcaption>
+		</figure>
+		<br>
+		<h3>Extras</h3>
+		<p class="helpP">If a user is signed in than he/she can check their progress and create custom levels from existing templetes or create their own.</p>
+		<figure>
+			<img src="images/help/customHelp.png" alt="Custom" width="550" height="400">
+			<figcaption>Custom Level Maker</figcaption>
+		</figure>
+		
+                </div>
+		
+	<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+ 
+
+<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBTv9YjgPICoHARmMTpZedIeuwj6Lx9VYc",
+    authDomain: "purplelifegame.firebaseapp.com",
+    databaseURL: "https://purplelifegame.firebaseio.com",
+    storageBucket: "purplelifegame.appspot.com",
+    messagingSenderId: "646512752544"
+  };
+  firebase.initializeApp(config);
+</script>
+</body>
+</html>
