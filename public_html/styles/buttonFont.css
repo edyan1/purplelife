@@ -1,0 +1,111 @@
+.divBody{
+    text-align: center;
+    background: darkgrey;
+    
+    width: 1024px;
+    height: 50px;
+    
+    position: absolute;
+    bottom:0px;
+    display: none;
+}
+
+/* play button style*/
+.playBtn {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Courier New;
+  color: #fffcff;
+  font-size: 22px;
+  background: #9c2194;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  height: 50px;
+  position: absolute;
+  left: 45.5%
+}
+
+.playBtn:hover {
+  background: #3bd11e;
+  text-decoration: none;
+}
+
+.undoBtn {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Courier New;
+  color: #fffcff;
+  font-size: 21px;
+  background: #9c2194;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  height: 50px;
+  position: absolute;
+  left: 55.5%
+}
+
+.undoBtn:hover {
+  background: #40E0D0;
+  text-decoration: none;
+}
+
+/* pause button style*/
+.quitBtn {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Courier New;
+  color: #fffcff;
+  font-size: 21px;
+  background: #9c2194;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  height: 50px;
+  position: absolute;
+  left: 65.5%
+}
+
+.quitBtn:hover {
+  background: #fc0505;
+  text-decoration: none;
+}
+
+/*reset button style*/
+.resetBtn {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Courier New;
+  color: #fffcff;
+  font-size: 21px;
+  background: #9c2194;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  height: 50px;
+  position: absolute;
+  left: 35%
+}
+
+.resetBtn:hover {
+  background: #f4fc05;
+  text-decoration: none;
+}
+
+/*THIS IS THE WEAPON MENU*/
+#weaponMenu {
+  bottom: 6.5%;
+  left: 1%;
+  position: absolute;
+  width: 100%;
+  
+}
+
+/*THIS IS THE DIRECTION MENU*/
+#directionMenu {
+  bottom: 6.5%;
+  left: 95%;
+  position: absolute;
+  width: 100%;
+}
