@@ -1,5 +1,28 @@
 'use strict';
 
+//GAME OF LIFE LINKS
+
+var AWESOMELIFE = "http://www.awesome-life-game.appspot.com";
+var CANARYLIFE = "https://canarylife.firebaseapp.com";
+var FIREBRICKLIFE = "http://fire-brick-life.appspot.com";
+var IKBLIFE = "https://ibk-life.firebaseapp.com";
+var JETLIFE = "https://jet-life.firebaseapp.com";
+var SALMONLIFE = "https://samlmon-life.firebaseapp.com";
+var SCARLETLIFE = "http://www.the-scarlet-life.appspot.com";
+var TIMBERWOLFLIFE = "https://timberwolf-life.firebaseapp.com";
+var WISTERIALIFE = "https://wisteria-life.appspot.com";
+
+var AWESOMEIMG = "images/ads/awesomelifead.png";
+var CANARYIMG = "images/ads/canarylifead.png";
+var FIREBRICKIMG = "images/ads/firebricklifead.png";
+var IKBIMG = "images/ads/ikblifead.png";
+var JETIMG = "images/ads/jetlifead.png";
+var SALMONIMG = "images/ads/salmonlifead.png";
+var SCARLETIMG = "images/ads/scarletlifead.png";
+var TIMBERWOLFIMG = "images/ads/timberwolflifead.png";
+var WISTERIAIMG = "images/ads/wisterialifead.png";
+
+
 //KEYS
 var currentlyPressedKeys = {};
 
@@ -54,6 +77,47 @@ function PurpleLife() {
 
   //Initialize the Scene Manager
   initSceneManager(Scenes.SPLASH, purpleGame);
+  
+  //load a random ad
+  loadAd();
+ 
+  
+}
+
+function loadAd (){
+   var randAd = Math.floor((Math.random() * 6) + 1); 
+   var adName;
+   var adPath;
+   switch (randAd) {
+    case 1:
+        adName = AWESOMEIMG;
+        adPath = AWESOMELIFE;
+        break;
+    case 2:
+        adPath = CANARYLIFE;
+        adName = CANARYIMG;
+        
+        break;
+    case 3:
+        adPath = FIREBRICKLIFE;
+        adName = FIREBRICKIMG;
+        break;
+    case 4:
+        adPath = IKBLIFE;
+        adName = IKBIMG;
+        break;
+    case 5:
+        adPath = SCARLETLIFE;
+        adName = SCARLETIMG;
+        break;
+    case 6:
+        adPath = WISTERIALIFE;
+        adName = WISTERIAIMG;
+    
+    }
+    
+   document.getElementById('adimg').setAttribute("src", adName);
+   document.getElementById('link').setAttribute("href", adPath);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
