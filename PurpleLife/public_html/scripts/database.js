@@ -140,6 +140,9 @@ function customLevelSelect (){
         });
         //initialize custom levels
         purpleGameLM.initCustLevels();
+        
+        //remove "loading" message
+        document.getElementById('loading').setAttribute('hidden', 'true');
     });
   
 }
