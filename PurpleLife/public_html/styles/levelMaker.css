@@ -18,23 +18,7 @@ html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
 
-/*THIS IS THE LEVEL MAKER INFO BOX*/
-.lm_info_box {
-  
-  width: 25%;
-  height: 90%;
-  background-color: #7b1fa2;
-    text-align: center;
-  /*border-style: solid;*/
-  /*border-color: #7b1fa2;*/
-  /*border-width: 3px;*/
-  padding-left: 2%;
-  padding-right: 2%;
-  right: 0px;
-  bottom: 0px;
-  position:fixed;
 
-}
 
 /* CSS FOR BUTTONS IN LEVEL MAKER PAGE
 .LM_buttons {

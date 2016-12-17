@@ -109,6 +109,9 @@ PurpleLifeLM.prototype.onAuthStateChanged = function(user) {
     };
  
  } else { // User is signed out!
+    //redirect to error
+    alert("For logged in users only!");
+    window.location.href = "index.html";
     // Hide user's profile and sign-out button.
     this.userName.setAttribute('hidden', 'true');
     this.userPic.setAttribute('hidden', 'true');

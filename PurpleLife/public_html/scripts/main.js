@@ -166,9 +166,10 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
     this.userName.removeAttribute('hidden');
     this.userPic.removeAttribute('hidden');
     this.signOutButton.removeAttribute('hidden');
-
+    document.getElementById('levelmaker').removeAttribute('hidden');
     // Hide sign-in button.
     this.signInButton.setAttribute('hidden', 'true');
+    
     
     //document.getElementById("game_canvas").style.visibility = 'hidden';
     changeScene(Scenes.LEVELSELECT);
@@ -181,6 +182,7 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
     this.userName.setAttribute('hidden', 'true');
     this.userPic.setAttribute('hidden', 'true');
     this.signOutButton.setAttribute('hidden', 'true');
+    document.getElementById('levelmaker').setAttribute('hidden', 'true');
     userSignedIn = false;
     // Show sign-in button.
     this.signInButton.removeAttribute('hidden');
