@@ -288,4 +288,5 @@ function handleKeyUp(event) {
 
 window.onload = function() {
   window.purpleLifeLM = new PurpleLifeLM();
+  
 };

@@ -132,6 +132,9 @@ function customLevelSelect (){
         //initialize custom levels
         purpleGameLM.initCustLevels();
         
+        //delete the temporary stored mapToEdit from database
+        firebase.database().ref('users/'+userId+'/mapToEdit').remove();
+        
         //remove "loading" message
         document.getElementById('loading').setAttribute('hidden', 'true');
     });
@@ -171,7 +174,7 @@ function loadMapToEdit(){
         var mapToEdit = snapshot.val().mapToEdit;
         loadCustomMapEdit(mapToEdit);
         document.getElementById('customLevelName').value = mapToEdit;
-     
+        
     });
     //load in user name into alias field
     userName = firebase.auth().currentUser.displayName;
