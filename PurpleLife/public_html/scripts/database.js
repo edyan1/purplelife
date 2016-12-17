@@ -47,19 +47,6 @@ function levelSelectAccess (){
     });
 }
 
-//saves custom map to datastore based on slot selected
-//each user has 5 slots in which to save custom maps to
-function storeMap(slot, img){
-    
-    if (slot === "1") writeUserData1(img);
-    if (slot === "2") writeUserData2(img);
-    if (slot === "3") writeUserData3(img);
-    if (slot === "4") writeUserData4(img);
-    if (slot === "5") writeUserData5(img);
-    
-    
-    //writeUserData(slot,img);
-}
 
 //save custom map under the directory map in firebase database
 function writeUserData(name, data) {
@@ -95,7 +82,11 @@ function loadUserMap (name) {
 function customLevelSelect (){
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
-
+    
+    //show "loading" message
+    document.getElementById('loading').removeAttribute('hidden');
+    
+    //call database and dynamically generate custom level rows
     dbRef.once('value', function(snapshot) {
         snapshot.forEach(function(data) {
             var customContainer = document.getElementById("level_maker_menu");
@@ -147,6 +138,7 @@ function customLevelSelect (){
   
 }
 
+//delete a custom level
 function customLevelDelete (name) {
     
     var userId = firebase.auth().currentUser.uid;
@@ -160,9 +152,35 @@ function customLevelDelete (name) {
     
 }
 
+//TODO: FIX open one of your custom levels for editing
 function editCustomLevel(name) {
     var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('users/'+userId+'/maps/'+name);
-    window.location = 'levelcreate.html?id='+name;
-    window.location.onload = loadCustomMapEdit(name);
+    var dbRef = firebase.database().ref('users/'+userId);
+    dbRef.update({
+        "mapToEdit" : name
+    });
+    window.location = 'levelcreate.html';
+   
+};
+
+//once levelcreate.html has loaded, load in the map the user wants to edit
+function loadMapToEdit(){
+    var userId = firebase.auth().currentUser.uid;
+    var dbRef = firebase.database().ref('users/'+userId);
+    dbRef.once('value').then(function(snapshot) {
+        var mapToEdit = snapshot.val().mapToEdit;
+        loadCustomMapEdit(mapToEdit);
+        document.getElementById('customLevelName').value = mapToEdit;
+     
+    });
+    //load in user name into alias field
+    userName = firebase.auth().currentUser.displayName;
+    document.getElementById('levelCreatorName').value = userName;
+    
+}
+
+//populate level market with all maps uploaded by users
+function levelMarketPopulate (){
+   
+    var dbRef = firebase.database().ref('marketmaps/');
 }

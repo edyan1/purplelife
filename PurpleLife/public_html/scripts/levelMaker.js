@@ -104,8 +104,10 @@ PurpleLifeLM.prototype.onAuthStateChanged = function(user) {
     
     //load custom level to edit
     window.onload = function () {
+    
     var name = getQueryVariable("id");
     loadCustomMapEdit(name);
+    
     };
  
  } else { // User is signed out!

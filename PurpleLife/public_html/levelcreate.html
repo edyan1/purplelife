@@ -22,6 +22,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="styles/levelMaker.css">
         <link rel="stylesheet" href="styles/levelCreate.css">
         <!-- Scripts to load  -->
+
         <script src="scripts/levelMaker.js"></script> 
         <script src="scripts/levelcreate.js"></script>
     </head>
@@ -55,12 +56,14 @@ and open the template in the editor.
         down list for selecting patterns to add to the game.
         -->
         <div id="levelMaker">
-            
-        
-        <div id="toolbar"></div>
         
         <canvas id="level_maker_canvas" width="1024" height="528">
         </canvas>
+            
+            <p>Use the Placeable Objects drop-down menu to select the object you want to place. <br>
+               Name your map and give yourself an alias that will be displayed in the public level market. <br>
+               It is up to you to make sure that your level is completeable.
+            </p>
         
         <div class="lm_info_box">
             <h2><br>Level Maker</h2>
@@ -80,22 +83,37 @@ and open the template in the editor.
             <br>
                 Level Name: <br>
                 <input id="customLevelName" type="text" value="Custom Level"/><br>
+                <br>
                 User Alias: <br>
                 <input id="levelCreatorName" type="text" value=""/><br>
-                <input id="save_upload" class="bottomButton" type="button" value="Save and Upload" /><br>
-                <br>               
                 
+                <br>
+                Weapons Available: 
+                <select id="levelWeaponCount">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select> <br>
+                <br>
+                <input id="save_upload" class="bottomButton" type="button" value="Save to My Levels" /><br>
+                <br>               
+                <input id="dec_cell_length_button" class = "bottomButton" type="button" value="Upload to Market" /> <br>
+                <br>
                 Name of Level to Load:<br>
                 <input id="loadName" type="text" value=""/><br>
-                <input id="load_from_save" class="bottomButton" type="button" value="Load from Save" />
                 <br>
-                <input id="dec_cell_length_button" class = "bottomButton" type="button" value="Upload to Market" />
-                <!--<input id="inc_cell_length_button" type="button" value="(Placeholder)" /> -->
+                <input id="load_from_save" class="bottomButton" type="button" value="Load from Save" /> <br>
                 <br>
+               
                 <img hidden id="thumbnail" src="" alt="custom made level"/>
               <br>
               <br>
-             <input class="bottomButton" type="button" onclick="window.location.href='levelMaker.html'" value="Go Back" />
+             <input class="bottomButton" type="button" onclick="window.location.href='levelMaker.html'" value="Return to Menu" />
             <!--<input id="undo_button" type="button" value="Undo (not functional yet)" />-->
         </div>       
         </div>
@@ -120,5 +138,18 @@ and open the template in the editor.
 </script>
 <script src="scripts/database.js"></script>
 <script> initLevelMaker(); </script>
+
+<!--SCRIPT TO EDIT LEVELS -->
+<script>
+    
+    window.onload = function(){
+        
+        setTimeout(function(){
+            //in database.js
+            loadMapToEdit();
+        }, 200);
+    };
+     
+</script>
     </body>
 </html>

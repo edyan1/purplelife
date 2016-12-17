@@ -1081,3 +1081,4 @@ function swapGrids()
     updateGrid = renderGrid;
     renderGrid = temp;
 }
+
