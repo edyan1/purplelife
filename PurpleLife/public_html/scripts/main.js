@@ -7,7 +7,7 @@ var CANARYLIFE = "https://canarylife.firebaseapp.com";
 var FIREBRICKLIFE = "http://fire-brick-life.appspot.com";
 var IKBLIFE = "https://ibk-life.firebaseapp.com";
 var JETLIFE = "https://jet-life.firebaseapp.com";
-var SALMONLIFE = "https://samlmon-life.firebaseapp.com";
+var SALMONLIFE = "https://salmon-life.firebaseapp.com";
 var SCARLETLIFE = "http://www.the-scarlet-life.appspot.com";
 var TIMBERWOLFLIFE = "https://timberwolf-life.firebaseapp.com";
 var WISTERIALIFE = "https://wisteria-life.appspot.com";
@@ -85,7 +85,7 @@ function PurpleLife() {
 }
 
 function loadAd (){
-   var randAd = Math.floor((Math.random() * 6) + 1); 
+   var randAd = Math.floor((Math.random() * 9) + 1); 
    var adName;
    var adPath;
    switch (randAd) {
@@ -96,7 +96,6 @@ function loadAd (){
     case 2:
         adPath = CANARYLIFE;
         adName = CANARYIMG;
-        
         break;
     case 3:
         adPath = FIREBRICKLIFE;
@@ -107,10 +106,22 @@ function loadAd (){
         adName = IKBIMG;
         break;
     case 5:
+        adPath = JETLIFE;
+        adName = JETIMG;
+        break;
+    case 6:
+        adPath = SALMONLIFE;
+        adName = SALMONIMG;
+        break;
+    case 7:
         adPath = SCARLETLIFE;
         adName = SCARLETIMG;
         break;
-    case 6:
+    case 8:
+        adPath = TIMBERWOLFLIFE;
+        adName = TIMBERWOLFIMG;
+        break;
+    case 9:
         adPath = WISTERIALIFE;
         adName = WISTERIAIMG;
     
