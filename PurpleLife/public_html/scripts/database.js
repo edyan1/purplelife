@@ -49,13 +49,15 @@ function levelSelectAccess (){
 
 
 //save custom map under the directory map in firebase database
-function writeUserData(name, data) {
+function writeUserData(name, alias, map, wcount) {
     var n = name;
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/'+n);
     dbRef.update({
         "name" : n,
-        "map" : data
+        "alias" : alias,
+        "map" : map,
+        "wcount" : wcount
     });
 }
 
@@ -67,12 +69,15 @@ function loadUserMap (name) {
     var dbRef = firebase.database().ref('users/'+userId+'/maps/'+n);
     dbRef.once('value').then(function(snapshot) {
         var thumbnail = document.getElementById("thumbnail");
-  
         thumbnail.setAttribute("src",snapshot.val().map);
-        
         thumbnail.setAttribute("width", "64px");
         thumbnail.setAttribute("height","33px");
-     
+        
+        if (snapshot.val().alias !== undefined){
+            userAlias = snapshot.val().alias;
+            document.getElementById('levelCreatorName').value = userAlias;
+        }
+      document.getElementById('levelWeaponCount').value = snapshot.val().wcount;
     });
     
 }
@@ -103,16 +108,16 @@ function customLevelSelect (){
             levelThumb.setAttribute("src", data.val().map);
             var playBtn = document.createElement("button");
             playBtn.className = "levelButtonLM";
-            playBtn.onclick = function(){loadCustomLevel(data.val().name)};
+            playBtn.onclick = function(){loadCustomLevel(data.val().name);};
             playBtn.innerHTML = "Play";
             var editBtn = document.createElement("button");
             editBtn.className = "levelButtonLM";
             editBtn.innerHTML = "Edit";
-            editBtn.onclick = function(){editCustomLevel(data.val().name)};
+            editBtn.onclick = function(){editCustomLevel(data.val().name);};
             var delBtn = document.createElement("button");
             delBtn.className = "levelButtonLM";
             delBtn.innerHTML = "Delete";
-            delBtn.onclick = function(){customLevelDelete(data.val().name)};
+            delBtn.onclick = function(){customLevelDelete(data.val().name);};
             newLevel.appendChild(title);
             newLevel.appendChild(levelThumb);
             newLevel.appendChild(playBtn);
@@ -123,7 +128,7 @@ function customLevelSelect (){
             var customList = document.getElementById("customLevelsListLM");
             var item = document.createElement("li");
             item.id = data.val().name;
-            item.value = "4";
+            item.value = data.val().wcount;
             item.setAttribute("cellcountX", "64");
             item.setAttribute("cellcountY", "35");
             item.setAttribute("gameLostTimeout", "9001");

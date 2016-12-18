@@ -310,8 +310,10 @@ function initEventHandlers()
 
 //saves the canvas as a png to a url
 function saveCanvas() {
+    //redraw borders and render
     drawBorders();
     renderCells();
+    //convert canvas to png image and redraw on off screen canvas to 64 x 33
     var canvasSave = document.getElementById("level_maker_canvas");
     var imgURL = canvasSave.toDataURL("image/png");
     var img = new Image();
@@ -321,22 +323,19 @@ function saveCanvas() {
     offscreenCanvas.height = 33;
     var offscreenCanvas2D = offscreenCanvas.getContext("2d");
     offscreenCanvas2D.drawImage(img, 0, 0, 64, 33);
-    
+    //convert offscreen canvas to png
     var imgSave = offscreenCanvas.toDataURL("image/png");
     
-    
+    //set map to thumbnail (invisible, for debugging purposes)
     var thumbnail = document.getElementById("thumbnail");
     thumbnail.setAttribute("src",imgSave);
     thumbnail.setAttribute("width", "64px");
     thumbnail.setAttribute("height","33px");
-    
-    //var storedCustoms = document.getElementById("stored_customs");
-    //var slot = storedCustoms.options[storedCustoms.selectedIndex].value;//
-    
+
     var customName = document.getElementById("customLevelName").value;
-    //storeMap(slot, imgSave);
-    //storeMap(customName,imgSave);
-    writeUserData(customName,imgSave);
+    var creatorAlias = document.getElementById("levelCreatorName").value;
+    var weaponCount = document.getElementById("levelWeaponCount").value;
+    writeUserData(customName,creatorAlias,imgSave,weaponCount);
 }
 
 function loadCustomMap() {
@@ -368,16 +367,6 @@ function loadCustomMapEdit(mapname) {
     };
 }
 
-function getQueryVariable(variable)
-{
-       var query = window.location.search.substring(1);
-       var vars = query.split("&");
-       for (var i=0;i<vars.length;i++) {
-               var pair = vars[i].split("=");
-               if(pair[0] === variable){return pair[1];}
-       }
-       return(false);
-}
 
 function respondToLoadedLevelImage(img, pixelArray)
 {
