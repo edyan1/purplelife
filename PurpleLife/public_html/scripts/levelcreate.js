@@ -301,7 +301,7 @@ function initEventHandlers()
     // level creation buttons
     document.getElementById("reset_button").onclick=resetGameOfLife;
     document.getElementById("save_upload").onclick=saveCanvas;
-    //document.getElementById("load_from_save").onclick=loadCustomMap;
+    document.getElementById("load_from_save").onclick=loadCustomMap;
     document.getElementById("market_upload").onclick=saveCanvasToMarket;
     
 }
@@ -370,20 +370,22 @@ function saveCanvasToMarket() {
     uploadToMarket(customName,creatorAlias,imgSave,weaponCount);
 }
 
-//loading a custom map by entering its name in field, NOT USED
+//loading back the map from the saved thumbnail
 function loadCustomMap() {
-    var name;
-    name = document.getElementById("loadName").value;
-
+    //var name;
+    //name = document.getElementById("loadName").value;
+    //resetGameOfLife();
+    //loadUserMap(name);
     resetGameOfLife();
-    loadUserMap(name);
     var mapLoaded = document.getElementById("thumbnail");
     
     pixelArray = new Array();
-    mapLoaded.onload = function(){
+    respondToLoadedLevelImage(mapLoaded, pixelArray);
+    renderLoadedLevel(pixelArray);
+    /*mapLoaded.onload = function(){
         respondToLoadedLevelImage(mapLoaded, pixelArray);
         renderLoadedLevel(pixelArray);
-    };
+    };*/
 }
 
 //load a custom map from edit button
@@ -1012,7 +1014,6 @@ function resetGameOfLife()
     
     // INIT THE CELLS IN THE GRID
     boardReset();
-
     
     // RENDER THE CLEARED SCREEN
     renderGame();

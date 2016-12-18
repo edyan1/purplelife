@@ -59,6 +59,7 @@ function writeUserData(name, alias, map, wcount) {
         "map" : map,
         "wcount" : wcount
     });
+    alert("Level saved!");
 }
 
 //upload user map to market
@@ -73,6 +74,7 @@ function uploadToMarket(name, alias, map, wcount) {
         "wcount" : wcount,
         "userId" : userId
     });
+    alert("Level uploaded!");
 }
 
 
@@ -197,7 +199,7 @@ function loadMapToEdit(){
     dbRef.once('value').then(function(snapshot) {
         var mapToEdit = snapshot.val().mapToEdit;
         loadCustomMapEdit(mapToEdit);
-        document.getElementById('customLevelName').value = mapToEdit;
+        if (mapToEdit !== undefined) document.getElementById('customLevelName').value = mapToEdit;
         
     });
     //load in user name into alias field
