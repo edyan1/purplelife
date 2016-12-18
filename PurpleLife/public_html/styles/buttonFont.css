@@ -107,6 +107,22 @@
   
 }
 
+.weaponCount {
+  
+  border-style: groove;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #000000;
+  font-size: 125%;
+  background: #fffcff;
+  
+  text-decoration: none;
+  height: 100%;
+  width: 15%;
+  position: absolute;
+  left: 5%
+}
+
 /*THIS IS THE DIRECTION MENU*/
 #directionMenu {
   bottom: 6.5%;

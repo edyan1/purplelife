@@ -73,10 +73,12 @@ and open the template in the editor.
           </div>
         </header>
         
-        <div style="text-align: center;"> <button onclick="window.location.href = 'levelcreate.html';" class="newLevel" >Create A Level</button></div>
-        <div style="text-align: center;"> <button onclick="loadLocalLevels();" class="myLevels" >My Levels</button></div>
-        <div style="text-align: center;"> <button onclick="loadMarketLevels();" class="levelMarket" >Level Market</button></div>
-        
+        <div id='lmmenu'>
+            <div style="text-align: center;"> <button onclick="window.location.href = 'levelcreate.html';" class="newLevel" >Create A Level</button></div>
+            <div style="text-align: center;"> <button onclick="loadLocalLevels();" class="myLevels" >My Levels</button></div>
+            <div style="text-align: center;"> <button onclick="loadMarketLevels();" class="levelMarket" >Level Market</button></div>
+        </div>
+            
         <div id="container">
             <div class="canvas">
             <canvas id="game_canvas" width="1024" height="580" style="margin:0 auto;"></canvas>
@@ -93,6 +95,8 @@ and open the template in the editor.
              
             <div id='weaponMenu' class="fm_wrap">
             <a class="fm_btntoggle" href="#" title="Toggle"><i>w</i></a>
+            <button id='weaponCount' type="button" class="weaponCount" disabled></button>
+            <!-- LIST OF WEAPONS -->
             <ul id="weaponSelect" class="fm_list">
               <li><a><img class="weaponSize" src="images/weapons/rocket.png"><i class="icon-user icon-white"></i></a></li>
               <li><a><img class="weaponSize" src="images/weapons/gun.png"><i class="icon-heart icon-white"></i></a></li>

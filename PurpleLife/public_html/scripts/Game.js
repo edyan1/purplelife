@@ -1351,17 +1351,16 @@ Game.prototype.renderCells = function() {
 };
 
 Game.prototype.renderWeaponCountText = function() {
-    canvas2D.fillStyle = TEXT_COLOR;
-
-    canvas2D.textAlign="left";
-    canvas2D.fillText("Weapon Count: " + this.getWeaponCount(), 25,canvasHeight*(6/7));
+    //canvas2D.fillStyle = TEXT_COLOR;
+    //canvas2D.textAlign="left";
+    //canvas2D.fillText("Weapon Count: " + this.getWeaponCount(), 25,canvasHeight*(6/7));
+    document.getElementById('weaponCount').innerHTML = "Count: "+this.getWeaponCount();
 }
 
 Game.prototype.renderWeaponSelect = function() {
-    canvas2D.fillStyle = TEXT_COLOR;
-
-    canvas2D.textAlign="left"
-    canvas2D.fillText("Weapon: " + this.getWeaponSelect() + " " + this.getWeaponDirection(), 25,canvasHeight*(5.5/7));
+    //canvas2D.fillStyle = TEXT_COLOR;
+    //canvas2D.textAlign="left"
+    //canvas2D.fillText("Weapon: " + this.getWeaponSelect() + " " + this.getWeaponDirection(), 25,canvasHeight*(5.5/7));
 }
 
 /*
