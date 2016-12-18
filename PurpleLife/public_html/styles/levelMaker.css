@@ -148,6 +148,7 @@ button.levelButtonLM{
   float: left;
   position: relative;
   margin: 0 auto;
+  
 }
 
 /*THIS IS THE DIV WHERE THE BUTTONS ARE PLACED IN*/
@@ -158,6 +159,7 @@ button.levelButtonLM{
   position: relative;
   margin: 0 auto;
 }
+
 
 button.levelButton{
     width: 150%;
@@ -175,10 +177,29 @@ button.levelButton{
   position: absolute;
 }
 
+.alias {
+  font-size: 20px;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  left: 60%;
+  top: 0;
+  position: absolute;
+}
+
 #level_maker_menu {
     position:absolute;
     height: 100%;
     width: 100%;
-    top: 90px;
+    
+    left: 0;
+}
+
+#level_market_menu {
+    position:absolute;
+    height: 100%;
+    width: 100%;
+
     left: 0;
 }

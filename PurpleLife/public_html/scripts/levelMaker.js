@@ -1,4 +1,6 @@
 'use strict';
+//DISPLAY (LOCAL OR MARKET)
+var display;
 
 //KEYS
 var currentlyPressedKeys = {};
@@ -101,14 +103,8 @@ PurpleLifeLM.prototype.onAuthStateChanged = function(user) {
     
     //generate level maker menu
     customLevelSelect();
-    
-    //load custom level to edit
-    window.onload = function () {
-    
-    var name = getQueryVariable("id");
-    loadCustomMapEdit(name);
-    
-    };
+    levelMarketPopulate();
+    display = "local";
  
  } else { // User is signed out!
     //redirect to error
@@ -284,6 +280,22 @@ function handleKeyDown(event) {
 
 function handleKeyUp(event) {
   currentlyPressedKeys[event.keyCode] = false;
+}
+
+function loadLocalLevels() {
+ 
+    //hide market div and show local div
+    document.getElementById('level_market_menu').setAttribute('hidden', 'true');
+    document.getElementById('level_maker_menu').removeAttribute('hidden');
+    display = "local";
+}
+
+function loadMarketLevels() {
+
+    //show market div and hide local div
+    document.getElementById('level_maker_menu').setAttribute('hidden', 'true');
+    document.getElementById('level_market_menu').removeAttribute('hidden');
+    display = "market";
 }
 
 window.onload = function() {

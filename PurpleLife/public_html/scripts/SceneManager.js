@@ -101,14 +101,15 @@ function deloadLevelSelectScene() {
 
 function loadLevelMakerScene() {
   document.getElementById("game_canvas").setAttribute('hidden', 'hidden');
-  document.getElementById("level_maker_menu").removeAttribute('hidden');
+  if (display === "local") document.getElementById("level_maker_menu").removeAttribute('hidden');
+  if (display === "market") document.getElementById("level_market_menu").removeAttribute('hidden');
   
 };
 
 function deloadLevelMakerScene() {
   
   document.getElementById("level_maker_menu").setAttribute('hidden', 'hidden');
-  
+  document.getElementById("level_market_menu").setAttribute('hidden', 'hidden');
 };
 
 function goBack() {

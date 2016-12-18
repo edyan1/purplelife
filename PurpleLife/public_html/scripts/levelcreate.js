@@ -298,19 +298,18 @@ function initEventHandlers()
     canvas.onmousedown = voidCellPlace;   
     canvas.onmouseup = voidPlaceChange;
     
-    // AND ALL THE APP'S BUTTONS
-    
-    //document.getElementById("undo_button").onclick=pauseGameOfLife;
+    // level creation buttons
     document.getElementById("reset_button").onclick=resetGameOfLife;
     document.getElementById("save_upload").onclick=saveCanvas;
-    document.getElementById("load_from_save").onclick=loadCustomMap;
-    //document.getElementById("dec_cell_length_button").onclick=decCellLength;
-    //document.getElementById("inc_cell_length_button").onclick=incCellLength;
+    //document.getElementById("load_from_save").onclick=loadCustomMap;
+    document.getElementById("market_upload").onclick=saveCanvasToMarket;
+    
 }
 
-//saves the canvas as a png to a url
+//saves to user list of custom maps
 function saveCanvas() {
     //redraw borders and render
+    
     drawBorders();
     renderCells();
     //convert canvas to png image and redraw on off screen canvas to 64 x 33
@@ -335,9 +334,43 @@ function saveCanvas() {
     var customName = document.getElementById("customLevelName").value;
     var creatorAlias = document.getElementById("levelCreatorName").value;
     var weaponCount = document.getElementById("levelWeaponCount").value;
+    
     writeUserData(customName,creatorAlias,imgSave,weaponCount);
 }
 
+//upload to market
+function saveCanvasToMarket() {
+    //redraw borders and render
+    
+    drawBorders();
+    renderCells();
+    //convert canvas to png image and redraw on off screen canvas to 64 x 33
+    var canvasSave = document.getElementById("level_maker_canvas");
+    var imgURL = canvasSave.toDataURL("image/png");
+    var img = new Image();
+    img.src = imgURL;
+    var offscreenCanvas = document.createElement("canvas");
+    offscreenCanvas.width = 64;
+    offscreenCanvas.height = 33;
+    var offscreenCanvas2D = offscreenCanvas.getContext("2d");
+    offscreenCanvas2D.drawImage(img, 0, 0, 64, 33);
+    //convert offscreen canvas to png
+    var imgSave = offscreenCanvas.toDataURL("image/png");
+    
+    //set map to thumbnail (invisible, for debugging purposes)
+    var thumbnail = document.getElementById("thumbnail");
+    thumbnail.setAttribute("src",imgSave);
+    thumbnail.setAttribute("width", "64px");
+    thumbnail.setAttribute("height","33px");
+
+    var customName = document.getElementById("customLevelName").value;
+    var creatorAlias = document.getElementById("levelCreatorName").value;
+    var weaponCount = document.getElementById("levelWeaponCount").value;
+    
+    uploadToMarket(customName,creatorAlias,imgSave,weaponCount);
+}
+
+//loading a custom map by entering its name in field, NOT USED
 function loadCustomMap() {
     var name;
     name = document.getElementById("loadName").value;
@@ -353,6 +386,7 @@ function loadCustomMap() {
     };
 }
 
+//load a custom map from edit button
 function loadCustomMapEdit(mapname) {
     var name = mapname;
 

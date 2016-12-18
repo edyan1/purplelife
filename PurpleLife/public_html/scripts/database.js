@@ -61,6 +61,20 @@ function writeUserData(name, alias, map, wcount) {
     });
 }
 
+//upload user map to market
+function uploadToMarket(name, alias, map, wcount) {
+    var n = name;
+    var userId = firebase.auth().currentUser.uid;
+    var dbRef = firebase.database().ref('marketmaps/'+n);
+    dbRef.update({
+        "name" : n,
+        "alias" : alias,
+        "map" : map,
+        "wcount" : wcount,
+        "userId" : userId
+    });
+}
+
 
 //load map in user selected slot (in level editor)
 function loadUserMap (name) {
@@ -85,6 +99,9 @@ function loadUserMap (name) {
 
 //populate custom maps screen in level select with user created maps
 function customLevelSelect (){
+    //set displaying flag to local
+    displaying = "local";
+    
     var userId = firebase.auth().currentUser.uid;
     var dbRef = firebase.database().ref('users/'+userId+'/maps/');
     
@@ -142,6 +159,8 @@ function customLevelSelect (){
         
         //remove "loading" message
         document.getElementById('loading').setAttribute('hidden', 'true');
+        
+        
     });
   
 }
@@ -189,6 +208,62 @@ function loadMapToEdit(){
 
 //populate level market with all maps uploaded by users
 function levelMarketPopulate (){
-   
+    
     var dbRef = firebase.database().ref('marketmaps/');
+    var userId = firebase.auth().currentUser.uid;
+    
+    //show "loading" message
+    document.getElementById('loadMarket').removeAttribute('hidden');
+    
+    //call database and dynamically generate custom level rows
+    dbRef.once('value', function(snapshot) {
+        
+        snapshot.forEach(function(data) {
+            var customContainer = document.getElementById("level_market_menu");
+            var newLevel = document.createElement("div");
+            newLevel.className = "custLevBar";
+            newLevel.id = data.val().name;
+            var title = document.createElement("div");
+            title.className = "title";
+            var mapTitle = document.createTextNode("By: "+data.val().name);
+            title.appendChild(mapTitle);
+            var alias = document.createElement("div");
+            alias.className = "alias";
+            var mapCreator = document.createTextNode(data.val().alias);
+            alias.appendChild(mapCreator);
+            var levelThumb = document.createElement("img");
+            levelThumb.className = "levelImg2";
+            levelThumb.id = data.val().name+"img";
+            levelThumb.setAttribute("src", data.val().map);
+            var playBtn = document.createElement("button");
+            playBtn.className = "levelButtonLM";
+            playBtn.onclick = function(){loadCustomLevel(data.val().name);};
+            playBtn.innerHTML = "Play";
+         
+            newLevel.appendChild(title);
+            newLevel.appendChild(alias);
+            newLevel.appendChild(levelThumb);
+            newLevel.appendChild(playBtn);
+   
+            customContainer.appendChild(newLevel);
+
+            var customList = document.getElementById("customLevelsListLM");
+            var item = document.createElement("li");
+            item.id = data.val().name;
+            item.value = data.val().wcount;
+            item.setAttribute("cellcountX", "64");
+            item.setAttribute("cellcountY", "35");
+            item.setAttribute("gameLostTimeout", "9001");
+            customList.appendChild(item);
+        });
+    //initialize custom levels
+    purpleGameLM.initCustLevels();
+
+    //delete the temporary stored mapToEdit from database
+    firebase.database().ref('users/'+userId+'/mapToEdit').remove();
+
+    //remove "loading" message
+    document.getElementById('loadMarket').setAttribute('hidden', 'true');
+    });
+  
 }
