@@ -65,7 +65,7 @@ function writeUserData(name, alias, map, wcount) {
 function uploadToMarket(name, alias, map, wcount) {
     var n = name;
     var userId = firebase.auth().currentUser.uid;
-    var dbRef = firebase.database().ref('marketmaps/'+n);
+    var dbRef = firebase.database().ref('marketmaps/'+userId+'/'+n);
     dbRef.update({
         "name" : n,
         "alias" : alias,
@@ -217,44 +217,48 @@ function levelMarketPopulate (){
     
     //call database and dynamically generate custom level rows
     dbRef.once('value', function(snapshot) {
-        
-        snapshot.forEach(function(data) {
-            var customContainer = document.getElementById("level_market_menu");
-            var newLevel = document.createElement("div");
-            newLevel.className = "custLevBar";
-            newLevel.id = data.val().name;
-            var title = document.createElement("div");
-            title.className = "title";
-            var mapTitle = document.createTextNode("By: "+data.val().name);
-            title.appendChild(mapTitle);
-            var alias = document.createElement("div");
-            alias.className = "alias";
-            var mapCreator = document.createTextNode(data.val().alias);
-            alias.appendChild(mapCreator);
-            var levelThumb = document.createElement("img");
-            levelThumb.className = "levelImg2";
-            levelThumb.id = data.val().name+"img";
-            levelThumb.setAttribute("src", data.val().map);
-            var playBtn = document.createElement("button");
-            playBtn.className = "levelButtonLM";
-            playBtn.onclick = function(){loadCustomLevel(data.val().name);};
-            playBtn.innerHTML = "Play";
-         
-            newLevel.appendChild(title);
-            newLevel.appendChild(alias);
-            newLevel.appendChild(levelThumb);
-            newLevel.appendChild(playBtn);
-   
-            customContainer.appendChild(newLevel);
+        //gets each child node of user IDs
+        //then gets the maps they've created
+        // dynamically load them onto page (levelmaker.html)
+        snapshot.forEach(function(userIDs) {
+            userIDs.forEach (function (data) {
+                var customContainer = document.getElementById("level_market_menu");
+                var newLevel = document.createElement("div");
+                newLevel.className = "custLevBar";
+                newLevel.id = data.val().name;
+                var title = document.createElement("div");
+                title.className = "title";
+                var mapTitle = document.createTextNode("By: "+data.val().name);
+                title.appendChild(mapTitle);
+                var alias = document.createElement("div");
+                alias.className = "alias";
+                var mapCreator = document.createTextNode(data.val().alias);
+                alias.appendChild(mapCreator);
+                var levelThumb = document.createElement("img");
+                levelThumb.className = "levelImg2";
+                levelThumb.id = data.val().name+"img";
+                levelThumb.setAttribute("src", data.val().map);
+                var playBtn = document.createElement("button");
+                playBtn.className = "levelButtonLM";
+                playBtn.onclick = function(){loadCustomLevel(data.val().name);};
+                playBtn.innerHTML = "Play";
 
-            var customList = document.getElementById("customLevelsListLM");
-            var item = document.createElement("li");
-            item.id = data.val().name;
-            item.value = data.val().wcount;
-            item.setAttribute("cellcountX", "64");
-            item.setAttribute("cellcountY", "35");
-            item.setAttribute("gameLostTimeout", "9001");
-            customList.appendChild(item);
+                newLevel.appendChild(title);
+                newLevel.appendChild(alias);
+                newLevel.appendChild(levelThumb);
+                newLevel.appendChild(playBtn);
+
+                customContainer.appendChild(newLevel);
+
+                var customList = document.getElementById("customLevelsListLM");
+                var item = document.createElement("li");
+                item.id = data.val().name;
+                item.value = data.val().wcount;
+                item.setAttribute("cellcountX", "64");
+                item.setAttribute("cellcountY", "35");
+                item.setAttribute("gameLostTimeout", "9001");
+                customList.appendChild(item);
+            });
         });
     //initialize custom levels
     purpleGameLM.initCustLevels();
