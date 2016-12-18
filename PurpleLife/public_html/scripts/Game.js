@@ -592,9 +592,9 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
                     }
 
                     // **DEBUG** CHECK FOR BROWSER DESCREPENCIES
-                    else {
-                        console.log(r +'\n' + g + '\n' + b + '\n');
-                    }
+                    //else {
+                    //    console.log(r +'\n' + g + '\n' + b + '\n');
+                    //}
 
                 }            
         }  
@@ -777,9 +777,9 @@ function respondToLoadedCustomLevelImage(img, pixelArray)
                     }
 
                     // **DEBUG** CHECK FOR BROWSER DESCREPENCIES
-                    else {
-                        console.log(r +'\n' + g + '\n' + b + '\n');
-                    }
+                    //else {
+                    //    console.log(r +'\n' + g + '\n' + b + '\n');
+                    //}
 
                 }            
         }  
@@ -1144,7 +1144,7 @@ Game.prototype.renderGame = function () {
             placedWeaponCount = 0;
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
             if (userSignedIn === true && getUserProgress() < levelNumber-1 ){
-                console.log(getUserProgress());
+                //console.log(getUserProgress());
                 setUserProgress(levelNumber-1);
             }
             giveLevelAccess(levelNumber);
@@ -1195,7 +1195,7 @@ Game.prototype.renderGameWithoutSwapping = function()
         if (currentlyPressedKeys[70]) {
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
             if (userSignedIn === true && getUserProgress() < levelNumber-1 ) {
-                console.log(getUserProgress());
+                //console.log(getUserProgress());
                 setUserProgress(levelNumber-1);
             }
             giveLevelAccess(levelNumber);
