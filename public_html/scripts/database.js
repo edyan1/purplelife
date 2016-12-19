@@ -227,7 +227,7 @@ function levelMarketPopulate (){
                 var customContainer = document.getElementById("level_market_menu");
                 var newLevel = document.createElement("div");
                 newLevel.className = "custLevBar";
-                newLevel.id = data.val().name;
+                newLevel.id = data.val().name+"_market";
                 var title = document.createElement("div");
                 title.className = "title";
                 var mapTitle = document.createTextNode("By: "+data.val().name);
@@ -249,7 +249,13 @@ function levelMarketPopulate (){
                 newLevel.appendChild(alias);
                 newLevel.appendChild(levelThumb);
                 newLevel.appendChild(playBtn);
-
+                if (firebase.auth().currentUser.uid === data.val().userId){
+                    var delBtn = document.createElement("button");
+                    delBtn.className = "levelButtonLM";
+                    delBtn.onclick = function(){marketLevelDelete(data.val().name);};
+                    delBtn.innerHTML = "Delete";
+                    newLevel.appendChild(delBtn);
+                }
                 customContainer.appendChild(newLevel);
 
                 var customList = document.getElementById("customLevelsListLM");
@@ -272,4 +278,18 @@ function levelMarketPopulate (){
     document.getElementById('loadMarket').setAttribute('hidden', 'true');
     });
   
+}
+
+//delete a level market level, only if the user is the creator of it
+function marketLevelDelete (name) {
+    
+    var userId = firebase.auth().currentUser.uid;
+    var dbRef = firebase.database().ref('marketmaps/'+userId+'/'+name);
+    if (confirm('Are you sure you want to remove this map from the level market?')) {
+        document.getElementById(name+"_market").setAttribute('hidden', 'hidden');
+        dbRef.remove();
+    } else {
+    
+    }
+    
 }

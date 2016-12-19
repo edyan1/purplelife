@@ -8,12 +8,35 @@ var ghostLock; //locks the ghost function so feedback bright cell function can w
 var VOID_CELL;
 var voidFlag;
 var PLACEMENT_CELL;
+
+//TURRETCELLS
+var TURRET_CELL; //green
+var TURRET_SPAWN_DIAGONAL_RIGHT;
+var TURRET_SPAWN_DIAGONAL_LEFT;
+var TURRET_SPAWN_DIAGONAL_UP;
+var TURRET_SPAWN_DIAGONAL_DOWN;
+var TURRET_SPAWN_STRAIGHT_RIGHT;
+var TURRET_SPAWN_STRAIGHT_LEFT;
+var TURRET_SPAWN_STRAIGHT_UP;
+var TURRET_SPAWN_STRAIGHT_DOWN;
+
+
 var placeFlag;
 var LIVE_COLOR;
 var VOID_COLOR;
 var GHOST_COLOR;
 var GRID_LINES_COLOR;
 var PLACEMENT_COLOR;
+var TURRET_CELL_COLOR; //green
+var TURRET_SPAWN_DIAGONAL_RIGHT_COLOR;
+var TURRET_SPAWN_DIAGONAL_LEFT_COLOR;
+var TURRET_SPAWN_DIAGONAL_UP_COLOR;
+var TURRET_SPAWN_DIAGONAL_DOWN_COLOR;
+var TURRET_SPAWN_STRAIGHT_RIGHT_COLOR;
+var TURRET_SPAWN_STRAIGHT_LEFT_COLOR;
+var TURRET_SPAWN_STRAIGHT_UP_COLOR;
+var TURRET_SPAWN_STRAIGHT_DOWN_COLOR;
+
 var TEXT_COLOR;
 var TOP_LEFT;
 var TOP_RIGHT;
@@ -94,16 +117,37 @@ function initConstants()
     LIVE_CELL = 1; 
     VOID_CELL = 2;
     PLACEMENT_CELL = 3;
+    TURRET_CELL = 4;
+    
+    TURRET_SPAWN_DIAGONAL_RIGHT = 5;
+    TURRET_SPAWN_DIAGONAL_LEFT = 6;
+    TURRET_SPAWN_DIAGONAL_UP = 7;
+    TURRET_SPAWN_DIAGONAL_DOWN = 8;
+    TURRET_SPAWN_STRAIGHT_RIGHT = 9;
+    TURRET_SPAWN_STRAIGHT_LEFT = 10;
+    TURRET_SPAWN_STRAIGHT_UP = 11;
+    TURRET_SPAWN_STRAIGHT_DOWN = 12;
     
     // COLORS FOR RENDERING
     LIVE_COLOR = "rgb(128, 0, 128)";
-    //set void cell color as the background color as taken from the CSS
     VOID_COLOR = "rgb(128,128,128)";
+    TURRET_COLOR = "rgb(28, 147, 64)"; //green
+    TURRET_SPAWN_DIAGONAL_RIGHT_COLOR = "rgb(253, 174, 201)";
+    TURRET_SPAWN_DIAGONAL_LEFT_COLOR = "rgb(233, 174, 201)";
+    TURRET_SPAWN_DIAGONAL_UP_COLOR = "rgb(213, 174, 201)";
+    TURRET_SPAWN_DIAGONAL_DOWN_COLOR = "rgb(193, 174, 201)";
+    TURRET_SPAWN_STRAIGHT_RIGHT_COLOR = "rgb(253, 0,0)";
+    TURRET_SPAWN_STRAIGHT_LEFT_COLOR = "rgb(233, 0, 0)";
+    TURRET_SPAWN_STRAIGHT_UP_COLOR = "rgb(213, 0,0)";
+    TURRET_SPAWN_STRAIGHT_DOWN_COLOR = "rgb(193, 0,0)";
+    
     GRID_LINES_COLOR = "#CCCCCC";
     TEXT_COLOR = "#7777CC";
     GHOST_COLOR = "rgba(255, 0, 0, 0.2)";
     FEEDBACK_COLOR = "#CC00CC";
     PLACEMENT_COLOR = "rgb(90,180,90)";
+    
+    
     //flag for placing and removing void cells
     voidFlag = false;
     placeFlag = false;
@@ -421,11 +465,29 @@ function respondToLoadedLevelImage(img, pixelArray)
     var voidArrayCounter = 0;
     var objArrayCounter = 0;
     var placementArrayCounter = 0;
+    var turretArrayCounter = 0;
+    var turretSUArrayCounter = 0;
+    var turretSDArrayCounter = 0;
+    var turretSLArrayCounter = 0;
+    var turretSRArrayCounter = 0;
+    var turretDUArrayCounter = 0;
+    var turretDDArrayCounter = 0;
+    var turretDLArrayCounter = 0;
+    var turretDRArrayCounter = 0;
 
     //LEVEL DATA ARRAYS
     var voidArray = new Array();
     var objArray = new Array();
     var placementArray = new Array();
+    var turretArray = new Array();
+    var turretSUArray = new Array();
+    var turretSDArray = new Array();
+    var turretSLArray = new Array();
+    var turretSRArray = new Array();
+    var turretDUArray = new Array();
+    var turretDDArray = new Array();
+    var turretDLArray = new Array();
+    var turretDRArray = new Array();
    
     // GO THROUGH THE IMAGE DATA AND PICK OUT THE COORDINATES
     for (var i = 0; i < imgData.data.length; i+=4)
@@ -460,18 +522,90 @@ function respondToLoadedLevelImage(img, pixelArray)
                     	objArrayCounter += 2;
                     }
 
-                    // IF PLACEMENT CELL (LIGHT GRAY)
+                    // IF PLACEMENT CELL (LIGHT GREEN)
                     else if ((r === 90) && (g === 180) && (b === 90)) {
                     	placementArray[placementArrayCounter] = x;
                     	placementArray[placementArrayCounter+1] = y;
                     	placementArrayCounter += 2;
                     }
-
+                    
+                    // IF TURRET CELL (GREEN)
+                    else if ((r === 28) && (g === 147) && (b === 64)) {
+                    	turretArray[turretArrayCounter] = x;
+                    	turretArray[turretArrayCounter+1] = y;
+                    	turretArrayCounter += 2;
+                    }
+                    
+                    // IF TURRET STRAIGHT UP
+                    else if ((r === 213) && (g === 0) && (b === 0)) {
+                    	turretSUArray[turretSUArrayCounter] = x;
+                    	turretSUArray[turretSUArrayCounter+1] = y;
+                    	turretSUArrayCounter += 2;
+                    }
+                    
+                    // IF TURRET STRAIGHT DOWN
+                    else if ((r === 193) && (g === 0) && (b === 0)) {
+                    	turretSDArray[turretSDArrayCounter] = x;
+                    	turretSDArray[turretSDArrayCounter+1] = y;
+                    	turretSDArrayCounter += 2;
+                    }
+                    
+                    // IF TURRET STRAIGHT LEFT
+                    else if ((r === 233) && (g === 0) && (b === 0)) {
+                    	turretSLArray[turretSLArrayCounter] = x;
+                    	turretSLArray[turretSLArrayCounter+1] = y;
+                    	turretSLArrayCounter += 2;
+                    }
+                    
+                    // IF TURRET STRAIGHT RIGHT
+                    else if ((r === 253) && (g === 0) && (b === 0)) {
+                    	turretSRArray[turretSRArrayCounter] = x;
+                    	turretSRArray[turretSRArrayCounter+1] = y;
+                    	turretSRArrayCounter += 2;
+                    }
+                    
+                    // IF TURRET DIAGONAL UP
+                    else if ((r === 213) && (g === 174) && (b === 201)) {
+                    	turretDUArray[turretDUArrayCounter] = x;
+                    	turretDUArray[turretDUArrayCounter+1] = y;
+                    	turretDUArrayCounter += 2;
+                    }
+                    
+                    // IF TURRET DIAGONAL DOWN
+                    else if ((r === 193) && (g === 174) && (b === 201)) {
+                    	turretDUArray[turretDUArrayCounter] = x;
+                    	turretDUArray[turretDUArrayCounter+1] = y;
+                    	turretDUArrayCounter += 2;
+                    }
+                    
+                    // IF TURRET DIAGONAL LEFT
+                    else if ((r === 233) && (g === 174) && (b === 201)) {
+                    	turretDUArray[turretDUArrayCounter] = x;
+                    	turretDUArray[turretDUArrayCounter+1] = y;
+                    	turretDUArrayCounter += 2;
+                    }
+                    
+                    // IF TURRET DIAGONAL RIGHT
+                    else if ((r === 253) && (g === 174) && (b === 201)) {
+                    	turretDUArray[turretDUArrayCounter] = x;
+                    	turretDUArray[turretDUArrayCounter+1] = y;
+                    	turretDUArrayCounter += 2;
+                    }
                 }            
         }  
     pixelArray[0] = voidArray;
     pixelArray[1] = objArray; 
-    pixelArray[2] = placementArray;    
+    pixelArray[2] = placementArray;
+    pixelArray[3] = turretArray;
+    pixelArray[4] = turretSUArray;
+    pixelArray[5] = turretSDArray;
+    pixelArray[6] = turretSLArray;
+    pixelArray[7] = turretSRArray;
+    pixelArray[8] = turretDUArray;
+    pixelArray[9] = turretDDArray;
+    pixelArray[10] = turretDLArray;
+    pixelArray[11] = turretDRArray;
+    
 }
 
 function renderLoadedLevel (pixelArray) {
@@ -480,7 +614,17 @@ function renderLoadedLevel (pixelArray) {
     var walls = pixelArray[0];
     var objectives = pixelArray[1];
     var placements = pixelArray[2];
+    var turrets = pixelArray[3];
+    var suturrets = pixelArray[4]; //straight up turrets
+    var sdturrets = pixelArray[5]; //straight down turrets
+    var slturrets = pixelArray[6]; //and so on...
+    var srturrets = pixelArray[7];
+    var duturrets = pixelArray[8];
+    var ddturrets = pixelArray[9];
+    var dlturrets = pixelArray[10];
+    var drturrets = pixelArray[11];
     
+    resetGameOfLife();
     // GO THROUGH ALL THE PIXELS IN THE PATTERN AND PUT THEM IN THE GRID
     for (var i = 0; i < walls.length; i += 2)
         {
@@ -505,6 +649,86 @@ function renderLoadedLevel (pixelArray) {
             var index = (row * gridWidth) + col;
             this.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
             this.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+        }
+    for (var i = 0; i < turrets.length; i += 2)
+        {
+            var col = turrets[i];
+            var row = turrets[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_CELL);
+            this.setGridCell(updateGrid, row, col, TURRET_CELL);
+        }
+        
+    for (var i = 0; i < suturrets.length; i += 2)
+        {
+            var col = suturrets[i];
+            var row = suturrets[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_SPAWN_STRAIGHT_UP);
+            this.setGridCell(updateGrid, row, col, TURRET_SPAWN_STRAIGHT_UP);
+        }
+        
+    for (var i = 0; i < sdturrets.length; i += 2)
+        {
+            var col = sdturrets[i];
+            var row = sdturrets[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_SPAWN_STRAIGHT_DOWN);
+            this.setGridCell(updateGrid, row, col, TURRET_SPAWN_STRAIGHT_DOWN);
+        }
+        
+    for (var i = 0; i < slturrets.length; i += 2)
+        {
+            var col = slturrets[i];
+            var row = slturrets[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_SPAWN_STRAIGHT_LEFT);
+            this.setGridCell(updateGrid, row, col, TURRET_SPAWN_STRAIGHT_LEFT);
+        }
+        
+    for (var i = 0; i < srturrets.length; i += 2)
+        {
+            var col = srturrets[i];
+            var row = srturrets[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_SPAWN_STRAIGHT_RIGHT);
+            this.setGridCell(updateGrid, row, col, TURRET_SPAWN_STRAIGHT_RIGHT);
+        }
+        
+    for (var i = 0; i < duturrets.length; i += 2)
+        {
+            var col = duturrets[i];
+            var row = duturrets[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_SPAWN_DIAGONAL_UP);
+            this.setGridCell(updateGrid, row, col, TURRET_SPAWN_DIAGONAL_UP);
+        }
+        
+    for (var i = 0; i < ddturrets.length; i += 2)
+        {
+            var col = ddturrets[i];
+            var row = ddturrets[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_SPAWN_DIAGONAL_DOWN);
+            this.setGridCell(updateGrid, row, col, TURRET_SPAWN_DIAGONAL_DOWN);
+        }
+    
+    for (var i = 0; i < dlturrets.length; i += 2)
+        {
+            var col = dlturrets[i];
+            var row = dlturrets[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_SPAWN_DIAGONAL_LEFT);
+            this.setGridCell(updateGrid, row, col, TURRET_SPAWN_DIAGONAL_LEFT);
+        }
+        
+    for (var i = 0; i < drturrets.length; i += 2)
+        {
+            var col = drturrets[i];
+            var row = drturrets[i+1];
+            var index = (row * gridWidth) + col;
+            this.setGridCell(renderGrid, row, col, TURRET_SPAWN_DIAGONAL_RIGHT);
+            this.setGridCell(updateGrid, row, col, TURRET_SPAWN_DIAGONAL_RIGHT);
         }
         
     // RENDER THE GAME IMMEDIATELY
@@ -598,9 +822,168 @@ function respondToMouseClick(event)
             
         }
     
+    if (selectedPattern === "turretUp.png") {
+    
+        setTimeout( function(){
+        for (var i = 0; i < pixels.length; i += 2)
+        {
+            var col = clickCol + pixels[i];
+            var row = clickRow + pixels[i+1];
+            if (i === 4) {
+                setGridCell(renderGrid, row, col, TURRET_SPAWN_STRAIGHT_UP);
+                setGridCell(updateGrid, row, col, TURRET_SPAWN_STRAIGHT_UP);
+            }
+            else {
+                setGridCell(renderGrid, row, col, TURRET_CELL);
+                setGridCell(updateGrid, row, col, TURRET_CELL);
+            }
+        }
+        ghostLock = false;
+        renderGame(); }, 250);
+    }
+    
+    else if (selectedPattern === "turretDown.png") {
+    
+        setTimeout( function(){
+        for (var i = 0; i < pixels.length; i += 2)
+        {
+            var col = clickCol + pixels[i];
+            var row = clickRow + pixels[i+1];
+            if (i === 12) {
+                setGridCell(renderGrid, row, col, TURRET_SPAWN_STRAIGHT_DOWN);
+                setGridCell(updateGrid, row, col, TURRET_SPAWN_STRAIGHT_DOWN);
+            }
+            else {
+                setGridCell(renderGrid, row, col, TURRET_CELL);
+                setGridCell(updateGrid, row, col, TURRET_CELL);
+            }
+        }
+        ghostLock = false;
+        renderGame(); }, 250);
+    }
+    
+    else if (selectedPattern === "turretLeft.png") {
+    
+        setTimeout( function(){
+        for (var i = 0; i < pixels.length; i += 2)
+        {
+            var col = clickCol + pixels[i];
+            var row = clickRow + pixels[i+1];
+            if (i === 8) {
+                setGridCell(renderGrid, row, col, TURRET_SPAWN_STRAIGHT_LEFT);
+                setGridCell(updateGrid, row, col, TURRET_SPAWN_STRAIGHT_LEFT);
+            }
+            else {
+                setGridCell(renderGrid, row, col, TURRET_CELL);
+                setGridCell(updateGrid, row, col, TURRET_CELL);
+            }
+        }
+        ghostLock = false;
+        renderGame(); }, 250);
+    }
+    
+    else if (selectedPattern === "turretRight.png") {
+    
+        setTimeout( function(){
+        for (var i = 0; i < pixels.length; i += 2)
+        {
+            var col = clickCol + pixels[i];
+            var row = clickRow + pixels[i+1];
+            if (i === 8) {
+                setGridCell(renderGrid, row, col, TURRET_SPAWN_STRAIGHT_RIGHT);
+                setGridCell(updateGrid, row, col, TURRET_SPAWN_STRAIGHT_RIGHT);
+            }
+            else {
+                setGridCell(renderGrid, row, col, TURRET_CELL);
+                setGridCell(updateGrid, row, col, TURRET_CELL);
+            }
+        }
+        ghostLock = false;
+        renderGame(); }, 250);
+    }
+    
+    else if (selectedPattern === "turretUpD.png") {
+    
+        setTimeout( function(){
+        for (var i = 0; i < pixels.length; i += 2)
+        {
+            var col = clickCol + pixels[i];
+            var row = clickRow + pixels[i+1];
+            if (i === 4) {
+                setGridCell(renderGrid, row, col, TURRET_SPAWN_DIAGONAL_UP);
+                setGridCell(updateGrid, row, col, TURRET_SPAWN_DIAGONAL_UP);
+            }
+            else {
+                setGridCell(renderGrid, row, col, TURRET_CELL);
+                setGridCell(updateGrid, row, col, TURRET_CELL);
+            }
+        }
+        ghostLock = false;
+        renderGame(); }, 250);
+    }
+    
+    else if (selectedPattern === "turretDownD.png") {
+    
+        setTimeout( function(){
+        for (var i = 0; i < pixels.length; i += 2)
+        {
+            var col = clickCol + pixels[i];
+            var row = clickRow + pixels[i+1];
+            if (i === 12) {
+                setGridCell(renderGrid, row, col, TURRET_SPAWN_DIAGONAL_DOWN);
+                setGridCell(updateGrid, row, col, TURRET_SPAWN_DIAGONAL_DOWN);
+            }
+            else {
+                setGridCell(renderGrid, row, col, TURRET_CELL);
+                setGridCell(updateGrid, row, col, TURRET_CELL);
+            }
+        }
+        ghostLock = false;
+        renderGame(); }, 250);
+    }
+    
+    else if (selectedPattern === "turretLeftD.png") {
+    
+        setTimeout( function(){
+        for (var i = 0; i < pixels.length; i += 2)
+        {
+            var col = clickCol + pixels[i];
+            var row = clickRow + pixels[i+1];
+            if (i === 8) {
+                setGridCell(renderGrid, row, col, TURRET_SPAWN_DIAGONAL_LEFT);
+                setGridCell(updateGrid, row, col, TURRET_SPAWN_DIAGONAL_LEFT);
+            }
+            else {
+                setGridCell(renderGrid, row, col, TURRET_CELL);
+                setGridCell(updateGrid, row, col, TURRET_CELL);
+            }
+        }
+        ghostLock = false;
+        renderGame(); }, 250);
+    }
+    
+    else if (selectedPattern === "turretRightD.png") {
+    
+        setTimeout( function(){
+        for (var i = 0; i < pixels.length; i += 2)
+        {
+            var col = clickCol + pixels[i];
+            var row = clickRow + pixels[i+1];
+            if (i === 8) {
+                setGridCell(renderGrid, row, col, TURRET_SPAWN_DIAGONAL_RIGHT);
+                setGridCell(updateGrid, row, col, TURRET_SPAWN_DIAGONAL_RIGHT);
+            }
+            else {
+                setGridCell(renderGrid, row, col, TURRET_CELL);
+                setGridCell(updateGrid, row, col, TURRET_CELL);
+            }
+        }
+        ghostLock = false;
+        renderGame(); }, 250);
+    }
     
     // RENDER THE GAME IMMEDIATELY
-    setTimeout( function(){
+    else setTimeout( function(){
         for (var i = 0; i < pixels.length; i += 2)
         {
             var col = clickCol + pixels[i];
@@ -895,10 +1278,20 @@ function renderGameWithoutSwapping()
  */
 function renderCells()
 {
+    //RENDER ALL DEAD CELLS (WHITE)
+    canvas2D.fillStyle = "#ffffff";
+    for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+            {
+                var x = j * cellLength;
+                var y = i * cellLength;
+                canvas2D.fillRect(x, y, cellLength, cellLength);
+            }
+        }
+    
     // SET THE PROPER RENDER COLOR
     canvas2D.fillStyle = LIVE_COLOR;
-    
-    // RENDER THE LIVE nd void CELLS IN THE GRID
     for (var i = 0; i <= gridHeight; i++)
         {
            for (var j = 0; j < gridWidth; j++)
@@ -914,7 +1307,6 @@ function renderCells()
         }  
     
     canvas2D.fillStyle = VOID_COLOR;
-    
     for (var i = 0; i <= gridHeight; i++)
         {
            for (var j = 0; j < gridWidth; j++)
@@ -929,8 +1321,8 @@ function renderCells()
                }
         }
         
-   canvas2D.fillStyle = PLACEMENT_COLOR;
-   for (var i = 0; i <= gridHeight; i++)
+    canvas2D.fillStyle = PLACEMENT_COLOR;
+    for (var i = 0; i <= gridHeight; i++)
         {
            for (var j = 0; j < gridWidth; j++)
                {
@@ -943,48 +1335,146 @@ function renderCells()
                        }
                }
         }
-}
-
-function clearGhostCells()
-{
-     
-    // clear THE ghost CELLS IN THE GRID
+        
+    canvas2D.fillStyle = TURRET_COLOR;
     for (var i = 0; i <= gridHeight; i++)
         {
            for (var j = 0; j < gridWidth; j++)
                {
                    var cell = getGridCell(renderGrid, i, j);
-                   if (cell === LIVE_CELL)
+                   if (cell === TURRET_CELL)
                        {
                            var x = j * cellLength;
                            var y = i * cellLength;
-                           canvas2D.fillStyle = LIVE_COLOR;
-                           canvas2D.fillRect(x, y, cellLength, cellLength);
-                           
-                       }
-                   else if (cell === DEAD_CELL)
-                        {
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillStyle = "#FFFFFF";
                            canvas2D.fillRect(x, y, cellLength, cellLength);
                        }
-                    else if (cell === VOID_CELL)
-                        {
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillStyle = VOID_COLOR;
-                           canvas2D.fillRect(x, y, cellLength, cellLength);
-                        }
-                    else if (cell === PLACEMENT_CELL)
-                        {
-                           var x = j * cellLength;
-                           var y = i * cellLength;
-                           canvas2D.fillStyle = PLACEMENT_COLOR;
-                           canvas2D.fillRect(x, y, cellLength, cellLength);
-                        }
                }
-        }          
+        }
+        
+    canvas2D.fillStyle = TURRET_SPAWN_STRAIGHT_UP_COLOR;
+    for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+               {
+                   var cell = getGridCell(renderGrid, i, j);
+                   if (cell === TURRET_SPAWN_STRAIGHT_UP)
+                       {
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+               }
+        }
+        
+    canvas2D.fillStyle = TURRET_SPAWN_STRAIGHT_DOWN_COLOR;
+    for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+               {
+                   var cell = getGridCell(renderGrid, i, j);
+                   if (cell === TURRET_SPAWN_STRAIGHT_DOWN)
+                       {
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+               }
+        }
+        
+    canvas2D.fillStyle = TURRET_SPAWN_STRAIGHT_LEFT_COLOR;
+    for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+               {
+                   var cell = getGridCell(renderGrid, i, j);
+                   if (cell === TURRET_SPAWN_STRAIGHT_LEFT)
+                       {
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+               }
+        }
+        
+    canvas2D.fillStyle = TURRET_SPAWN_STRAIGHT_RIGHT_COLOR;
+    for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+               {
+                   var cell = getGridCell(renderGrid, i, j);
+                   if (cell === TURRET_SPAWN_STRAIGHT_RIGHT)
+                       {
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+               }
+        }
+        
+    canvas2D.fillStyle = TURRET_SPAWN_DIAGONAL_UP_COLOR;
+    for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+               {
+                   var cell = getGridCell(renderGrid, i, j);
+                   if (cell === TURRET_SPAWN_DIAGONAL_UP)
+                       {
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+               }
+        }
+        
+    canvas2D.fillStyle = TURRET_SPAWN_DIAGONAL_DOWN_COLOR;
+    for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+               {
+                   var cell = getGridCell(renderGrid, i, j);
+                   if (cell === TURRET_SPAWN_DIAGONAL_DOWN)
+                       {
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+               }
+        }
+        
+    canvas2D.fillStyle = TURRET_SPAWN_DIAGONAL_LEFT_COLOR;
+    for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+               {
+                   var cell = getGridCell(renderGrid, i, j);
+                   if (cell === TURRET_SPAWN_DIAGONAL_LEFT)
+                       {
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+               }
+        }
+        
+    canvas2D.fillStyle = TURRET_SPAWN_DIAGONAL_RIGHT_COLOR;
+    for (var i = 0; i <= gridHeight; i++)
+        {
+           for (var j = 0; j < gridWidth; j++)
+               {
+                   var cell = getGridCell(renderGrid, i, j);
+                   if (cell === TURRET_SPAWN_DIAGONAL_RIGHT)
+                       {
+                           var x = j * cellLength;
+                           var y = i * cellLength;
+                           canvas2D.fillRect(x, y, cellLength, cellLength);
+                       }
+               }
+        }
+}
+
+function clearGhostCells()
+{ 
+    renderCells();          
 }
 
 /*
