@@ -210,7 +210,22 @@ main, #messages-card {
   top: -1px;
   margin-right: 5px;
 }
-/*THIS IS CSS FOR THE ENTER BUTTON ON SPLASH SCREEN*/
+/*THIS IS CSS FOR THE LOG IN and PLAY AS GUEST BUTTONS ON SPLASH SCREEN*/
+#Login_button {
+  font-size: 20px;
+  display: inline-block;
+  color: white;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  background-color: #800080;
+  border: none;
+  border-radius: 10%;
+  bottom: 1%;
+  left: 28%;
+  position: absolute;
+}
+
 #Enter_button {
   font-size: 20px;
   display: inline-block;
@@ -222,7 +237,7 @@ main, #messages-card {
   border: none;
   border-radius: 10%;
   bottom: 1%;
-  left: 38%;
+  left: 48%;
   position: absolute;
 }
 
@@ -278,16 +293,9 @@ main, #messages-card {
   float: left;
   width: 8%;
   height: 55%;
-  margin-right: 15px;
-  margin-left: 10px;
-  border-top: 1px dashed #046ca3;
-  border-left: 2px dashed #046ca3;
-  border-right: 2px dashed #046ca3;
-  border-bottom: 1px dashed #046ca3;
-  box-shadow: inset 0 -1px 0 0 #046ca3, inset 0 1px 0 0 #046ca3, 0 1px 0 0 #046ca3, 0 -1px 0 0 #046ca3;
-  margin-bottom: 1px;
+  
   left: 2%;
-  bottom: 10%;
+  top: 15%;
   position:fixed;
 
 }

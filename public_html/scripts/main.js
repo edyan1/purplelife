@@ -1,5 +1,28 @@
 'use strict';
 
+//GAME OF LIFE LINKS
+
+var AWESOMELIFE = "http://www.awesome-life-game.appspot.com";
+var CANARYLIFE = "https://canarylife.firebaseapp.com";
+var FIREBRICKLIFE = "http://fire-brick-life.appspot.com";
+var IKBLIFE = "https://ibk-life.firebaseapp.com";
+var JETLIFE = "https://jet-life.firebaseapp.com";
+var SALMONLIFE = "https://salmon-life.firebaseapp.com";
+var SCARLETLIFE = "http://www.the-scarlet-life.appspot.com";
+var TIMBERWOLFLIFE = "https://timberwolf-life.firebaseapp.com";
+var WISTERIALIFE = "https://wisteria-life.appspot.com";
+
+var AWESOMEIMG = "images/ads/awesomelifead.png";
+var CANARYIMG = "images/ads/canarylifead.png";
+var FIREBRICKIMG = "images/ads/firebricklifead.png";
+var IKBIMG = "images/ads/ikblifead.png";
+var JETIMG = "images/ads/jetlifead.png";
+var SALMONIMG = "images/ads/salmonlifead.png";
+var SCARLETIMG = "images/ads/scarletlifead.png";
+var TIMBERWOLFIMG = "images/ads/timberwolflifead.png";
+var WISTERIAIMG = "images/ads/wisterialifead.png";
+
+
 //KEYS
 var currentlyPressedKeys = {};
 
@@ -32,6 +55,7 @@ function PurpleLife() {
   this.userPic = document.getElementById('user-pic');
   this.userName = document.getElementById('user-name');
   this.signInButton = document.getElementById('sign-in');
+  this.signInbutton2 = document.getElementById('Login_button');
   this.signOutButton = document.getElementById('sign-out');
   this.levelSelect = document.getElementById('ls-section');
   this.toolbar = document.getElementById('toolbar');
@@ -39,6 +63,7 @@ function PurpleLife() {
   // Saves message on form submit.
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
   this.signInButton.addEventListener('click', this.signIn.bind(this));
+  //this.signInButton2.addEventListener('click', this.signIn.bind(this));
 
   canvasScaleX = .672;
   canvasScaleY = .75;
@@ -52,6 +77,58 @@ function PurpleLife() {
 
   //Initialize the Scene Manager
   initSceneManager(Scenes.SPLASH, purpleGame);
+  
+  //load a random ad
+  loadAd();
+ 
+  
+}
+
+function loadAd (){
+   var randAd = Math.floor((Math.random() * 9) + 1); 
+   var adName;
+   var adPath;
+   switch (randAd) {
+    case 1:
+        adName = AWESOMEIMG;
+        adPath = AWESOMELIFE;
+        break;
+    case 2:
+        adPath = CANARYLIFE;
+        adName = CANARYIMG;
+        break;
+    case 3:
+        adPath = FIREBRICKLIFE;
+        adName = FIREBRICKIMG;
+        break;
+    case 4:
+        adPath = IKBLIFE;
+        adName = IKBIMG;
+        break;
+    case 5:
+        adPath = JETLIFE;
+        adName = JETIMG;
+        break;
+    case 6:
+        adPath = SALMONLIFE;
+        adName = SALMONIMG;
+        break;
+    case 7:
+        adPath = SCARLETLIFE;
+        adName = SCARLETIMG;
+        break;
+    case 8:
+        adPath = TIMBERWOLFLIFE;
+        adName = TIMBERWOLFIMG;
+        break;
+    case 9:
+        adPath = WISTERIALIFE;
+        adName = WISTERIAIMG;
+    
+    }
+    
+   document.getElementById('adimg').setAttribute("src", adName);
+   document.getElementById('link').setAttribute("href", adPath);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -100,9 +177,10 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
     this.userName.removeAttribute('hidden');
     this.userPic.removeAttribute('hidden');
     this.signOutButton.removeAttribute('hidden');
-
+    document.getElementById('levelmaker').removeAttribute('hidden');
     // Hide sign-in button.
     this.signInButton.setAttribute('hidden', 'true');
+    
     
     //document.getElementById("game_canvas").style.visibility = 'hidden';
     changeScene(Scenes.LEVELSELECT);
@@ -115,6 +193,7 @@ PurpleLife.prototype.onAuthStateChanged = function(user) {
     this.userName.setAttribute('hidden', 'true');
     this.userPic.setAttribute('hidden', 'true');
     this.signOutButton.setAttribute('hidden', 'true');
+    document.getElementById('levelmaker').setAttribute('hidden', 'true');
     userSignedIn = false;
     // Show sign-in button.
     this.signInButton.removeAttribute('hidden');

@@ -61,12 +61,13 @@ function changeScene (scene) {
 
 function loadSplashScene() {
     canvas2D.drawImage(this.splashScreen, 60, 0, canvas.width-120, canvas.height - 60);
-
+    document.getElementById("Login_button").style.visibility = "visible";
     document.getElementById("Enter_button").style.visibility = "visible";
 };
 
 function deloadSplashScene() {
   canvas2D.clearRect(0, 0, canvasWidth, canvasHeight);
+  document.getElementById("Login_button").style.visibility = "hidden";
   document.getElementById("Enter_button").style.visibility = "hidden";
 };
 
@@ -100,14 +101,16 @@ function deloadLevelSelectScene() {
 
 function loadLevelMakerScene() {
   document.getElementById("game_canvas").setAttribute('hidden', 'hidden');
-  document.getElementById("level_maker_menu").removeAttribute('hidden');
+  document.getElementById("lmmenu").removeAttribute('hidden');
+  if (display === "local") document.getElementById("level_maker_menu").removeAttribute('hidden');
+  if (display === "market") document.getElementById("level_market_menu").removeAttribute('hidden');
   
 };
 
 function deloadLevelMakerScene() {
-  
+  document.getElementById("lmmenu").setAttribute('hidden', 'hidden');
   document.getElementById("level_maker_menu").setAttribute('hidden', 'hidden');
-  
+  document.getElementById("level_market_menu").setAttribute('hidden', 'hidden');
 };
 
 function goBack() {

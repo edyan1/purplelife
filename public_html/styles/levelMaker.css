@@ -18,23 +18,7 @@ html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
 
-/*THIS IS THE LEVEL MAKER INFO BOX*/
-.lm_info_box {
-  
-  width: 25%;
-  height: 90%;
-  background-color: #7b1fa2;
-    text-align: center;
-  /*border-style: solid;*/
-  /*border-color: #7b1fa2;*/
-  /*border-width: 3px;*/
-  padding-left: 2%;
-  padding-right: 2%;
-  right: 0px;
-  bottom: 0px;
-  position:fixed;
 
-}
 
 /* CSS FOR BUTTONS IN LEVEL MAKER PAGE
 .LM_buttons {
@@ -65,19 +49,58 @@ a.button {
   border-radius: 10%;
 }
 
-a.newLevel {
+button.newLevel {
   margin: auto;
-  font-size: 20px;
-  width: 50%;
-  height: 2%;
-  display: inline-block;
+  font-size: 100%;
+  width: 10%;
+  height: 9%;
+  
   color: white;
-  padding: 1.5% 6%;
+  
   text-align: center;
   text-decoration: none;
   background-color: #800080;
   border: none;
   border-radius: 10%;
+  position: fixed;
+  top: 30%;
+  left: 2%;
+}
+
+button.myLevels {
+  margin: auto;
+  font-size: 100%;
+  width: 10%;
+  height: 9%;
+  
+  color: white;
+  
+  text-align: center;
+  text-decoration: none;
+  background-color: #800080;
+  border: none;
+  border-radius: 10%;
+  position: fixed;
+  top: 40%;
+  left: 2%;
+}
+
+button.levelMarket {
+  margin: auto;
+  font-size: 100%;
+  width: 10%;
+  height: 9%;
+  
+  color: white;
+  
+  text-align: center;
+  text-decoration: none;
+  background-color: #800080;
+  border: none;
+  border-radius: 10%;
+  position: fixed;
+  top: 50%;
+  left: 2%;
 }
 
 img.levelImg2 {
@@ -125,6 +148,7 @@ button.levelButtonLM{
   float: left;
   position: relative;
   margin: 0 auto;
+  
 }
 
 /*THIS IS THE DIV WHERE THE BUTTONS ARE PLACED IN*/
@@ -135,6 +159,7 @@ button.levelButtonLM{
   position: relative;
   margin: 0 auto;
 }
+
 
 button.levelButton{
     width: 150%;
@@ -152,10 +177,29 @@ button.levelButton{
   position: absolute;
 }
 
+.alias {
+  font-size: 20px;
+  color: purple;
+  padding: 1.5% 6%;
+  text-align: center;
+  text-decoration: none;
+  left: 60%;
+  top: 0;
+  position: absolute;
+}
+
 #level_maker_menu {
     position:absolute;
     height: 100%;
     width: 100%;
-    top: 0;
+    
+    left: 0;
+}
+
+#level_market_menu {
+    position:absolute;
+    height: 100%;
+    width: 100%;
+
     left: 0;
 }

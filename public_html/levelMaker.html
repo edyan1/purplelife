@@ -8,7 +8,7 @@ and open the template in the editor.
     <head>
         <title>Purple Life Level Maker</title>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+           <!--<meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
             <!-- styles -->
         
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -30,7 +30,6 @@ and open the template in the editor.
             <script src="scripts/fanmenu.js"></script>
             <script src="scripts/SceneManager.js"></script>
             <script src ="scripts/levelMaker.js"></script>
-            
             
             <script src="scripts/notify.js"></script>
             
@@ -73,20 +72,31 @@ and open the template in the editor.
             </div>
           </div>
         </header>
-       
+        
+        <div id='lmmenu'>
+            <div style="text-align: center;"> <button onclick="window.location.href = 'levelcreate.html';" class="newLevel" >Create A Level</button></div>
+            <div style="text-align: center;"> <button onclick="loadLocalLevels();" class="myLevels" >My Levels</button></div>
+            <div style="text-align: center;"> <button onclick="loadMarketLevels();" class="levelMarket" >Level Market</button></div>
+        </div>
+            
         <div id="container">
             <div class="canvas">
             <canvas id="game_canvas" width="1024" height="580" style="margin:0 auto;"></canvas>
             </div>
             <div id="level_maker_menu">
-            <h2></h2>
-            <div style="text-align: center;"> <a href="levelcreate.html" class="newLevel" >Create New Level</a></div>
+                <h2 id="loading">Loading Custom Levels...</h2>
+            </div>
+            
+            <div hidden id="level_market_menu">
+                <h2 hidden id="loadMarket">Loading Level Market...</h2>
             </div>
             
             <div id="toolbar" class="divBody">
              
             <div id='weaponMenu' class="fm_wrap">
             <a class="fm_btntoggle" href="#" title="Toggle"><i>w</i></a>
+            <button id='weaponCount' type="button" class="weaponCount" disabled></button>
+            <!-- LIST OF WEAPONS -->
             <ul id="weaponSelect" class="fm_list">
               <li><a><img class="weaponSize" src="images/weapons/rocket.png"><i class="icon-user icon-white"></i></a></li>
               <li><a><img class="weaponSize" src="images/weapons/gun.png"><i class="icon-heart icon-white"></i></a></li>

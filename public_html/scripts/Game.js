@@ -592,9 +592,9 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
                     }
 
                     // **DEBUG** CHECK FOR BROWSER DESCREPENCIES
-                    else {
-                        console.log(r +'\n' + g + '\n' + b + '\n');
-                    }
+                    //else {
+                    //    console.log(r +'\n' + g + '\n' + b + '\n');
+                    //}
 
                 }            
         }  
@@ -777,9 +777,9 @@ function respondToLoadedCustomLevelImage(img, pixelArray)
                     }
 
                     // **DEBUG** CHECK FOR BROWSER DESCREPENCIES
-                    else {
-                        console.log(r +'\n' + g + '\n' + b + '\n');
-                    }
+                    //else {
+                    //    console.log(r +'\n' + g + '\n' + b + '\n');
+                    //}
 
                 }            
         }  
@@ -1144,7 +1144,7 @@ Game.prototype.renderGame = function () {
             placedWeaponCount = 0;
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
             if (userSignedIn === true && getUserProgress() < levelNumber-1 ){
-                console.log(getUserProgress());
+                //console.log(getUserProgress());
                 setUserProgress(levelNumber-1);
             }
             giveLevelAccess(levelNumber);
@@ -1195,7 +1195,7 @@ Game.prototype.renderGameWithoutSwapping = function()
         if (currentlyPressedKeys[70]) {
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
             if (userSignedIn === true && getUserProgress() < levelNumber-1 ) {
-                console.log(getUserProgress());
+                //console.log(getUserProgress());
                 setUserProgress(levelNumber-1);
             }
             giveLevelAccess(levelNumber);
@@ -1351,17 +1351,16 @@ Game.prototype.renderCells = function() {
 };
 
 Game.prototype.renderWeaponCountText = function() {
-    canvas2D.fillStyle = TEXT_COLOR;
-
-    canvas2D.textAlign="left";
-    canvas2D.fillText("Weapon Count: " + this.getWeaponCount(), 25,canvasHeight*(6/7));
+    //canvas2D.fillStyle = TEXT_COLOR;
+    //canvas2D.textAlign="left";
+    //canvas2D.fillText("Weapon Count: " + this.getWeaponCount(), 25,canvasHeight*(6/7));
+    document.getElementById('weaponCount').innerHTML = "Count: "+this.getWeaponCount();
 }
 
 Game.prototype.renderWeaponSelect = function() {
-    canvas2D.fillStyle = TEXT_COLOR;
-
-    canvas2D.textAlign="left"
-    canvas2D.fillText("Weapon: " + this.getWeaponSelect() + " " + this.getWeaponDirection(), 25,canvasHeight*(5.5/7));
+    //canvas2D.fillStyle = TEXT_COLOR;
+    //canvas2D.textAlign="left"
+    //canvas2D.fillText("Weapon: " + this.getWeaponSelect() + " " + this.getWeaponDirection(), 25,canvasHeight*(5.5/7));
 }
 
 /*

@@ -8,6 +8,25 @@ and open the template in the editor.
     Author     : William
 */
 
+/*THIS IS THE LEVEL MAKER INFO BOX*/
+.lm_info_box {
+  
+  width: 25%;
+  height: 95%;
+  color: white;
+  text-align: center;
+  /*border-style: solid;*/
+  /*border-color: #7b1fa2;*/
+  /*border-width: 3px;*/
+  padding-left: 2%;
+  padding-right: 2%;
+  right: 0px;
+  bottom: 0px;
+  position:fixed;
+    
+  background : rgba(123, 31, 162, 0.7);
+}
+
 /*button properties*/
 .bottomButton{
     border : solid 0px #fff700;
@@ -40,6 +59,4 @@ and open the template in the editor.
   background-color: #3bd11e;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
-
-
 }

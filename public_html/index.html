@@ -8,7 +8,7 @@ and open the template in the editor.
     <head>
         <title>Purple Life</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
         
          <!-- Material Design Lite -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -53,7 +53,7 @@ and open the template in the editor.
             
             <div id="user-container">  
               
-              <button id="levelmaker" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='levelMaker.html'">
+              <button id="levelmaker" hidden class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onclick="window.location.href='levelMaker.html'">
               Level Maker
               </button>
                 
@@ -78,15 +78,13 @@ and open the template in the editor.
           </div>
         </header>
         
-        <div class="add_banner_left">
-          <div class="rotate">ADVERTISE HERE</div>
+        <div class="add_banner_left" id="ad">
+            <a id="link" href=""><img id="adimg" border="0" alt="Advertise Here" src=""> </a>
         </div>
         
-        
-        
-        
         <div id="container">
-        
+          
+          <!--GAME CANVAS-->
           <div class="canvas">
             <canvas id="game_canvas" width="1024" height="580" style="margin:0 auto;"></canvas>
           </div>
@@ -157,8 +155,8 @@ and open the template in the editor.
                 <div class="c-tab__content">
                   <h2>Chapter 3</h2>
                   <div class="level1" id="lev13">Level 13: <br><button disabled class="levelButton" id="level13" type="button" onclick="loadGameLevel(13)"><img class="levelImg" id="l13img" src="images/levels/hidden.png" /></button> </div>
-                  <div class="level2" id="lev14">Level 14: <br><button disabled class="levelButton" id="level14" type="button" onclick="loadGameLevel(14)"><img class="levelImg" id="l14img" src="images/levels/hidden.png" /></button> </div>
-                  <div class="level3" id="lev15">Level 15: <br><button disabled class="levelButton" id="level15" type="button" onclick="loadGameLevel(15)"><img class="levelImg" id="l15img" src="images/levels/hidden.png" /></button> </div>
+                  <div class="level2" id="lev14">Level 14: <br><button disabled class="levelButtonBig" id="level14" type="button" onclick="loadGameLevel(14)"><img class="levelImgBig" id="l14img" src="images/levels/hidden.png" /></button> </div>
+                  <div class="level3" id="lev15">Level 15: <br><button disabled class="levelButtonBig" id="level15" type="button" onclick="loadGameLevel(15)"><img class="levelImgBig" id="l15img" src="images/levels/hidden.png" /></button> </div>
                   <div class="level4" id="lev16">Level 16: <br><button disabled class="levelButton" id="level16" type="button" onclick="loadGameLevel(16)"><img class="levelImg" id="l16img" src="images/levels/hidden.png" /></button> </div>
                   <div class="level5" id="lev17">Level 17: <br><button disabled class="levelButton" id="level17" type="button" onclick="loadGameLevel(17)"><img class="levelImg" id="l17img" src="images/levels/hidden.png" /></button> </div>
                   <div class="level6" id="lev18">Level 18: <br><button disabled class="levelButton" id="level18" type="button" onclick="loadGameLevel(18)"><img class="levelImg" id="l18img" src="images/levels/hidden.png" /></button> </div>
@@ -201,9 +199,12 @@ and open the template in the editor.
              
             <div id='weaponMenu' class="fm_wrap">
             <a class="fm_btntoggle" href="#" title="Toggle"><i>w</i></a>
+            
+            <button id='weaponCount' type="button" class="weaponCount" disabled></button>
+            <!-- List of weapons -->
             <ul id="weaponSelect" class="fm_list">
-              <li><a><img class="weaponSize" src="images/weapons/rocket.png"><i class="icon-user icon-white"></i></a></li>
-              <li><a><img class="weaponSize" src="images/weapons/gun.png"><i class="icon-heart icon-white"></i></a></li>
+              <li><a><img class="weaponSize" src="images/weapons/rocket.png"><i ></i></a></li>
+              <li><a><img class="weaponSize" src="images/weapons/gun.png"><i ></i></a></li>
             </ul>
             <ul id="weaponsList" style="list-style: none;">
                 <li id="rocket.png"></li>
@@ -217,21 +218,25 @@ and open the template in the editor.
                 <li id="gun_upleft.png"></li>
                 <li id="gun_upright.png"></li>
             </ul>
+            
+            <!-- List of levels --> 
             <ul id="levelsList" style="list-style: none;">
                 <li id="level1.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
                 <li id="level2.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
                 <li id="level3.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
-                <li id="level4.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
+                <li id="level4.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
                 <li id="level5.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
-                <li id="level6.png" value="2" cellcountX="96" cellcountY="35" gameLostTimeout="8000"></li>
-                <li id="level7.png" value="3" cellcountX="64" cellcountY="71" gameLostTimeout="5000"></li>
+                <li id="level6.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="8000"></li>
+                <li id="level7.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
                 <li id="level8.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="5000"></li>
-                <li id="level9.png" value="3" cellcountX="64" cellcountY="71" gameLostTimeout="8000"></li>
-                <li id="level10.png" value="2" cellcountX="61" cellcountY="61" gameLostTimeout="18000"></li>
-                <li id="level11.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="20000"></li>
-                <li id="level12.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="20000"></li>
-                <li id="level13.png" value="4" cellcountX="64" cellcountY="71" gameLostTimeout="20000"></li>
-                <li id="level14.png" value="4" cellcountX="64" cellcountY="71" gameLostTimeout="20000"></li>
+                <li id="level9.png" value="2" cellcountX="64" cellcountY="35" gameLostTimeout="8000"></li>
+                <li id="level10.png" value="3" cellcountX="64" cellcountY="35" gameLostTimeout="18000"></li>
+                <li id="level11.png" value="3" cellcountX="64" cellcountY="35" gameLostTimeout="20000"></li>
+                <li id="level12.png" value="4" cellcountX="128" cellcountY="70" gameLostTimeout="20000"></li>
+                <li id="level13.png" value="4" cellcountX="64" cellcountY="35" gameLostTimeout="20000"></li>
+                <li id="level14.png" value="4" cellcountX="128" cellcountY="70" gameLostTimeout="20000"></li>
+                <li id="level15.png" value="6" cellcountX="128" cellcountY="70" gameLostTimeout="6000"></li>
+                <li id="level16.png" value="6" cellcountX="128" cellcountY="70" gameLostTimeout="6000"></li>
             </ul>
            
             </div> 
@@ -245,10 +250,10 @@ and open the template in the editor.
             <div id='directionMenu' class="fm_wrap">
             <a class="fm_btntoggle" href="#" title="Toggle"><i>D</i></a>
             <ul id="weaponDirection" class="fm_list">
-              <li><a><img class="weaponDir" id="leftdir" src="icons/left.png"><i class="icon-user icon-white"></i></a></li>
-              <li><a><img class="weaponDir" id="rightdir" src="icons/right.png"><i class="icon-heart icon-white"></i></a></li>
-              <li><a><img class="weaponDir" id="downdir" src="icons/down.png"><i class="icon-music icon-white"></i></a></li>
-              <li><a><img class="weaponDir" id="updir" src="icons/up.png"><i class="icon-home icon-white"></i></a></li>
+              <li><a><img class="weaponDir" id="leftdir" src="icons/left.png"><i ></i></a></li>
+              <li><a><img class="weaponDir" id="rightdir" src="icons/right.png"><i ></i></a></li>
+              <li><a><img class="weaponDir" id="downdir" src="icons/down.png"><i ></i></a></li>
+              <li><a><img class="weaponDir" id="updir" src="icons/up.png"><i ></i></a></li>
               <!--<li><a href="#"><i class="icon-flag icon-white"></i></a></li>-->
             </ul>
             </div>
@@ -256,8 +261,8 @@ and open the template in the editor.
           </div>
           
           
-          
-          <button id="Enter_button" type="button" onclick="loadGameLevel(1)">Play As A Guest</button>
+          <button id="Login_button" type="button" onclick="window.purpleLife.signIn()">Log In</button>
+          <button id="Enter_button" type="button" onclick="loadGameLevel(1)">Play As Guest</button>
         </div>
         </div>
 

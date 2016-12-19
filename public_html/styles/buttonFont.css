@@ -2,8 +2,8 @@
     text-align: center;
     background: darkgrey;
     
-    width: 1024px;
-    height: 50px;
+    width: 99%;
+    height: 6%;
     
     position: absolute;
     bottom:0px;
@@ -12,16 +12,17 @@
 
 /* play button style*/
 .playBtn {
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
+  -webkit-border-radius: 28px;
+  -moz-border-radius: 28px;
   border-radius: 28px;
   font-family: Courier New;
   color: #fffcff;
-  font-size: 22px;
+  font-size: 100%;
   background: #9c2194;
-  padding: 5px 10px 5px 10px;
+  padding: 0px 1% 0px 1%;
   text-decoration: none;
-  height: 50px;
+  height: 100%;
+  width: 9%;
   position: absolute;
   left: 45.5%
 }
@@ -32,16 +33,17 @@
 }
 
 .undoBtn {
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
+  -webkit-border-radius: 28px;
+  -moz-border-radius: 28px;
   border-radius: 28px;
   font-family: Courier New;
   color: #fffcff;
-  font-size: 21px;
+  font-size: 100%;
   background: #9c2194;
-  padding: 5px 10px 5px 10px;
+  padding: 0px 1% 0px 1%;
   text-decoration: none;
-  height: 50px;
+  height: 100%;
+  width: 9%;
   position: absolute;
   left: 55.5%
 }
@@ -53,16 +55,17 @@
 
 /* pause button style*/
 .quitBtn {
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
+  -webkit-border-radius: 28px;
+  -moz-border-radius: 28px;
   border-radius: 28px;
   font-family: Courier New;
   color: #fffcff;
-  font-size: 21px;
+  font-size: 100%;
   background: #9c2194;
-  padding: 5px 10px 5px 10px;
+  padding: 0px 1% 0px 1%;
   text-decoration: none;
-  height: 50px;
+  height: 100%;
+  width: 9%;
   position: absolute;
   left: 65.5%
 }
@@ -74,16 +77,17 @@
 
 /*reset button style*/
 .resetBtn {
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
+  -webkit-border-radius: 28px;
+  -moz-border-radius: 28px;
   border-radius: 28px;
   font-family: Courier New;
   color: #fffcff;
-  font-size: 21px;
+  font-size: 100%;
   background: #9c2194;
-  padding: 5px 10px 5px 10px;
+  padding: 0px 1% 0px 1%;
   text-decoration: none;
-  height: 50px;
+  height: 100%;
+  width: 9%;
   position: absolute;
   left: 35%
 }
@@ -99,7 +103,24 @@
   left: 1%;
   position: absolute;
   width: 100%;
+  height: 100%;
   
+}
+
+.weaponCount {
+  
+  border-style: groove;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #000000;
+  font-size: 125%;
+  background: #fffcff;
+  
+  text-decoration: none;
+  height: 100%;
+  width: 15%;
+  position: absolute;
+  left: 5%
 }
 
 /*THIS IS THE DIRECTION MENU*/
@@ -108,4 +129,5 @@
   left: 95%;
   position: absolute;
   width: 100%;
+  height: 100%;
 }

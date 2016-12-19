@@ -22,8 +22,8 @@ and open the template in the editor.
         <link rel="stylesheet" href="styles/levelMaker.css">
         <link rel="stylesheet" href="styles/levelCreate.css">
         <!-- Scripts to load  -->
-     
-        <script src="scripts/levelMaker.js"></script>
+
+        <script src="scripts/levelMaker.js"></script> 
         <script src="scripts/levelcreate.js"></script>
     </head>
     <body>
@@ -48,58 +48,89 @@ and open the template in the editor.
                 </div>
               </div>
             </header>
-    <!--    
-        <div class="lm_info_box">
-            <p style="font-size:150%;"><br>Level Maker Info - </p>
-        </div> 
+      
+        
+            
         <!-- This is the toolbar with buttons for starting, pausing,
         and resetting the simulation, as well as containing a drop
         down list for selecting patterns to add to the game.
         -->
         <div id="levelMaker">
-            
-        
-        <div id="toolbar">
-            <input class="bottomButton" type="button" onclick="window.location.href='levelMaker.html'" value="Go Back" />
-            <!--<input id="undo_button" type="button" value="Undo (not functional yet)" />-->
-            <input id="reset_button" class="bottomButton" type="button" value="Reset" />
-            
-            <!-- Here's the drop down list, it contains a reference
-            to all the image patterns to be used. -->
-            <select id="game_of_life_patterns">
-                <option value="2x2.png">Objective: Box</option>
-                <option value="ship.png">Objective: Ship</option>
-                <option value="VoidCell.png">Void Cell</option>
-                <option value="Placement.png">Placement Cell</option>
-                <option value="RemoveVC">Eraser (1x1)</option>
-            </select>
-            
-            
-           
-        </div>
         
         <canvas id="level_maker_canvas" width="1024" height="528">
         </canvas>
-        
-        <div> 
-            <input id="save_upload" class="bottomButton" type="button" value="Save and Upload" />
-            <input id="customLevelName" type="text" value="Custom Name"/><br>
             
-            <input id="load_from_save" class="bottomButton" type="button" value="Load from Save" />
-            <input id="loadName" type="text" value="Name of file"/><br>
-            <!--
-            <select id="stored_customs">
-                <option value="1">Slot 1</option>
-                <option value="2">Slot 2</option>
-                <option value="3">Slot 3</option>
-                <option value="4">Slot 4</option>
-                <option value="5">Slot 5</option>
-            </select><br>
-            -->
-            <input id="dec_cell_length_button" type="button" value="Upload to Marketplace (not functional yet)" />
-            <input id="inc_cell_length_button" type="button" value="(Placeholder)" />
-            <img id="thumbnail" src="" alt="custom made level"/>
-        </div>
+            <p>Use the Placeable Objects drop-down menu to select the object you want to place. <br>
+               Name your map and give yourself an alias that will be displayed in the public level market. <br>
+               It is up to you to make sure that your level is completeable.
+            </p>
+        
+        <div class="lm_info_box">
+            <h2><br>Level Maker</h2>
+            <input id="reset_button" class="bottomButton" type="button" value="Clear Canvas" /> 
+            <br>
+            <br>
+             <!-- Here's the drop down list, it contains a reference
+            to all the image patterns to be used. -->
+             Placeable Objects: <br>
+            <select id="game_of_life_patterns">
+                <option value="2x2.png">Objective: Box</option>
+                <option value="shipLeft.png">Objective: Ship-Left</option>
+                <option value="shipRight.png">Objective: Ship-Right</option>
+                <option value="combHori.png">Objective: Honeycomb-H</option>
+                <option value="combVert.png">Objective: Honeycomb-V</option>
+                <option value="cluster.png">Objective: Honey Cluster</option>
+                <option value="">Turret: Up</option>
+                <option value="">Turret: Down</option>
+                <option value="">Turret: Left</option>
+                <option value="">Turret: Right</option>
+                <option value="">Turret: Up-Left</option>
+                <option value="">Turret: Up-Right</option>
+                <option value="">Turret: Down-Left</option>
+                <option value="">Turret: Down-Right</option>
+                <option value="VoidCell.png">Void Cell (Wall)</option>
+                <option value="Placement.png">Placement Cell</option>
+                <option value="RemoveVC">Eraser (1x1)</option>
+            </select> <br>
+            <br>
+                Level Name: <br>
+                <input id="customLevelName" type="text" value="Custom Level"/><br>
+                <br>
+                User Alias: <br>
+                <input id="levelCreatorName" type="text" value=""/><br>
+                
+                <br>
+                Weapons Available: 
+                <select id="levelWeaponCount">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option selected = "selected" value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select> <br>
+                <br>
+                <input id="save_upload" class="bottomButton" type="button" value="Save to My Levels" /><br>
+                <br>               
+                <input id="market_upload" class = "bottomButton" type="button" value="Upload to Market" /> <br>
+                <br>
+                <!--
+                Name of Level to Load:<br>
+                <input id="loadName" type="text" value=""/><br>
+                -->
+                
+                <img id="thumbnail" src="images/levels/empty.png" alt="custom made level"/><br>
+                <br>
+                <input id="load_from_save" class="bottomButton" type="button" value="Load from Save" /> <br>
+                <br>
+                
+              <br>
+              <br>
+             <input class="bottomButton" type="button" onclick="window.location.href='levelMaker.html'" value="Return to Menu" />
+            <!--<input id="undo_button" type="button" value="Undo (not functional yet)" />-->
+        </div>       
         </div>
     </div>
           
@@ -117,11 +148,23 @@ and open the template in the editor.
   firebase.initializeApp(config);
 </script>
 <script>
-              initLevelMaker(); 
-              var database = firebase.database(); 
-              
-            </script>
-            <script src="scripts/database.js"></script>
-          
+     
+    var database = firebase.database();               
+</script>
+<script src="scripts/database.js"></script>
+<script> initLevelMaker(); </script>
+
+<!--SCRIPT TO EDIT LEVELS -->
+<script>
+    
+    window.onload = function(){
+        
+        setTimeout(function(){
+            //in database.js
+            loadMapToEdit();
+        }, 200);
+    };
+     
+</script>
     </body>
 </html>
