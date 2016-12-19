@@ -230,11 +230,11 @@ function levelMarketPopulate (){
                 newLevel.id = data.val().name+"_market";
                 var title = document.createElement("div");
                 title.className = "title";
-                var mapTitle = document.createTextNode("By: "+data.val().name);
+                var mapTitle = document.createTextNode(data.val().name);
                 title.appendChild(mapTitle);
                 var alias = document.createElement("div");
                 alias.className = "alias";
-                var mapCreator = document.createTextNode(data.val().alias);
+                var mapCreator = document.createTextNode("By: "+data.val().alias);
                 alias.appendChild(mapCreator);
                 var levelThumb = document.createElement("img");
                 levelThumb.className = "levelImg2";
