@@ -70,15 +70,17 @@ and open the template in the editor.
 .c-tab {
   display: none;
   background-color: #e7e7e7;
-  height: 537px;
+  height: 67.7vh;
 }
 
 .c-tab.is-active {
   display: block;
+  height: 67.7vh;
 }
 
 .c-tab__content {
   padding: 1.5rem;
+  height: 67.7vh;
 }
 
 a.button {
