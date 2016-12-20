@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d437b82-76df-42c4-81b2-183af60fbae5" name="Default" comment="fixed fanmenu.js">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public_html/styles/main.css" afterPath="$PROJECT_DIR$/public_html/styles/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public_html/styles/buttonFont.css" afterPath="$PROJECT_DIR$/public_html/styles/buttonFont.css" />
     </list>
     <ignored path="purplelife.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,8 +36,8 @@
       <file leaf-file-name="Game.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public_html/scripts/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="32190">
-              <caret line="2146" column="1" selection-start-line="2146" selection-start-column="1" selection-end-line="2146" selection-end-column="1" />
+            <state relative-caret-position="32745">
+              <caret line="2183" column="0" selection-start-line="2183" selection-start-column="0" selection-end-line="2183" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -57,28 +56,28 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public_html/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10">
-              <caret line="200" column="22" selection-start-line="200" selection-start-column="22" selection-end-line="200" selection-end-column="22" />
+            <state relative-caret-position="25">
+              <caret line="201" column="20" selection-start-line="201" selection-start-column="20" selection-end-line="201" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public_html/styles/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-137">
-              <caret line="438" column="22" selection-start-line="438" selection-start-column="22" selection-end-line="438" selection-end-column="22" />
+            <state relative-caret-position="523">
+              <caret line="482" column="28" selection-start-line="482" selection-start-column="28" selection-end-line="482" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="buttonFont.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="buttonFont.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public_html/styles/buttonFont.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
+            <state relative-caret-position="555">
+              <caret line="112" column="10" selection-start-line="112" selection-start-column="10" selection-end-line="112" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -98,7 +97,7 @@
         <entry file="file://$PROJECT_DIR$/public_html/styles/levelselect.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="723">
-              <caret line="111" column="16" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
+              <caret line="110" column="16" selection-start-line="110" selection-start-column="16" selection-end-line="110" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -148,11 +147,11 @@
         <option value="$PROJECT_DIR$/public_html/scripts/levelcreate.js" />
         <option value="$PROJECT_DIR$/public_html/scripts/database.js" />
         <option value="$PROJECT_DIR$/public_html/scripts/Game.js" />
-        <option value="$PROJECT_DIR$/public_html/styles/buttonFont.css" />
         <option value="$PROJECT_DIR$/public_html/styles/fanmenu.css" />
         <option value="$PROJECT_DIR$/public_html/styles/levelselect.css" />
         <option value="$PROJECT_DIR$/public_html/index.html" />
         <option value="$PROJECT_DIR$/public_html/styles/main.css" />
+        <option value="$PROJECT_DIR$/public_html/styles/buttonFont.css" />
       </list>
     </option>
   </component>
@@ -709,12 +708,12 @@
       <workItem from="1482124490504" duration="71000" />
       <workItem from="1482151629929" duration="162000" />
       <workItem from="1482204075257" duration="6147000" />
-      <workItem from="1482219756635" duration="2268000" />
+      <workItem from="1482219756635" duration="2998000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93192000" />
+    <option name="totallyTimeSpent" value="93922000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="874" extended-state="6" />
@@ -1092,16 +1091,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public_html/scripts/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32190">
-          <caret line="2146" column="1" selection-start-line="2146" selection-start-column="1" selection-end-line="2146" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public_html/styles/buttonFont.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
+        <state relative-caret-position="32745">
+          <caret line="2183" column="0" selection-start-line="2183" selection-start-column="0" selection-end-line="2183" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1125,23 +1116,31 @@
     <entry file="file://$PROJECT_DIR$/public_html/styles/levelselect.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="723">
-          <caret line="111" column="16" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
+          <caret line="110" column="16" selection-start-line="110" selection-start-column="16" selection-end-line="110" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public_html/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10">
-          <caret line="200" column="22" selection-start-line="200" selection-start-column="22" selection-end-line="200" selection-end-column="22" />
+        <state relative-caret-position="25">
+          <caret line="201" column="20" selection-start-line="201" selection-start-column="20" selection-end-line="201" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public_html/styles/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-137">
-          <caret line="438" column="22" selection-start-line="438" selection-start-column="22" selection-end-line="438" selection-end-column="22" />
+        <state relative-caret-position="523">
+          <caret line="482" column="28" selection-start-line="482" selection-start-column="28" selection-end-line="482" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public_html/styles/buttonFont.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="112" column="10" selection-start-line="112" selection-start-column="10" selection-end-line="112" selection-end-column="10" />
           <folding />
         </state>
       </provider>

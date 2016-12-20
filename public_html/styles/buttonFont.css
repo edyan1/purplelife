@@ -24,7 +24,7 @@
   height: 100%;
   width: 9%;
   position: absolute;
-  left: 55.5%
+  left: 47%
 }
 
 .playBtn:hover {
@@ -45,7 +45,7 @@
   height: 100%;
   width: 9%;
   position: absolute;
-  left: 65.5%
+  left: 57%
 }
 
 .undoBtn:hover {
@@ -67,7 +67,7 @@
   height: 100%;
   width: 9%;
   position: absolute;
-  left: 75.5%
+  left: 67%
 }
 
 .quitBtn:hover {
@@ -89,7 +89,7 @@
   height: 100%;
   width: 9%;
   position: absolute;
-  left: 35.5%
+  left: 27%
 }
 
 .resetBtn:hover {
@@ -110,7 +110,7 @@
   height: 100%;
   width: 9%;
   position: absolute;
-  left: 45.5%
+  left: 37%
 }
 
 .rewindBtn:hover {
