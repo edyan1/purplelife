@@ -48,7 +48,27 @@ and open the template in the editor.
          
     </head>
     <body>
-        
+      		<div class="md-modal modal-fall" id="myModalWon">
+			<div class="md-content">
+				<h3>You Won!</h3>
+				<div>
+					<p id="modalWonText">ayy you did it!</p>
+					<button class="md-close">Continue!</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="md-modal modal-fall" id="myModalLost">
+			<div class="md-content">
+				<h3>You Lost!</h3>
+				<div>
+					<p>ayy you failed!</p>
+					<button class="md-close">Reset!</button>
+				</div>
+			</div>
+		</div>
+
+      <div class="blur_container">
         <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
         <!-- Header section containing logo -->
@@ -91,6 +111,7 @@ and open the template in the editor.
         </div>
         
         <div id="container">
+          
           
           <!--GAME CANVAS-->
           <div class="canvas">
@@ -214,25 +235,7 @@ and open the template in the editor.
             </div>
           </div>
 
-		<div class="md-modal modal-fall" id="myModalWon">
-			<div class="md-content">
-				<h3>You Won!</h3>
-				<div>
-					<p id="modalWonText">ayy you did it!</p>
-					<button class="md-close">Continue!</button>
-				</div>
-			</div>
-		</div>
 
-		<div class="md-modal modal-fall" id="myModalLost">
-			<div class="md-content">
-				<h3>You Lost!</h3>
-				<div>
-					<p>ayy you failed!</p>
-					<button class="md-close">Rewind!</button>
-				</div>
-			</div>
-		</div>
 
           <div id="toolbar" class="divBody">
              
@@ -325,8 +328,8 @@ and open the template in the editor.
         </div>
         </div>
 
+        </div>
            
-
 <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
 <script>
   // Initialize Firebase
