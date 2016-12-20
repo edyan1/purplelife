@@ -168,8 +168,8 @@ textarea {
   transition: 0.4s ease;
 }
 .fm_list {
-  bottom: 18px;
-  left: 5px;
+  bottom: 75%;
+  left: 1%;
   position: absolute;
 }
 .fm_list li {

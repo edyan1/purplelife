@@ -12,9 +12,9 @@
 
 /* play button style*/
 .playBtn {
-  -webkit-border-radius: 28px;
-  -moz-border-radius: 28px;
-  border-radius: 28px;
+  -webkit-border-radius: 40%;
+  -moz-border-radius: 40%;
+  border-radius: 40%;
   font-family: Courier New;
   color: #fffcff;
   font-size: 100%;
@@ -33,9 +33,9 @@
 }
 
 .undoBtn {
-  -webkit-border-radius: 28px;
-  -moz-border-radius: 28px;
-  border-radius: 28px;
+  -webkit-border-radius: 40%;
+  -moz-border-radius: 40%;
+  border-radius: 40%;
   font-family: Courier New;
   color: #fffcff;
   font-size: 100%;
@@ -55,9 +55,9 @@
 
 /* pause button style*/
 .quitBtn {
-  -webkit-border-radius: 28px;
-  -moz-border-radius: 28px;
-  border-radius: 28px;
+  -webkit-border-radius: 40%;
+  -moz-border-radius: 40%;
+  border-radius: 40%;
   font-family: Courier New;
   color: #fffcff;
   font-size: 100%;
@@ -77,9 +77,9 @@
 
 /*reset button style*/
 .resetBtn {
-  -webkit-border-radius: 28px;
-  -moz-border-radius: 28px;
-  border-radius: 28px;
+  -webkit-border-radius: 40%;
+  -moz-border-radius: 40%;
+  border-radius: 40%;
   font-family: Courier New;
   color: #fffcff;
   font-size: 100%;
