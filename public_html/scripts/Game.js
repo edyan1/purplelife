@@ -257,7 +257,7 @@ Game.prototype.initPurpleGameData = function() {
     }
 
     resetButton.onclick = function(event) {
-        classie.remove( modalWon, 'md-show' );
+        classie.remove( modalLost, 'md-show' );
         purpleGame.resetLevel();
     }
 
