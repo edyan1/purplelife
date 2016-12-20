@@ -1178,7 +1178,7 @@ Game.prototype.renderGame = function () {
         var currentLevelNumber = parseInt(currentLevel.match(/\d+/), 10);
         console.log(currentLevelNumber);
         if (currentLevelNumber === 6) 
-            document.getElementById('modalWonText').innerHTML = "Great job! I believe you are ready to lead us into battle.";
+            document.getElementById('modalWonText').innerHTML = "Great job! I believe you are ready to lead us in the upcoming battle.";
         if (currentLevelNumber === 12) 
             document.getElementById('modalWonText').innerHTML = "Excellent. But I am afraid these battles will be even tougher soon. The enemy will not fall so easily. Ready yourself.";
         if (currentLevelNumber === 18) 
