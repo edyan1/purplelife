@@ -1,25 +1,36 @@
 128, 128, 128 = Wall (GRAY)
 
+
 128, 0, 128 = Objective (PURPLE)
 
+
 232, 232, 232 = Placement (Light Gray)
+
 
 28, 147, 64 = Turret Cell (GREEN)
 
 
+
 253, 174, 201 = Turret Spawn Cell DIAGONAL RIGHT (PINK)
+
 
 233, 174, 201 = Turret Spawn Cell DIAGONAL LEFT
 
+
 213, 174, 201 = Turret Spawn Cell DIAGONAL UP
+
 
 193, 174, 201 = Turret Spawn Cell DIAGONAL DOWN
 
 
+
 253, 0, 0 = Turret Spawn Cell STRAIGHT RIGHT
+
 
 233, 0, 0 = Turret Spawn Cell STRAIGHT LEFT
 
-213, 0, 0 = Turret Spawn Cell STRAIGHT UP 
+
+213, 0, 0 = Turret Spawn Cell STRAIGHT UP
+
 
 193, 0, 0 = Turret Spawn Cell STRAIGHT DOWN
