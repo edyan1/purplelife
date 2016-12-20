@@ -12,17 +12,17 @@ and open the template in the editor.
 .lm_info_box {
   
   width: 25%;
-  height: 95%;
+  height: 100%;
   color: white;
   text-align: center;
   /*border-style: solid;*/
   /*border-color: #7b1fa2;*/
   /*border-width: 3px;*/
-  padding-left: 2%;
-  padding-right: 2%;
+  /*padding-left: 2%;*/
+  /*padding-right: 2%;*/
   right: 0px;
   bottom: 0px;
-  position:fixed;
+  position:absolute;
     
   background : rgba(123, 31, 162, 0.7);
 }

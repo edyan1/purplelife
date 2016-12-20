@@ -194,9 +194,13 @@ function initCanvas()
     // NOTE THAT THESE DIMENSIONS SHOULD BE THE
     // SAME AS SPECIFIED IN THE WEB PAGE, WHERE
     // THE CANVAS IS SIZED
+ 
+    
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
 }
+
+
 
 function initLevelMakerData()
 {    
