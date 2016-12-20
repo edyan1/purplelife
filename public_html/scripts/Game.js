@@ -1174,7 +1174,10 @@ Game.prototype.renderGame = function () {
     // AND RENDER THE TEXT
     if (gameWon) {
         playWonSound();
-
+        
+        var currentLevelNumber = parseInt(currentLevel.match(/\d+/), 10);
+        console.log(currentLevelNumber);
+        if (currentLevelNumber === 1) document.getElementById('modalWonText').innerHTML = "Great job! I believe you are ready to lead us into battle.";
         classie.add( modalWon, 'md-show' );
     
     } else if (gameLost) {
