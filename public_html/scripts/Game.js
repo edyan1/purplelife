@@ -108,6 +108,12 @@ var gameRunning;
 var customLevelsBegin = 0;
 var totalLevels = 0;
 
+var span;
+var modalWon;
+var modalLost;
+var continueButton;
+var resetButton;
+
 // INITIALIZATION METHODS
 
 /*
@@ -223,6 +229,37 @@ Game.prototype.initPurpleGameData = function() {
     // INIT THE CELL LENGTH
     cellLengthX = MIN_CELL_LENGTH;
     cellLengthY = MIN_CELL_LENGTH;
+
+    // Get the modal
+    modalWon = document.getElementById('myModalWon');
+    modalLost = document.getElementById('myModalLost');
+
+    continueButton = document.getElementsByClassName("btn btn-default")[0];
+    resetButton = document.getElementsByClassName("btn btn-default")[1];
+
+    continueButton.onclick = function(event) {
+        // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
+        if (parseInt(currentLevel.match(/\d+/), 10) != totalLevels) {
+            placedWeapons.length = 0;
+            placedWeaponCount = 0;
+            var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
+            if (userSignedIn === true && getUserProgress() < levelNumber-1 ){
+                //console.log(getUserProgress());
+                setUserProgress(levelNumber-1);
+            }
+            giveLevelAccess(levelNumber);
+            var tempCurrentLevel = currentLevel;
+            purpleGame.resetGameOfLife();
+            purpleGame.pausePurpleGame();
+            purpleGame.loadLevel(tempCurrentLevel.substring(0,5) + levelNumber + ".png");
+            modalWon.style.display = "none";
+        }
+    }
+
+    resetButton.onclick = function(event) {
+        purpleGame.resetLevel();
+        modalLost.style.display = "none";
+    }
 
 };
 
@@ -1136,29 +1173,12 @@ Game.prototype.renderGame = function () {
 
     // AND RENDER THE TEXT
     if (gameWon) {
-        this.renderYouWon();
         playWonSound();
-        // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
-        if (currentlyPressedKeys[70] && parseInt(currentLevel.match(/\d+/), 10) != totalLevels) {
-            placedWeapons.length = 0;
-            placedWeaponCount = 0;
-            var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
-            if (userSignedIn === true && getUserProgress() < levelNumber-1 ){
-                //console.log(getUserProgress());
-                setUserProgress(levelNumber-1);
-            }
-            giveLevelAccess(levelNumber);
-            var tempCurrentLevel = currentLevel;
-            this.resetGameOfLife();
-            this.pausePurpleGame();
-            this.loadLevel(tempCurrentLevel.substring(0,5) + levelNumber + ".png");
-        }
+
+        modalWon.style.display = "block";
+    
     } else if (gameLost) {
-        this.renderYouLostText();
-        // IF THE PLAYER WANTS TO PRESS R TO RESTART THE LEVEL
-        if (currentlyPressedKeys[82]) {
-            this.resetLevel();
-        }
+        modalLost.style.display = "block";
     }
     
     // THE GRID WE RENDER THIS FRAME WILL BE USED AS THE BASIS
@@ -1186,39 +1206,6 @@ Game.prototype.renderGameWithoutSwapping = function()
 
     // RENDER WEAPON SELECT
     this.renderWeaponSelect();
-    
-    // AND RENDER THE TEXT
-    if (gameWon && !isCustomLevel) {
-        this.renderYouWon();
-        playWonSound();
-        // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
-        if (currentlyPressedKeys[70]) {
-            var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
-            if (userSignedIn === true && getUserProgress() < levelNumber-1 ) {
-                //console.log(getUserProgress());
-                setUserProgress(levelNumber-1);
-            }
-            giveLevelAccess(levelNumber);
-            this.resetGameOfLife();
-            this.pausePurpleGame();
-            this.loadLevel(currentLevel.substring(0,5) + levelNumber + ".png");
-        }
-    } else if(gameWon && isCustomLevel) {
-        this.renderYouWon();
-        playWonSound();
-        //if(isCustomLevel) {
-            //isCustomLevel = false;
-            //this.resetGameOfLife();
-           // this.pausePurpleGame();
-            sceneManager.goBack();
-        //}
-    } else if (gameLost) {
-        this.renderYouLostText();
-        // IF THE PLAYER WANTS TO PRESS R TO RESTART THE LEVEL
-        if (currentlyPressedKeys[82]) {
-            this.resetLevel();
-        }
-    }
 }
 
 Game.prototype.renderPlacementCells = function() {
