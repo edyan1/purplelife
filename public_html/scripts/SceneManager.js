@@ -63,6 +63,7 @@ function loadSplashScene() {
     canvas2D.drawImage(this.splashScreen, 60, 0, canvas.width-120, canvas.height - 60);
     document.getElementById("Login_button").style.visibility = "visible";
     document.getElementById("Enter_button").style.visibility = "visible";
+    document.getElementById("game_canvas").removeAttribute('hidden');
 };
 
 function deloadSplashScene() {
@@ -90,6 +91,7 @@ function deloadGameScene() {
 function loadLevelSelectScene() {
   document.getElementById("Enter_button").style.visibility = "hidden";
   document.getElementById("ls-section").removeAttribute('hidden');
+  document.getElementById("game_canvas").setAttribute('hidden', 'hidden');
   
 };
 
