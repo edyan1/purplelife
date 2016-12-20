@@ -474,6 +474,7 @@ h3 {
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
+  transform: scale(1.5); 
 }
 
 .md-show.modal-fall .md-content {
@@ -482,6 +483,7 @@ h3 {
 	-ms-transform: scale(1);
 	transform: scale(1);
 	opacity: 1;
+  transform: scale(1.5); 
 }
 
 
