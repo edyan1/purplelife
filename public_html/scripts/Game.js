@@ -1188,6 +1188,7 @@ Game.prototype.renderGame = function () {
         if (currentLevelNumber === 30) 
             document.getElementById('modalWonText').innerHTML = "Congratulations Lord-General, we have crushed the rebellion. No one will dare challenge your authority ever again. Long live the Purple Nation!";
         classie.add( modalWon, 'md-show' );
+        classie.remove( modalLost, 'md-show' );
     
     } else if (gameLost) {
         classie.add( modalLost, 'md-show' );
@@ -1903,6 +1904,8 @@ Game.prototype.rewindLevel = function() {
     this.loadLevel(levelToReset);
     placedCount = temp;
     this.loadLastPlacedCells();
+    classie.remove( modalWon, 'md-show' );
+    classie.remove( modalLost, 'md-show' );
 };
 
 Game.prototype.resetLevel = function() {
@@ -1913,6 +1916,8 @@ Game.prototype.resetLevel = function() {
     this.loadLevel(levelToReset);
     placedCount = temp;
     this.loadLastPlacedCellsTransparent();
+    classie.remove( modalWon, 'md-show' );
+    classie.remove( modalLost, 'md-show' );
 };
 
 Game.prototype.loadLastPlacedCells = function() {

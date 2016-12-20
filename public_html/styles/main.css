@@ -404,7 +404,7 @@ h3 {
 
 /* Content styles */
 .md-content {
-	color: #fff;
+	color: #FFFFFF;
 	background: #800080;
 	position: relative;
 	border-radius: 1%;
@@ -453,7 +453,7 @@ h3 {
 	border: none;
 	padding: 0.6em 1.2em;
 	background: #9400D3;
-	color: #fff;
+	color: #FFFFFF;
 	font-family: 'Lato', Calibri, Arial, sans-serif;
 	font-size: 1em;
 	letter-spacing: 1%;
