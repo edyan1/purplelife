@@ -29,9 +29,17 @@ and open the template in the editor.
         <script src="scripts/fanmenu.js"></script>
        
 	<script src="scripts/Game.js"></script>
+  		<script>
+			// this is important for IEs
+			var polyfilter_scriptpath = '/scripts/';
+		</script>
         <script src="scripts/SceneManager.js"></script>
         <script src="scripts/main.js"></script>
         <script src="scripts/notify.js"></script>
+        <script src="scripts/classie.js"></script>
+        <script src="scripts/css-filters-polyfill.js"></script>
+        <script src="scripts/cssParser.js"></script>
+        <script src="scripts/modernizr.custom.js"></script>
         
         
         <!-- Level Select style sheet and script -->
@@ -206,35 +214,26 @@ and open the template in the editor.
             </div>
           </div>
 
-<div id="myModalWon" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+		<div class="md-modal modal-fall" id="myModalWon">
+			<div class="md-content">
+				<h3>You Won!</h3>
+				<div>
+					<p>ayy you did it!</p>
+					<button class="md-close">Continue!</button>
+				</div>
+			</div>
+		</div>
 
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">You won!</h4>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Continue</button>
-      </div>
-    </div>
+		<div class="md-modal modal-fall" id="myModalLost">
+			<div class="md-content">
+				<h3>You Lost!</h3>
+				<div>
+					<p>ayy you failed!</p>
+					<button class="md-close">Reset!</button>
+				</div>
+			</div>
+		</div>
 
-  </div>
-</div>
-
-<div id="myModalLost" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">You lost!</h4>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Reset</button>
-      </div>
-    </div>
-
-  </div>
-</div>
           <div id="toolbar" class="divBody">
              
             <div id='weaponMenu' class="fm_wrap">

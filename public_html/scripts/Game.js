@@ -234,10 +234,11 @@ Game.prototype.initPurpleGameData = function() {
     modalWon = document.getElementById('myModalWon');
     modalLost = document.getElementById('myModalLost');
 
-    continueButton = document.getElementsByClassName("btn btn-default")[0];
-    resetButton = document.getElementsByClassName("btn btn-default")[1];
+    continueButton = document.getElementsByClassName("md-close")[0];
+    resetButton = document.getElementsByClassName("md-close")[1];
 
     continueButton.onclick = function(event) {
+        classie.remove( modalWon, 'md-show' );
         // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
         if (parseInt(currentLevel.match(/\d+/), 10) != totalLevels) {
             placedWeapons.length = 0;
@@ -252,13 +253,12 @@ Game.prototype.initPurpleGameData = function() {
             purpleGame.resetGameOfLife();
             purpleGame.pausePurpleGame();
             purpleGame.loadLevel(tempCurrentLevel.substring(0,5) + levelNumber + ".png");
-            modalWon.style.display = "none";
         }
     }
 
     resetButton.onclick = function(event) {
+        classie.remove( modalWon, 'md-show' );
         purpleGame.resetLevel();
-        modalLost.style.display = "none";
     }
 
 };
@@ -1175,10 +1175,10 @@ Game.prototype.renderGame = function () {
     if (gameWon) {
         playWonSound();
 
-        modalWon.style.display = "block";
+        classie.add( modalWon, 'md-show' );
     
     } else if (gameLost) {
-        modalLost.style.display = "block";
+        classie.add( modalLost, 'md-show' );
     }
     
     // THE GRID WE RENDER THIS FRAME WILL BE USED AS THE BASIS
