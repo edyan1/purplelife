@@ -112,7 +112,7 @@ var span;
 var modalWon;
 var modalLost;
 var continueButton;
-var resetButton;
+var rewindButton;
 
 // INITIALIZATION METHODS
 
@@ -235,7 +235,7 @@ Game.prototype.initPurpleGameData = function() {
     modalLost = document.getElementById('myModalLost');
 
     continueButton = document.getElementsByClassName("md-close")[0];
-    resetButton = document.getElementsByClassName("md-close")[1];
+    rewindButton = document.getElementsByClassName("md-close")[1];
 
     continueButton.onclick = function(event) {
         classie.remove( modalWon, 'md-show' );
@@ -256,9 +256,9 @@ Game.prototype.initPurpleGameData = function() {
         }
     }
 
-    resetButton.onclick = function(event) {
+    rewindButton.onclick = function(event) {
         classie.remove( modalLost, 'md-show' );
-        purpleGame.resetLevel();
+        purpleGame.rewindLevel();
     }
 
 };
@@ -1895,7 +1895,7 @@ Game.prototype.resetGameOfLife = function () {
     this.renderGame();
 };
 
-Game.prototype.resetLevel = function() {
+Game.prototype.rewindLevel = function() {
     var levelToReset = currentLevel;
     this.resetGameOfLife();
     this.pausePurpleGame();
@@ -1903,6 +1903,16 @@ Game.prototype.resetLevel = function() {
     this.loadLevel(levelToReset);
     placedCount = temp;
     this.loadLastPlacedCells();
+};
+
+Game.prototype.resetLevel = function() {
+    var levelToReset = currentLevel;
+    this.resetGameOfLife();
+    this.pausePurpleGame();
+    var temp = placedCount;
+    this.loadLevel(levelToReset);
+    placedCount = temp;
+    this.loadLastPlacedCellsTransparent();
 };
 
 Game.prototype.loadLastPlacedCells = function() {
@@ -1917,6 +1927,20 @@ Game.prototype.loadLastPlacedCells = function() {
         }
         weaponCount--;
     }
+}
+
+Game.prototype.loadLastPlacedCellsTransparent = function() {
+    for (var i = 0; i < placedCount; i++) {
+        var undoArray = allSavedPlacements[i];
+        for (var f = 0; f < undoArray.length; f += 2) {
+            var col = undoArray[f];
+            var row = undoArray[f + 1];
+            purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
+            purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+            purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
+        }
+    }
+    placedCount = 0;
 }
 
 Game.prototype.undo = function() {
@@ -2155,5 +2179,5 @@ Game.prototype.resizeCanvas = function() {
     canvasHeight = canvas.height;
 
     if (currentLevel != null)
-        this.resetLevel();
+        this.rewindLevel();
 }
