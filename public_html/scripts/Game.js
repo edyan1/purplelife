@@ -1177,7 +1177,16 @@ Game.prototype.renderGame = function () {
         
         var currentLevelNumber = parseInt(currentLevel.match(/\d+/), 10);
         console.log(currentLevelNumber);
-        if (currentLevelNumber === 1) document.getElementById('modalWonText').innerHTML = "Great job! I believe you are ready to lead us into battle.";
+        if (currentLevelNumber === 6) 
+            document.getElementById('modalWonText').innerHTML = "Great job! I believe you are ready to lead us into battle.";
+        if (currentLevelNumber === 12) 
+            document.getElementById('modalWonText').innerHTML = "Excellent. But I am afraid these battles will be even tougher soon. The enemy will not fall so easily. Ready yourself.";
+        if (currentLevelNumber === 18) 
+            document.getElementById('modalWonText').innerHTML = "Their defenses were strong, but we perservered. You are truly a tactical genius.";
+        if (currentLevelNumber === 24) 
+            document.getElementById('modalWonText').innerHTML = "Terrific! Their weapons were no match for ours. Our campaign is nearly complete. Our victory will not be denied.";
+        if (currentLevelNumber === 30) 
+            document.getElementById('modalWonText').innerHTML = "Congratulations Lord-General, we have crushed the rebellion. No one will dare challenge your authority ever again. Long live the Purple Nation!";
         classie.add( modalWon, 'md-show' );
     
     } else if (gameLost) {
