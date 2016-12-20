@@ -2186,3 +2186,8 @@ Game.prototype.resizeCanvas = function() {
     if (currentLevel != null)
         this.rewindLevel();
 }
+
+Game.prototype.removePrompts = function() {
+    classie.remove( modalWon, 'md-show' );
+    classie.remove( modalLost, 'md-show' );
+}

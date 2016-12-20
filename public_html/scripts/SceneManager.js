@@ -115,6 +115,7 @@ function deloadLevelMakerScene() {
 
 function goBack() {
   game.pausePurpleGame();
+  game.removePrompts();
   
   if (userSignedIn) changeScene(Scenes.LEVELSELECT);
   else changeScene(Scenes.SPLASH);
