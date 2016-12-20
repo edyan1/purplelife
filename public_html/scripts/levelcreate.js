@@ -577,23 +577,23 @@ function respondToLoadedLevelImage(img, pixelArray)
                     
                     // IF TURRET DIAGONAL DOWN
                     else if ((r === 193) && (g === 174) && (b === 201)) {
-                    	turretDUArray[turretDUArrayCounter] = x;
-                    	turretDUArray[turretDUArrayCounter+1] = y;
-                    	turretDUArrayCounter += 2;
+                    	turretDDArray[turretDDArrayCounter] = x;
+                    	turretDDArray[turretDDArrayCounter+1] = y;
+                    	turretDDArrayCounter += 2;
                     }
                     
                     // IF TURRET DIAGONAL LEFT
                     else if ((r === 233) && (g === 174) && (b === 201)) {
-                    	turretDUArray[turretDUArrayCounter] = x;
-                    	turretDUArray[turretDUArrayCounter+1] = y;
-                    	turretDUArrayCounter += 2;
+                    	turretDLArray[turretDLArrayCounter] = x;
+                    	turretDLArray[turretDLArrayCounter+1] = y;
+                    	turretDLArrayCounter += 2;
                     }
                     
                     // IF TURRET DIAGONAL RIGHT
                     else if ((r === 253) && (g === 174) && (b === 201)) {
-                    	turretDUArray[turretDUArrayCounter] = x;
-                    	turretDUArray[turretDUArrayCounter+1] = y;
-                    	turretDUArrayCounter += 2;
+                    	turretDRArray[turretDRArrayCounter] = x;
+                    	turretDRArray[turretDRArrayCounter+1] = y;
+                    	turretDRArrayCounter += 2;
                     }
                 }            
         }  
