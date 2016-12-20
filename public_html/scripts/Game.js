@@ -112,7 +112,7 @@ var span;
 var modalWon;
 var modalLost;
 var continueButton;
-var resetButton;
+var rewindButton;
 
 // INITIALIZATION METHODS
 
@@ -235,7 +235,7 @@ Game.prototype.initPurpleGameData = function() {
     modalLost = document.getElementById('myModalLost');
 
     continueButton = document.getElementsByClassName("md-close")[0];
-    resetButton = document.getElementsByClassName("md-close")[1];
+    rewindButton = document.getElementsByClassName("md-close")[1];
 
     continueButton.onclick = function(event) {
         classie.remove( modalWon, 'md-show' );
@@ -256,9 +256,9 @@ Game.prototype.initPurpleGameData = function() {
         }
     }
 
-    resetButton.onclick = function(event) {
+    rewindButton.onclick = function(event) {
         classie.remove( modalLost, 'md-show' );
-        purpleGame.resetLevel();
+        purpleGame.rewindLevel();
     }
 
 };
@@ -1174,7 +1174,19 @@ Game.prototype.renderGame = function () {
     // AND RENDER THE TEXT
     if (gameWon) {
         playWonSound();
-
+        
+        var currentLevelNumber = parseInt(currentLevel.match(/\d+/), 10);
+        console.log(currentLevelNumber);
+        if (currentLevelNumber === 6) 
+            document.getElementById('modalWonText').innerHTML = "Great job! I believe you are ready to lead us into battle.";
+        if (currentLevelNumber === 12) 
+            document.getElementById('modalWonText').innerHTML = "Excellent. But I am afraid these battles will be even tougher soon. The enemy will not fall so easily. Ready yourself.";
+        if (currentLevelNumber === 18) 
+            document.getElementById('modalWonText').innerHTML = "Their defenses were strong, but we perservered. You are truly a tactical genius.";
+        if (currentLevelNumber === 24) 
+            document.getElementById('modalWonText').innerHTML = "Terrific! Their weapons were no match for ours. Our campaign is nearly complete. Our victory will not be denied.";
+        if (currentLevelNumber === 30) 
+            document.getElementById('modalWonText').innerHTML = "Congratulations Lord-General, we have crushed the rebellion. No one will dare challenge your authority ever again. Long live the Purple Nation!";
         classie.add( modalWon, 'md-show' );
     
     } else if (gameLost) {
@@ -1883,7 +1895,7 @@ Game.prototype.resetGameOfLife = function () {
     this.renderGame();
 };
 
-Game.prototype.resetLevel = function() {
+Game.prototype.rewindLevel = function() {
     var levelToReset = currentLevel;
     this.resetGameOfLife();
     this.pausePurpleGame();
@@ -1891,6 +1903,16 @@ Game.prototype.resetLevel = function() {
     this.loadLevel(levelToReset);
     placedCount = temp;
     this.loadLastPlacedCells();
+};
+
+Game.prototype.resetLevel = function() {
+    var levelToReset = currentLevel;
+    this.resetGameOfLife();
+    this.pausePurpleGame();
+    var temp = placedCount;
+    this.loadLevel(levelToReset);
+    placedCount = temp;
+    this.loadLastPlacedCellsTransparent();
 };
 
 Game.prototype.loadLastPlacedCells = function() {
@@ -1905,6 +1927,20 @@ Game.prototype.loadLastPlacedCells = function() {
         }
         weaponCount--;
     }
+}
+
+Game.prototype.loadLastPlacedCellsTransparent = function() {
+    for (var i = 0; i < placedCount; i++) {
+        var undoArray = allSavedPlacements[i];
+        for (var f = 0; f < undoArray.length; f += 2) {
+            var col = undoArray[f];
+            var row = undoArray[f + 1];
+            purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
+            purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+            purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
+        }
+    }
+    placedCount = 0;
 }
 
 Game.prototype.undo = function() {
@@ -2143,5 +2179,5 @@ Game.prototype.resizeCanvas = function() {
     canvasHeight = canvas.height;
 
     if (currentLevel != null)
-        this.resetLevel();
+        this.rewindLevel();
 }

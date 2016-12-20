@@ -123,12 +123,12 @@ and open the template in the editor.
                   <span>Chapter 5</span>
                 </a>
 
-                <a href="#" class="c-tabs-nav__link">
+                <a hidden href="#" class="c-tabs-nav__link">
                   <i class="chapter6"></i>
                   <span>Chapter 6</span>
                 </a>
 
-                <a href="#" class="c-tabs-nav__link">
+                <a hidden href="#" class="c-tabs-nav__link">
                   <i class="epilogue"></i>
                   <span>Epilogue</span>
                 </a>
@@ -203,10 +203,10 @@ and open the template in the editor.
 
               <div class="c-tab">
                 <div class="c-tab__content">
-                  <div class="level1" id="lev37">Level 37: <br><button disabled class="levelButton" id="level37" type="button" onclick="loadGameLevel(37)"><img class="levelImg" id="l37img" src="images/levels/boss.png" /></button> </div>
-                  <div class="level2" id="lev38">Level 38: <br><button disabled class="levelButton" id="level38" type="button" onclick="loadGameLevel(38)"><img class="levelImg" id="l38img" src="images/levels/boss.png" /></button> </div>
-                  <div class="level3" id="lev39">Level 39: <br><button disabled class="levelButton" id="level39" type="button" onclick="loadGameLevel(39)"><img class="levelImg" id="l39img" src="images/levels/boss.png" /></button> </div>
-                  <div class="level4" id="lev40">Level 40: <br><button disabled class="levelButton" id="level40" type="button" onclick="loadGameLevel(40)"><img class="levelImg" id="l40img" src="images/levels/boss.png" /></button> </div>
+                  <div class="level1" id="lev37">??????: <br><button disabled class="levelButton" id="level37" type="button" onclick="loadGameLevel(37)"><img class="levelImg" id="l37img" src="images/levels/boss.png" /></button> </div>
+                  <div class="level2" id="lev38">??????: <br><button disabled class="levelButton" id="level38" type="button" onclick="loadGameLevel(38)"><img class="levelImg" id="l38img" src="images/levels/boss.png" /></button> </div>
+                  <div class="level3" id="lev39">??????: <br><button disabled class="levelButton" id="level39" type="button" onclick="loadGameLevel(39)"><img class="levelImg" id="l39img" src="images/levels/boss.png" /></button> </div>
+                  <div class="level4" id="lev40">??????: <br><button disabled class="levelButton" id="level40" type="button" onclick="loadGameLevel(40)"><img class="levelImg" id="l40img" src="images/levels/boss.png" /></button> </div>
                 </div>
               </div>
 
@@ -218,7 +218,7 @@ and open the template in the editor.
 			<div class="md-content">
 				<h3>You Won!</h3>
 				<div>
-					<p>ayy you did it!</p>
+					<p id="modalWonText">ayy you did it!</p>
 					<button class="md-close">Continue!</button>
 				</div>
 			</div>
@@ -229,7 +229,7 @@ and open the template in the editor.
 				<h3>You Lost!</h3>
 				<div>
 					<p>ayy you failed!</p>
-					<button class="md-close">Reset!</button>
+					<button class="md-close">Rewind!</button>
 				</div>
 			</div>
 		</div>
@@ -301,6 +301,7 @@ and open the template in the editor.
 
 
               <button id="reset_button" type="button" value="Reset" class="resetBtn" onclick="purpleGame.resetLevel()">Reset</button>
+              <button id="rewind_button" type="button" value="Rewind" class="rewindBtn" onclick="purpleGame.rewindLevel()">Rewind</button>
               <button id="start_button" type="button" value="Play" class="playBtn" onclick="purpleGame.startPurpleGame()">Play</button>
               <button id="undo_button" type="button" value="Undo" class="undoBtn" onclick="purpleGame.undo()">Undo</button>
               <button id="quit_button" type="button" value="Quit" class="quitBtn" onclick="goBack()">Quit</button>
