@@ -1099,8 +1099,8 @@ Game.prototype.realMouseClick = function(event, purpleGame) {
                 var placedWeapon = weapon.substring(0, weapon.indexOf('_'));
                 if(placedWeapon.length == 0)
                     placedWeapon = weapon.substring(0, weapon.indexOf('.'));
-                if(!checkIfAvailable(placedWeapon))
-                    placedWeapons[placedWeaponCount++] = placedWeapon;
+
+                placedWeapons[placedWeaponCount++] = placedWeapon;
             }
 	        
 	    // RENDER THE GAME IMMEDIATELY
@@ -1797,14 +1797,16 @@ Game.prototype.startPurpleGame = function () {
 // EVERY WEAPON HAS A SOUND WHEN SHOT
 function playWeaponSound() {
     var audio;
-    for(var i = 0; i < placedWeapons.length; i++)
-        switch(placedWeapons[i]) {
-            case "rocket":
+    var rocket = false;
+    var gun = false;
+
+    for(var i = 0; i < placedWeapons.length; i++) {
+        if(placedWeapons[i] === "rocket" && !rocket) {
                 audio = new Audio("./sounds/weapons/rocket.mp3");
                 audio.play();
                 audio.volume = 0.2;
-                break;
-            case "gun":
+                rocket = true;
+        } else if(placedWeapons[i] === "gun" && !gun) {
                 audio = new Audio("./sounds/weapons/gun.mp3");
                 audio.play();
                 audio.volume = 0.3;
@@ -1813,8 +1815,9 @@ function playWeaponSound() {
                     audio.play();
                     audio.volume = 0.3;
                 });
-                break;
+                gun = true;
         }
+    }
 }
 
 // PLAYS FIREWORKS FOR WINNING
