@@ -114,6 +114,49 @@ var modalLost;
 var continueButton;
 var rewindButton;
 
+//END OF LEVEL WIN TEXT (STORY)
+var winText1;
+var winText2;
+var winText3;
+var winText4;
+var winText5;
+var winText6;
+var winText7;
+var winText8;
+var winText9;
+var winText10;
+var winText11;
+var winText12;
+var winText13;
+var winText14;
+var winText15;
+var winText16;
+var winText17;
+var winText18;
+var winText19;
+var winText20;
+var winText21;
+var winText22;
+var winText23;
+var winText24;
+var winText25;
+var winText26;
+var winText27;
+var winText28;
+var winText29;
+var winText30;
+var winText31;
+var winText32;
+var winText33;
+var winText34;
+var winText35;
+var winText36;
+var winText37;
+var winText38;
+var winText39;
+var winText40;
+
+
 // INITIALIZATION METHODS
 
 /*
@@ -209,6 +252,49 @@ var rewindButton;
 
     allSavedPlacements = new Array();
     allSavedPlacements[0] = new Array();
+    
+    //THE TEXT TELLING THE STORY
+    winText1 = "Good shots! Let's do some more target practice.";
+    winText2 = "Ready for something harder?";
+    winText3 = "Nice and easy right? No sweat at all!";
+    winText4 = "Looks like you've already got the hang of it.";
+    winText5 = "Boom goes the dynamite.";
+    winText6 = "Excellent! Looks like you're ready to lead us in our upcoming battle!";
+    winText7 = "";
+    winText8 = "";
+    winText9 = "";
+    winText10 = "";
+    winText11 = "";
+    winText12 = "";
+    winText13 = "";
+    winText14 = "";
+    winText15 = "";
+    winText16 = "";
+    winText17 = "";
+    winText18 = "";
+    winText19 = "";
+    winText20 = "";
+    winText21 = "";
+    winText22 = "";
+    winText23 = "";
+    winText24 = "";
+    winText25 = "";
+    winText26 = "";
+    winText27 = "";
+    winText28 = "";
+    winText29 = "";
+    winText30 = "Congratulations Lord-General! We have crushed the rebellion. No one will ever challenge our authority again. Love live Purple Nation!";
+    winText31 = "";
+    winText32 = "";
+    winText33 = "";
+    winText34 = "";
+    winText35 = "";
+    winText36 = "";
+    winText37 = "";
+    winText38 = "";
+    winText39 = "";
+    winText40 = "";
+
 };
 
 Game.prototype.initCanvas = function(canvas, canvas2D, canvasWidth, canvasHeight, mouseState) {
@@ -376,42 +462,6 @@ Game.prototype.initLevels = function () {
     }
     
 };
-
-// Game.prototype.initCustLevels = function () {
-//
-//     // THIS WILL STORE ALL THE PATTERNS IN AN ASSOCIATIVE ARRAY
-//     cLevels = new Array();
-//
-//     // RECEIEVE THE LEVELS FROM THE HTML
-//     var cLevelList = document.getElementById("customLevelsList");
-//     var cLevelItems = cLevelList.getElementsByTagName("li");
-//
-//     var keyNum = 1;
-//     for (var i = 0; i < cLevelItems.length; i++) {
-//         // GET THE NAME OF THE IMAGE FILE AND MAKE
-//         // A NEW ARRAY TO STORE IT'S PIXEL COORDINATES
-//         var key = cLevelItems[i].id;
-//         var pixelArray = new Array();
-//
-//         loadCustomMap(i+1);
-//         var mapLoaded = document.getElementById("slot" + (i+1).toString());
-//
-//         // NOW LOAD THE DATA FROM THE IMAGE
-//         loadOffScreenCustomLevel(mapLoaded, pixelArray);
-//
-//         //SET THE WEAPON COUNT
-//         pixelArray[12] = cLevelItems[i].value;
-//         pixelArray[13] = cLevelItems[i].getAttribute("cellcountX");
-//         pixelArray[14] = cLevelItems[i].getAttribute("cellcountY");
-//         pixelArray[15] = cLevelItems[i].getAttribute("gameLostTimeout");
-//
-//         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
-//         // BY KEY
-//         levels["level" + (customLevelsBegin + keyNum).toString() + ".png"] = pixelArray;
-//         keyNum++;
-//     }
-//
-// };
 
 function loadOffScreenLevel(imgName, pixelArray)
 {    
@@ -1176,17 +1226,131 @@ Game.prototype.renderGame = function () {
         playWonSound();
         
         var currentLevelNumber = parseInt(currentLevel.match(/\d+/), 10);
-        console.log(currentLevelNumber);
-        if (currentLevelNumber === 6) 
-            document.getElementById('modalWonText').innerHTML = "Great job! I believe you are ready to lead us in the upcoming battle.";
-        if (currentLevelNumber === 12) 
-            document.getElementById('modalWonText').innerHTML = "Excellent. But I am afraid these battles will be even tougher soon. The enemy will not fall so easily. Ready yourself.";
-        if (currentLevelNumber === 18) 
-            document.getElementById('modalWonText').innerHTML = "Their defenses were strong, but we perservered. You are truly a tactical genius.";
-        if (currentLevelNumber === 24) 
-            document.getElementById('modalWonText').innerHTML = "Terrific! Their weapons were no match for ours. Our campaign is nearly complete. Our victory will not be denied.";
-        if (currentLevelNumber === 30) 
-            document.getElementById('modalWonText').innerHTML = "Congratulations Lord-General, we have crushed the rebellion. No one will dare challenge your authority ever again. Long live the Purple Nation!";
+        switch (currentLevelNumber){
+            
+            case 1:
+                levelWinText(winText1);
+                break;
+            case 2:
+                levelWinText(winText2);
+                break;
+            case 3:
+                levelWinText(winText3);
+                break;
+            case 4:
+                levelWinText(winText4);
+                break;
+            case 5:
+                levelWinText(winText5);
+                break;
+            case 6:
+                levelWinText(winText6);
+                break;
+            case 7:
+                levelWinText(winText7);
+                break;
+            case 8:
+                levelWinText(winText8);
+                break;
+            case 9:
+                levelWinText(winText9);
+                break;
+            case 10:
+                levelWinText(winText10);
+                break;
+            case 11:
+                levelWinText(winText11);
+                break;
+            case 12:
+                levelWinText(winText12);
+                break;
+            case 13:
+                levelWinText(winText13);
+                break;
+            case 14:
+                levelWinText(winText14);
+                break;
+            case 15:
+                levelWinText(winText15);
+                break;
+            case 16:
+                levelWinText(winText16);
+                break;
+            case 17:
+                levelWinText(winText17);
+                break;
+            case 18:
+                levelWinText(winText18);
+                break;
+            case 19:
+                levelWinText(winText19);
+                break;
+            case 20:
+                levelWinText(winText20);
+                break;
+            case 21:
+                levelWinText(winText21);
+                break;
+            case 22:
+                levelWinText(winText22);
+                break;
+            case 23:
+                levelWinText(winText23);
+                break;
+            case 24:
+                levelWinText(winText24);
+                break;
+            case 25:
+                levelWinText(winText25);
+                break;
+            case 26:
+                levelWinText(winText26);
+                break;
+            case 27:
+                levelWinText(winText27);
+                break;
+            case 28:
+                levelWinText(winText28);
+                break;
+            case 29:
+                levelWinText(winText29);
+                break;
+            case 30:
+                levelWinText(winText30);
+                break;
+            case 31:
+                levelWinText(winText31);
+                break;
+            case 32:
+                levelWinText(winText32);
+                break;
+            case 33:
+                levelWinText(winText33);
+                break;
+            case 34:
+                levelWinText(winText34);
+                break;
+            case 35:
+                levelWinText(winText35);
+                break;
+            case 36:
+                levelWinText(winText36);
+                break;
+            case 37:
+                levelWinText(winText37);
+                break;
+            case 38:
+                levelWinText(winText38);
+                break;
+            case 39:
+                levelWinText(winText39);
+                break;
+            case 40:
+                levelWinText(winText40);
+                break;
+            default:
+                levelWinText("Nice! Got 'em!");
+        }
         classie.add( modalWon, 'md-show' );
         classie.remove( modalLost, 'md-show' );
     
@@ -1198,6 +1362,10 @@ Game.prototype.renderGame = function () {
     // FOR THE UPDATE GRID NEXT FRAME
     this.swapGrids();
 };
+
+function levelWinText (text) {
+    document.getElementById('modalWonText').innerHTML = text;
+}
 
 Game.prototype.renderGameWithoutSwapping = function()
 {
