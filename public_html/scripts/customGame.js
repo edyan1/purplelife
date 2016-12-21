@@ -1833,7 +1833,7 @@ customGame.prototype.resetGameOfLife = function () {
     this.renderGame();
 };
 
-customGame.prototype.resetLevel = function() {
+customGame.prototype.rewindLevel = function() {
     var levelToReset = currentLevel;
     this.resetGameOfLife();
     this.pausePurpleGame();
@@ -1841,6 +1841,18 @@ customGame.prototype.resetLevel = function() {
     this.loadLevel(levelToReset);
     placedCount = temp;
     this.loadLastPlacedCells();
+   
+};
+
+customGame.prototype.resetLevel = function() {
+    var levelToReset = currentLevel;
+    this.resetGameOfLife();
+    this.pausePurpleGame();
+    var temp = placedCount;
+    this.loadLevel(levelToReset);
+    placedCount = temp;
+    this.loadLastPlacedCellsTransparent();
+   
 };
 
 customGame.prototype.loadLastPlacedCells = function() {
@@ -2094,4 +2106,18 @@ customGame.prototype.resizeCanvas = function() {
 
     if (currentLevel != null)
         this.resetLevel();
+}
+
+customGame.prototype.loadLastPlacedCellsTransparent = function() {
+    for (var i = 0; i < placedCount; i++) {
+        var undoArray = allSavedPlacements[i];
+        for (var f = 0; f < undoArray.length; f += 2) {
+            var col = undoArray[f];
+            var row = undoArray[f + 1];
+            purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
+            purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+            purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
+        }
+    }
+    placedCount = 0;
 }
