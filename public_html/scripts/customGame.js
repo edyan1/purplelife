@@ -106,6 +106,12 @@ var gameRunning;
 var customlevelsBegin = 0;
 var totalLevels = 0;
 
+var span;
+var modalWon;
+var modalLost;
+var continueButton;
+var rewindButton;
+
 // INITIALIZATION METHODS
 
 /*
@@ -220,6 +226,23 @@ customGame.prototype.initPurpleGameData = function() {
     cellLengthX = MIN_CELL_LENGTH;
     cellLengthY = MIN_CELL_LENGTH;
 
+    // Get the modal
+    modalWon = document.getElementById('myModalWon');
+    modalLost = document.getElementById('myModalLost');
+
+    continueButton = document.getElementsByClassName("md-close")[0];
+    rewindButton = document.getElementsByClassName("md-close")[1];
+
+    continueButton.onclick = function(event) {
+        classie.remove( modalWon, 'md-show' );
+        goBackToLevelMaker()
+    }
+
+    rewindButton.onclick = function(event) {
+        classie.remove( modalLost, 'md-show' );
+        purpleGameLM.rewindLevel();
+    }
+
 };
 
 /*
@@ -333,7 +356,6 @@ customGame.prototype.initCustLevels = function () {
             
         // AND PUT THE DATA IN THE ASSIATIVE ARRAY,
         // BY KEY
-        console.log(key);
         levels[key] = pixelArray;
        
         keyNum++;
@@ -558,7 +580,7 @@ function respondToLoadedLevelImage(imgName, img, pixelArray)
 
                     // **DEBUG** CHECK FOR BROWSER DESCREPENCIES
                     else {
-                        console.log(r +'\n' + g + '\n' + b + '\n');
+                        //console.log(r +'\n' + g + '\n' + b + '\n');
                     }
 
                 }            
@@ -743,7 +765,7 @@ function respondToLoadedCustomLevelImage(img, pixelArray)
 
                     // **DEBUG** CHECK FOR BROWSER DESCREPENCIES
                     else {
-                        console.log(r +'\n' + g + '\n' + b + '\n');
+                        //console.log(r +'\n' + g + '\n' + b + '\n');
                     }
 
                 }            
@@ -822,7 +844,7 @@ customGame.prototype.loadLevel = function (levelToLoad) {
         level1 = false;
     currentLevel = levelToLoad;
     var level = levels[levelToLoad];
-    console.log(levelToLoad);
+    //console.log(levelToLoad);
     var walls = level[0];
     var objectives = level[1];
     var placements = level[2];
@@ -1024,11 +1046,13 @@ customGame.prototype.realMouseClick = function(event, purpleGame) {
             placedCount++;
 
             // SAVE PLACED WEAPON IN AN ARRAY
-            var placedWeapon = weapon.substring(0, weapon.indexOf('_'));
-            if(placedWeapon.length == 0)
-                placedWeapon = weapon.substring(0, weapon.indexOf('.'));
-            if(!checkIfAvailable(placedWeapon))
+            if(cell == PLACEMENT_CELL) {
+                var placedWeapon = weapon.substring(0, weapon.indexOf('_'));
+                if(placedWeapon.length == 0)
+                    placedWeapon = weapon.substring(0, weapon.indexOf('.'));
+
                 placedWeapons[placedWeaponCount++] = placedWeapon;
+            }
 	        
 	    // RENDER THE GAME IMMEDIATELY
 	    purpleGameLM.renderGameWithoutSwapping();
@@ -1304,24 +1328,13 @@ customGame.prototype.renderWeaponSelect = function() {
  * Renders the text on top of the grid.
  */
 customGame.prototype.renderYouWon = function() {
-    // SET THE PROPER COLOR
-    canvas2D.fillStyle = TEXT_COLOR;
+    classie.add( modalWon, 'md-show' );
+    classie.remove( modalLost, 'md-show' );
     
-    // RENDER THE TEXT
-    canvas2D.textAlign="center";
-    if(!isCustomLevel)
-        canvas2D.fillText("You Won!", canvasWidth/2, canvasHeight/2);
-    else
-        canvas2D.fillText("You Won!", canvasWidth/2, canvasHeight/2);
 }
 
 customGame.prototype.renderYouLostText = function() {
-    // SET THE PROPER COLOR
-    canvas2D.fillStyle = TEXT_COLOR;
-    
-    // RENDER THE TEXT
-    canvas2D.textAlign="center"; 
-    canvas2D.fillText("You Lost! Press R to retry!", canvasWidth/2, canvasHeight/2);
+    classie.add( modalLost, 'md-show' );
 }
 
 customGame.prototype.stepPurpleGame = function() {
@@ -1734,14 +1747,16 @@ customGame.prototype.startPurpleGame = function () {
 // EVERY WEAPON HAS A SOUND WHEN SHOT
 function playWeaponSound() {
     var audio;
-    for(var i = 0; i < placedWeapons.length; i++)
-        switch(placedWeapons[i]) {
-            case "rocket":
+    var rocket = false;
+    var gun = false;
+
+    for(var i = 0; i < placedWeapons.length; i++) {
+        if(placedWeapons[i] === "rocket" && !rocket) {
                 audio = new Audio("./sounds/weapons/rocket.mp3");
                 audio.play();
                 audio.volume = 0.2;
-                break;
-            case "gun":
+                rocket = true;
+        } else if(placedWeapons[i] === "gun" && !gun) {
                 audio = new Audio("./sounds/weapons/gun.mp3");
                 audio.play();
                 audio.volume = 0.3;
@@ -1750,8 +1765,9 @@ function playWeaponSound() {
                     audio.play();
                     audio.volume = 0.3;
                 });
-                break;
+                gun = true;
         }
+    }
 }
 
 // PLAYS FIREWORKS FOR WINNING
@@ -1841,7 +1857,8 @@ customGame.prototype.rewindLevel = function() {
     this.loadLevel(levelToReset);
     placedCount = temp;
     this.loadLastPlacedCells();
-   
+    classie.remove( modalWon, 'md-show' );
+    classie.remove( modalLost, 'md-show' );
 };
 
 customGame.prototype.resetLevel = function() {
@@ -1852,7 +1869,8 @@ customGame.prototype.resetLevel = function() {
     this.loadLevel(levelToReset);
     placedCount = temp;
     this.loadLastPlacedCellsTransparent();
-   
+    classie.remove( modalWon, 'md-show' );
+    classie.remove( modalLost, 'md-show' );
 };
 
 customGame.prototype.loadLastPlacedCells = function() {

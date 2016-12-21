@@ -26,10 +26,19 @@ and open the template in the editor.
             <link rel="stylesheet" href="styles/levelselect.css">
             <link rel="stylesheet" href="styles/levelMaker.css" type="text/css"/>
 
+              		<script>
+			// this is important for IEs
+			var polyfilter_scriptpath = '/scripts/';
+		</script>
+
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
             <script src="scripts/fanmenu.js"></script>
             <script src="scripts/SceneManager.js"></script>
             <script src ="scripts/levelMaker.js"></script>
+            <script src="scripts/classie.js"></script>
+            <script src="scripts/css-filters-polyfill.js"></script>
+            <script src="scripts/cssParser.js"></script>
+            <script src="scripts/modernizr.custom.js"></script>
             
             <script src="scripts/notify.js"></script>
             
@@ -45,7 +54,28 @@ and open the template in the editor.
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
     </script>
+
+          		<div class="md-modal modal-fall" id="myModalWon">
+			<div class="md-content">
+				<h3>You Won!</h3>
+				<div>
+					<p id="modalWonText">Awesome!</p>
+					<button class="md-close">Go Back.</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="md-modal modal-fall" id="myModalLost">
+			<div class="md-content">
+				<h3>You Lost!</h3>
+				<div>
+					<p>Try again!</p>
+					<button class="md-close">Rewind!</button>
+				</div>
+			</div>
+		</div>
         
+        <div class="blur_container">
      	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
 	    <!-- Header section containing logo -->
@@ -169,6 +199,7 @@ and open the template in the editor.
                 </ul>
             </div>
 
+        </div>
         
        
         
