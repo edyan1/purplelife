@@ -112,29 +112,43 @@ and open the template in the editor.
             </div>
           </div>
         </header>
-    <section class="webdesigntuts-workshop">   
-    <form id="searchBar">   
-                <input id="search" type="search" placeholder="What are you looking for?">         
-                <button class="search-button">Search</button>
-                </form>
-            </section>
+            
         <div id='lmmenu'>
             <div style="text-align: center;"> <button onclick="window.location.href = 'levelcreate.html';" class="newLevel" >Create A Level</button></div>
             <div style="text-align: center;"> <button onclick="loadLocalLevels();" class="myLevels" >My Levels</button></div>
             <div style="text-align: center;"> <button onclick="loadMarketLevels();" class="levelMarket" >Level Market</button></div>
-        </div>
             
+            <div class="webdesigntuts-workshop">
+                <!--<section class="webdesigntuts-workshop">   -->
+                    <form id="searchBar" style="left: 40%; position: relative;">   
+                        <input id="search" type="search" placeholder="What are you looking for?">         
+                        <button class="search-button">Search</button>
+                    </form>
+                <!-- </section> -->
+            </div>
+        </div>
+        
+         
+        
         <div id="container">
+            
+            
+            
             <div class="canvas">
             <canvas id="game_canvas" width="1024" height="580" style="margin:0 auto;"></canvas>
             </div>
+            
+            
+            
             <div id="level_maker_menu">
+                
                 <h2 id="loading">Loading Custom Levels...</h2>
             </div>
             
             <div hidden id="level_market_menu">
+                
                 <h2 hidden id="loadMarket">Loading Level Market...</h2>
-
+                
             </div>
             
             <div id="toolbar" class="divBody">
