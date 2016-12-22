@@ -39,11 +39,11 @@ function PurpleLifeLM() {
 
   searchButton = document.getElementsByClassName('search-button')[0];
   searchButton.onclick = function(event) {
+    updateListWithSearchTerm(document.getElementById("search").value);
     return false;
   }
 
   $('#searchBar').submit(function () {
-    updateListWithSearchTerm(document.getElementById("search").value);
     return false;
   });
 
