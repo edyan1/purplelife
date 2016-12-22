@@ -322,7 +322,9 @@ function updateListWithSearchTerm(userSearchString) {
   
   var children = customContainer.getElementsByClassName('custLevBar');
   for (var i = 0; i < children.length; i++){
-    children[i].setAttribute('hidden', 'true');
+    if (children[i].getElementsByClassName('title')[0].innerHTML.toUpperCase().includes(searchString)){
+        children[i].setAttribute('hidden', 'true');
+    }
       
   }
   for (var i = 0; i < children.length; i++){
