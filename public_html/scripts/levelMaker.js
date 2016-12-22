@@ -319,18 +319,16 @@ function updateListWithSearchTerm(userSearchString) {
   var searchString = userSearchString.toUpperCase();
   
   var customContainer = document.getElementById("level_market_menu");
-  
-  var children = customContainer.getElementsByClassName('custLevBar');
-  for (var i = 0; i < children.length; i++){
-    children[i].setAttribute('hidden', 'true');
-      
-  }
-  for (var i = 0; i < children.length; i++){
-      if (children[i].getElementsByClassName('title')[0].innerHTML.toUpperCase().includes(searchString)) {
-          children[i].removeAttribute('hidden');
-      }
-      if (children[i].getElementsByClassName('alias')[0].innerHTML.toUpperCase().includes(searchString)) {
-          children[i].removeAttribute('hidden');
-      }
+  var children = customContainer.children;
+
+  for (var i = 0; i < children.length; i++) {
+    var childTitle = children[i].getElementsByClassName("title")[0];
+    var childAlias = children[i].getElementsByClassName("alias")[0];
+    
+    if (!$(childTitle).text().toUpperCase().includes(searchString) && !$(childAlias).text().toUpperCase().includes(searchString)) {
+      children[i].style.display = "none";
+    } else {
+      children[i].style.display = "";
+    }
   }
 }
