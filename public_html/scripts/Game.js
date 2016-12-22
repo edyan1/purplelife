@@ -325,8 +325,8 @@ Game.prototype.initPurpleGameData = function() {
 
     continueButton.onclick = function(event) {
         classie.remove( modalWon, 'md-show' );
-        // IF THE PLAYER WANTS TO PRESS F TO GO ON TO THE NEXT LEVEL
-        if (parseInt(currentLevel.match(/\d+/), 10) != totalLevels) {
+        
+        if (parseInt(currentLevel.match(/\d+/), 10) < totalLevels) {
             placedWeapons.length = 0;
             placedWeaponCount = 0;
             var levelNumber = parseInt(currentLevel.match(/\d+/), 10) + 1;
@@ -340,6 +340,8 @@ Game.prototype.initPurpleGameData = function() {
             purpleGame.pausePurpleGame();
             purpleGame.loadLevel(tempCurrentLevel.substring(0,5) + levelNumber + ".png");
         }
+        
+        else goBack();
     }
 
     rewindButton.onclick = function(event) {
