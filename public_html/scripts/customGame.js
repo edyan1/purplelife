@@ -1887,6 +1887,7 @@ customGame.prototype.loadLastPlacedCells = function() {
     }
 }
 
+
 customGame.prototype.undo = function() {
     if (!gameRunning) {
         if (placedCount != 0) {
@@ -2132,9 +2133,9 @@ customGame.prototype.loadLastPlacedCellsTransparent = function() {
         for (var f = 0; f < undoArray.length; f += 2) {
             var col = undoArray[f];
             var row = undoArray[f + 1];
-            purpleGame.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
-            purpleGame.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
-            purpleGame.setGridCell(brightGrid, row, col, PREV_CELL);
+            purpleGameLM.setGridCell(renderGrid, row, col, PLACEMENT_CELL);
+            purpleGameLM.setGridCell(updateGrid, row, col, PLACEMENT_CELL);
+            purpleGameLM.setGridCell(brightGrid, row, col, PREV_CELL);
         }
     }
     placedCount = 0;
