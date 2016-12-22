@@ -209,10 +209,12 @@ function loadMapToEdit(){
 }
 
 //populate level market with all maps uploaded by users
-function levelMarketPopulate (){
+function levelMarketPopulate (userSearchString){
     
     var dbRef = firebase.database().ref('marketmaps/');
     var userId = firebase.auth().currentUser.uid;
+
+    var searchString = userSearchString.toUpperCase();
     
     //show "loading" message
     document.getElementById('loadMarket').removeAttribute('hidden');
@@ -224,48 +226,50 @@ function levelMarketPopulate (){
         // dynamically load them onto page (levelmaker.html)
         snapshot.forEach(function(userIDs) {
             userIDs.forEach (function (data) {
-                var customContainer = document.getElementById("level_market_menu");
-                var newLevel = document.createElement("div");
-                newLevel.className = "custLevBar";
-                newLevel.id = data.val().name+"_market";
-                var title = document.createElement("div");
-                title.className = "title";
-                var mapTitle = document.createTextNode(data.val().name);
-                title.appendChild(mapTitle);
-                var alias = document.createElement("div");
-                alias.className = "alias";
-                var mapCreator = document.createTextNode("By: "+data.val().alias);
-                alias.appendChild(mapCreator);
-                var levelThumb = document.createElement("img");
-                levelThumb.className = "levelImg2";
-                levelThumb.id = data.val().name+"img";
-                levelThumb.setAttribute("src", data.val().map);
-                var playBtn = document.createElement("button");
-                playBtn.className = "levelButtonLM";
-                playBtn.onclick = function(){loadCustomLevel(data.val().name);};
-                playBtn.innerHTML = "Play";
+                if (data.val().name.toUpperCase().includes(searchString) || data.val().alias.toUpperCase().includes(searchString)) {
+                    var customContainer = document.getElementById("level_market_menu");
+                    var newLevel = document.createElement("div");
+                    newLevel.className = "custLevBar";
+                    newLevel.id = data.val().name+"_market";
+                    var title = document.createElement("div");
+                    title.className = "title";
+                    var mapTitle = document.createTextNode(data.val().name);
+                    title.appendChild(mapTitle);
+                    var alias = document.createElement("div");
+                    alias.className = "alias";
+                    var mapCreator = document.createTextNode("By: "+data.val().alias);
+                    alias.appendChild(mapCreator);
+                    var levelThumb = document.createElement("img");
+                    levelThumb.className = "levelImg2";
+                    levelThumb.id = data.val().name+"img";
+                    levelThumb.setAttribute("src", data.val().map);
+                    var playBtn = document.createElement("button");
+                    playBtn.className = "levelButtonLM";
+                    playBtn.onclick = function(){loadCustomLevel(data.val().name);};
+                    playBtn.innerHTML = "Play";
 
-                newLevel.appendChild(title);
-                newLevel.appendChild(alias);
-                newLevel.appendChild(levelThumb);
-                newLevel.appendChild(playBtn);
-                if (firebase.auth().currentUser.uid === data.val().userId){
-                    var delBtn = document.createElement("button");
-                    delBtn.className = "levelButtonLM";
-                    delBtn.onclick = function(){marketLevelDelete(data.val().name);};
-                    delBtn.innerHTML = "Delete";
-                    newLevel.appendChild(delBtn);
+                    newLevel.appendChild(title);
+                    newLevel.appendChild(alias);
+                    newLevel.appendChild(levelThumb);
+                    newLevel.appendChild(playBtn);
+                    if (firebase.auth().currentUser.uid === data.val().userId){
+                        var delBtn = document.createElement("button");
+                        delBtn.className = "levelButtonLM";
+                        delBtn.onclick = function(){marketLevelDelete(data.val().name);};
+                        delBtn.innerHTML = "Delete";
+                        newLevel.appendChild(delBtn);
+                    }
+                    customContainer.appendChild(newLevel);
+
+                    var customList = document.getElementById("customLevelsListLM");
+                    var item = document.createElement("li");
+                    item.id = data.val().name;
+                    item.value = data.val().wcount;
+                    item.setAttribute("cellcountX", "64");
+                    item.setAttribute("cellcountY", "35");
+                    item.setAttribute("gameLostTimeout", "9001");
+                    customList.appendChild(item);
                 }
-                customContainer.appendChild(newLevel);
-
-                var customList = document.getElementById("customLevelsListLM");
-                var item = document.createElement("li");
-                item.id = data.val().name;
-                item.value = data.val().wcount;
-                item.setAttribute("cellcountX", "64");
-                item.setAttribute("cellcountY", "35");
-                item.setAttribute("gameLostTimeout", "9001");
-                customList.appendChild(item);
             });
         });
     //initialize custom levels
