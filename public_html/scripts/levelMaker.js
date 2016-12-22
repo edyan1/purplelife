@@ -319,7 +319,9 @@ function updateListWithSearchTerm(userSearchString) {
   var searchString = userSearchString.toUpperCase();
   
   var customContainer = document.getElementById("level_market_menu");
+  var customContainerLocal = document.getElementById("level_maker_menu");
   var children = customContainer.children;
+  var childrenLocal = customContainerLocal.children;
 
   for (var i = 0; i < children.length; i++) {
     var childTitle = children[i].getElementsByClassName("title")[0];
@@ -329,6 +331,17 @@ function updateListWithSearchTerm(userSearchString) {
       children[i].style.display = "none";
     } else {
       children[i].style.display = "";
+    }
+  }
+
+  for (var i = 0; i < childrenLocal.length; i++) {
+    var childTitle = childrenLocal[i].getElementsByClassName("title")[0];
+    var childAlias = childrenLocal[i].getElementsByClassName("alias")[0];
+    
+    if (!$(childTitle).text().toUpperCase().includes(searchString) && !$(childAlias).text().toUpperCase().includes(searchString)) {
+      childrenLocal[i].style.display = "none";
+    } else {
+      childrenLocal[i].style.display = "";
     }
   }
 }
