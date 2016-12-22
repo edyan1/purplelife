@@ -39,8 +39,13 @@ function PurpleLifeLM() {
 
   searchButton = document.getElementsByClassName('search-button')[0];
   searchButton.onclick = function(event) {
-    levelMarketPopulate(document.getElementById("searcher").value);
+    levelMarketPopulate(document.getElementById("search").value);
   }
+
+  $('#searchBar').submit(function () {
+    levelMarketPopulate(document.getElementById("search").value);
+    return false;
+  });
 
   // Saves message on form submit.
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
