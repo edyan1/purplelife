@@ -113,26 +113,26 @@ and open the template in the editor.
           </div>
         </header>
             
-        <div id='lmmenu' style="width: 80%;">
-            <div style="text-align: center;"> <button onclick="window.location.href = 'levelcreate.html';" class="newLevel" >Create A Level</button></div>
-            <div style="text-align: center;"> <button onclick="loadLocalLevels();" class="myLevels" >My Levels</button></div>
-            <div style="text-align: center;"> <button onclick="loadMarketLevels();" class="levelMarket" >Level Market</button></div>
-            
-            <div class="webdesigntuts-workshop">
-                <!--<section class="webdesigntuts-workshop">   -->
-                    <form id="searchBar" style="left: 40%; position: relative;">   
-                        <input id="search" type="search" placeholder="What are you looking for?">         
-                        <button class="search-button">Search</button>
-                    </form>
-                <!-- </section> -->
-            </div>
-        </div>
+        
         
          
         
         <div id="container">
             
-            
+            <div id='lmmenu'>
+                <div style="text-align: center;"> <button onclick="window.location.href = 'levelcreate.html';" class="newLevel" >Create A Level</button></div>
+                <div style="text-align: center;"> <button onclick="loadLocalLevels();" class="myLevels" >My Levels</button></div>
+                <div style="text-align: center;"> <button onclick="loadMarketLevels();" class="levelMarket" >Level Market</button></div>
+
+                <div class="webdesigntuts-workshop">
+                    <!--<section class="webdesigntuts-workshop">   -->
+                        <form id="searchBar" style="left: 40%; width: 100%; position: absolute;">   
+                            <input id="search" type="search" placeholder="What are you looking for?">         
+                            <button class="search-button">Search</button>
+                        </form>
+                    <!-- </section> -->
+                </div>
+            </div>
             
             <div class="canvas">
             <canvas id="game_canvas" width="1024" height="580" style="margin:0 auto;"></canvas>

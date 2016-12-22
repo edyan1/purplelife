@@ -193,7 +193,7 @@ button.levelButton{
     position:absolute;
     height: 100%;
     width: 100%;
-    
+    top:50px;
     left: 0;
 }
 
@@ -201,7 +201,7 @@ button.levelButton{
     position:absolute;
     height: 100%;
     width: 100%;
-
+    top:50px;
     left: 0;
 }
 
@@ -350,10 +350,8 @@ button.levelButton{
   display: block; 
   height: 1px;
  
-  margin: 0 0 0 -400px;
+  /*margin: 0 0 0 -400px;*/
   /*position: relative;*/
-  width: 20%;
-  
   margin: auto;
   font-size: 100%;
 
@@ -364,7 +362,7 @@ button.levelButton{
 
   border: none;
   border-radius: 10%;
-  position: relative;
+  position: fixed;
   
 }
 
@@ -410,7 +408,7 @@ button.levelButton{
   margin: 0;
   padding: 0 10px;
   text-shadow: 0 -1px 0 #000;
-  width: 10%;
+  /*width: 100%;*/
   
 }
 
