@@ -209,12 +209,10 @@ function loadMapToEdit(){
 }
 
 //populate level market with all maps uploaded by users
-function levelMarketPopulate (userSearchString){
+function levelMarketPopulate (){
     
     var dbRef = firebase.database().ref('marketmaps/');
     var userId = firebase.auth().currentUser.uid;
-
-    var searchString = userSearchString.toUpperCase();
     
     var marketMenu = document.getElementById("level_market_menu");
     for (var i = 0; i < marketMenu.childNodes.length; i++) {
@@ -233,7 +231,6 @@ function levelMarketPopulate (userSearchString){
         // dynamically load them onto page (levelmaker.html)
         snapshot.forEach(function(userIDs) {
             userIDs.forEach (function (data) {
-                if (data.val().name.toUpperCase().includes(searchString) || data.val().alias.toUpperCase().includes(searchString)) {
                     var customContainer = document.getElementById("level_market_menu");
                     var newLevel = document.createElement("div");
                     newLevel.className = "custLevBar";
@@ -276,7 +273,6 @@ function levelMarketPopulate (userSearchString){
                     item.setAttribute("cellcountY", "35");
                     item.setAttribute("gameLostTimeout", "9001");
                     customList.appendChild(item);
-                }
             });
         });
     //initialize custom levels

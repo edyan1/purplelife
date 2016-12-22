@@ -37,13 +37,9 @@ function PurpleLifeLM() {
   this.signInButton = document.getElementById('sign-in');
   this.signOutButton = document.getElementById('sign-out');
 
-  searchButton = document.getElementsByClassName('search-button')[0];
-  searchButton.onclick = function(event) {
-    levelMarketPopulate(document.getElementById("search").value);
-  }
 
   $('#searchBar').submit(function () {
-    levelMarketPopulate(document.getElementById("search").value);
+    updateListWithSearchTerm(document.getElementById("search").value);
     return false;
   });
 
@@ -115,7 +111,7 @@ PurpleLifeLM.prototype.onAuthStateChanged = function(user) {
     
     //generate level maker menu
     customLevelSelect();
-    levelMarketPopulate("");
+    levelMarketPopulate();
     display = "local";
  
  } else { // User is signed out!
@@ -314,3 +310,9 @@ window.onload = function() {
   window.purpleLifeLM = new PurpleLifeLM();
   
 };
+
+function updateListWithSearchTerm(userSearchString) {
+  var searchString = userSearchString.toUpperCase();
+  
+  //DO STUFF HERE
+}
