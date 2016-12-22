@@ -216,6 +216,13 @@ function levelMarketPopulate (userSearchString){
 
     var searchString = userSearchString.toUpperCase();
     
+    var marketMenu = document.getElementById("level_market_menu");
+    for (var i = 0; i < marketMenu.childNodes.length; i++) {
+        if (marketMenu.childNodes[i].className === "custLevBar") {
+          marketMenu.removeChild(marketMenu.childNodes[i]);
+        }        
+    }
+    
     //show "loading" message
     document.getElementById('loadMarket').removeAttribute('hidden');
     
