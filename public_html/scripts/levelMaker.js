@@ -319,9 +319,18 @@ function updateListWithSearchTerm(userSearchString) {
   var searchString = userSearchString.toUpperCase();
   
   var customContainer = document.getElementById("level_market_menu");
-  var children = customerContainer.childNodes;
-
-  for(child in children){
-    console.log(children[child]);
+  
+  var children = customContainer.getElementsByClassName('custLevBar');
+  for (var i = 0; i < children.length; i++){
+    children[i].setAttribute('hidden', 'true');
+      
+  }
+  for (var i = 0; i < children.length; i++){
+      if (children[i].getElementsByClassName('title')[0].innerHTML.toUpperCase().includes(searchString)) {
+          children[i].removeAttribute('hidden');
+      }
+      if (children[i].getElementsByClassName('alias')[0].innerHTML.toUpperCase().includes(searchString)) {
+          children[i].removeAttribute('hidden');
+      }
   }
 }
