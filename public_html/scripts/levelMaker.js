@@ -25,6 +25,8 @@ var toolbar;
 //Weapon Manager
 var weapon;
 var direction;
+
+var searchButton;
 // Initializes Purple Life
 function PurpleLifeLM() {
   //this.checkSetup();
@@ -34,6 +36,11 @@ function PurpleLifeLM() {
   this.userName = document.getElementById('user-name');
   this.signInButton = document.getElementById('sign-in');
   this.signOutButton = document.getElementById('sign-out');
+
+  searchButton = document.getElementsByClassName('search-button')[0];
+  searchButton.onclick = function(event) {
+    levelMarketPopulate(document.getElementById("searcher").value);
+  }
 
   // Saves message on form submit.
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
@@ -103,7 +110,7 @@ PurpleLifeLM.prototype.onAuthStateChanged = function(user) {
     
     //generate level maker menu
     customLevelSelect();
-    levelMarketPopulate();
+    levelMarketPopulate("");
     display = "local";
  
  } else { // User is signed out!
