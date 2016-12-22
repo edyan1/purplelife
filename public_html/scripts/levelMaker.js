@@ -37,6 +37,10 @@ function PurpleLifeLM() {
   this.signInButton = document.getElementById('sign-in');
   this.signOutButton = document.getElementById('sign-out');
 
+  searchButton = document.getElementsByClassName('search-button')[0];
+  searchButton.onclick = function(event) {
+    return false;
+  }
 
   $('#searchBar').submit(function () {
     updateListWithSearchTerm(document.getElementById("search").value);
@@ -314,5 +318,10 @@ window.onload = function() {
 function updateListWithSearchTerm(userSearchString) {
   var searchString = userSearchString.toUpperCase();
   
-  //DO STUFF HERE
+  var customContainer = document.getElementById("level_market_menu");
+  var children = customerContainer.childNodes;
+
+  for(child in children){
+    console.log(children[child]);
+  }
 }
